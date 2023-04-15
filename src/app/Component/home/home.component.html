@@ -37,6 +37,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
+    <h1 style="align-self: center">Dai un occhiata alle ultime novità: </h1>
     <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;">
       <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let item of items; let i = index"> <img [src]="item.image" class="card-img-top" alt="{{item.title}}">
         <div class="card-body"> <h5 class="card-title">{{item.title + " " + i}}</h5> <p class="card-text">{{item.description}}</p> <a href="{{item.link}}" class="btn btn-primary">Aggiungi al carrello</a>
