@@ -11,3 +11,14 @@
 mat-form-field {
   margin-top: 20px;
 }
+
+form {
+  width: 50%;
+  margin: auto;
+  padding: 20px;
+}
+
+label, input {
+  display: block;
+  margin-bottom: 10px;
+}
