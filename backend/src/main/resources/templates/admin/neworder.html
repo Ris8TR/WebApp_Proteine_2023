@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Nuovo ordine</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+    #header {
+        background-color: #000000;
+        color: #ffee00;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+    }
+    #logo {
+        width: 100px;
+        height: 100px;
+        margin-right: 10px;
+    }
+    #content {
+        background-color: #ffffff;
+        /*display: flex;*/
+        /*flex-wrap: wrap;*/
+        /*height: calc(100vh - 60px);*/
+    }
+    input[type="text"], textarea {
+        width: 100%;
+        display: block;
+        border: black;
+        outline: none;
+        background: none;
+        font-size: 1.2rem;
+        color: #666;
+        padding: 10px 15px 10px 10px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+    }
+    input[type="number"], textarea {
+        width: 100%;
+        display: block;
+        border: black;
+        outline: none;
+        background: none;
+        font-size: 1.2rem;
+        color: #666;
+        padding: 10px 15px 10px 10px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+    }
+    input[type="date"], textarea {
+        width: 100%;
+        display: block;
+        border: black;
+        outline: none;
+        background: none;
+        font-size: 1.2rem;
+        color: #666;
+        padding: 10px 15px 10px 10px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+    }
+
+    input {
+        margin-right: 100px; /* aggiungi spazio tra gli input */
+    }
+    td{
+        padding-right: 100px;
+    }
+    th{
+        padding-right: 100px;
+    }
+    button {
+        box-shadow: none;
+        background-color: #000000;
+        color: #fff;
+        border-radius: 25px;
+        box-shadow: 3px 3px 3px #b1b1b1,
+        -3px -3px 3px #fff;
+        letter-spacing: 1.3px;
+    }
+    button:hover{
+        background-color: #ffee00;
+    }
+</style>
+<body>
+<div id="header">
+    <img id="logo" src="/logo.png">
+    <h1>Nuovo Ordine</h1>
+</div>
+<button id="back" onclick="window.location.replace('http://localhost:8080/admin/orders')" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Indietro</button>
+<div id="content" style="height: 30px;width: 300px;margin-left: 500px;margin-top: 50px;/*! align-self: center; *//*! background-color: ; */">
+<form id="order-form">
+    <div>
+        <label for="customerName">Email cliente:</label>
+        <input type="text" id="customerName" name="customerName" required>
+    </div>
+    <div>
+        <label for="orderDate">Data dell'ordine:</label>
+        <input type="date" id="orderDate" name="orderDate" required>
+    </div>
+    <div>
+        <h2>Prodotti:</h2>
+        <table id="products-table">
+            <thead>
+            <tr>
+                <th>ID prodotto</th>
+                <th>Quantità</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input type="text" name="products[0].name" required></td>
+                <td><input type="number" min="1" name="products[0].quantity" required></td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" id="add-product-btn" style="width: 200px;height: 30px;">Aggiungi prodotto</button>
+    </div>
+    <input type="number" id="n" name="num" value="0" style="display: none">
+    <button type="submit" style="margin-top: 30px;width: 400px;height: 40px;">Aggiungi ordine</button>
+</form>
+</div>
+<script>
+    $(document).ready(function() {
+        var productIndex = 1;
+
+        $("#add-product-btn").click(function() {
+            var newRow = `
+                    <tr>
+                        <td><input type="text" name="products[${productIndex}].name" required></td>
+                        <td><input type="number" min="1" name="products[${productIndex}].quantity" required></td>
+                    </tr>
+                `;
+            $("#products-table tbody").append(newRow);
+            productIndex++;
+            $("#n").val(productIndex);
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#order-form').submit(function(event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/admin/addorder',
+                data: formData,
+                success: function(response) {
+                    if(response === -1){
+                        alert("Impossibile aggiungere ordine per questo utente, controllare db e riprovare!");
+                    }
+                    else{
+                        alert("Aggiunta ordine andata a buon fine!");
+                        window.location.reload();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Gestisci eventuali errori qui
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

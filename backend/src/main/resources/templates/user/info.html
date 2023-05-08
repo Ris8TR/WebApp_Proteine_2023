@@ -1,0 +1,247 @@
+<html xmlns:th="http://www.thymeleaf.org"><head>
+    <title>Informazioni personali</title>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        #header {
+            background-color: #000000;
+            color: #ffee00;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+        #logo {
+            width: 100px;
+            height: 100px;
+            margin-right: 10px;
+        }
+        #content {
+            background-color: #ffffff;
+            /*display: flex;*/
+            /*flex-wrap: wrap;*/
+            /*height: calc(100vh - 60px);*/
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            display: block;
+            border: black;
+            outline: none;
+            background: none;
+            font-size: 1.2rem;
+            color: #666;
+            padding: 10px 15px 10px 10px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+        }
+        input[type="password"], textarea {
+            width: 100%;
+            display: block;
+            border: black;
+            outline: none;
+            background: none;
+            font-size: 1.2rem;
+            color: #666;
+            padding: 10px 15px 10px 10px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+
+        }
+
+        form {
+
+            display: grid;
+
+            grid-template-columns: 200px 1fr;
+
+        }
+
+
+        label {
+
+            float: left;
+
+            width: 10px;
+
+            padding-right: 24px;
+
+        }
+
+        input {
+
+            float: left;
+
+            width: calc(100% - 200px);
+
+        }
+
+        #submit {
+            box-shadow: none;
+            width: 510px;
+            height: 40px;
+            background-color: #000000;
+            color: #fff;
+            border-radius: 25px;
+            box-shadow: 3px 3px 3px #b1b1b1,
+            -3px -3px 3px #fff;
+            letter-spacing: 1.3px;
+        }
+        #submit:hover{
+            background-color: #ffee00;
+        }
+
+        #hide {
+            box-shadow: none;
+            width: 210px;
+            height: 40px;
+            background-color: #000000;
+            color: #fff;
+            border-radius: 25px;
+            box-shadow: 3px 3px 3px #b1b1b1,
+            -3px -3px 3px #fff;
+            letter-spacing: 1.3px;
+        }
+        #hide:hover{
+            background-color: #ffee00;
+        }
+
+        #back {
+            box-shadow: none;
+            background-color: #000000;
+            color: #fff;
+            border-radius: 25px;
+            box-shadow: 3px 3px 3px #b1b1b1,
+            -3px -3px 3px #fff;
+            letter-spacing: 1.3px;
+        }
+        #back:hover{
+            background-color: #ffee00;
+        }
+
+    </style>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<body>
+<div id="header">
+    <img id="logo" src="/logo.png">
+    <h1>Informazioni Personali</h1>
+</div>
+<button id="back" onclick="window.location.replace('http://localhost:8080/user/')" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Indietro</button>
+<div id="content" style="height: 30px;width: 300px;margin-left: 500px;margin-top: 50px;/*! align-self: center; *//*! background-color: ; */">
+    <form style="width: 600px;margin-top: -30px;margin-bottom: 30px;">
+        <label for="user" style="margin-top: 10px;">Email:</label>
+        <input id="user" name="user" th:value="${email}" type="text" style="margin-left: -110px;" readonly>
+
+        <label for="pwd" style="margin-top: 10px;">Password:</label>
+        <div style="display: flex;">
+            <input id="pwd" name="pwd" placeholder="Password" type="password" style="margin-left: -110px;">
+            <button id="hide" type="button" onclick="togglePassword()">Mostra/Nascondi password</button>
+        </div>
+
+        <label for="name" style="margin-top: 10px;">Nome:</label>
+        <input id="name" name="name" th:value="${name}"  type="text" style="margin-left: -110px;">
+
+        <label for="surname" style="margin-top: 10px;">Cognome:</label>
+        <input id="surname" name="surname" th:value="${surname}" type="text" style="margin-left: -110px;">
+
+        <label for="street_1" style="margin-top: 10px;">Via_1:</label>
+        <input id="street_1" name="street_1" th:value="${street_1}" type="text" style="margin-left: -110px;">
+
+        <label for="street_2" style="margin-top: 10px;">Via_2:</label>
+        <input id="street_2" name="street_2" th:value="${street_2}" type="text" style="margin-left: -110px;">
+
+        <label for="cap" style="margin-top: 10px;">CAP:</label>
+        <input id="cap" name="cap" th:value="${cap}" type="text" style="margin-left: -110px;">
+
+        <label for="city" style="margin-top: 10px;">Cittá:</label>
+        <input id="city" name="city" th:value="${city}" type="text" style="margin-left: -110px;">
+
+        <label for="country" style="margin-top: 10px;">Nazione:</label>
+        <input id="country" name="country" th:value="${country}" type="text" style="margin-left: -110px;">
+
+        <label for="cell" style="margin-top: 10px;">Cellulare:</label>
+        <input id="cell" name="cell" th:value="${cell}" type="text" style="margin-left: -110px;">
+    </form>
+    <button id="submit" style="margin-top: -40px;margin-left: -10px;margin-bottom: 100px;">Aggiorna Dati</button><br>
+</div>
+
+<script>
+    function togglePassword() {
+        var pwdInput = document.getElementById("pwd");
+        if (pwdInput.type === "password") {
+            pwdInput.type = "text";
+        } else {
+            pwdInput.type = "password";
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        let mail = document.querySelector("#user");
+        let pass = document.querySelector("#pwd");
+        let name = document.querySelector("#name");
+        let surname = document.querySelector("#surname");
+        let via_1 = document.querySelector("#street_1");
+        let via_2 = document.querySelector("#street_2");
+        let cap = document.querySelector("#cap");
+        let city = document.querySelector("#city");
+        let nation = document.querySelector("#country");
+        let phone = document.querySelector("#cell");
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        $('#submit').click(function () {
+            if(mail.value.match(mailformat)) {
+                if(mail.value !== "" && pass.value !== "") {
+                    if (name.value !== "" && surname.value !== "") {
+                        if (via_1.value !== "") {
+                            if (cap.value !== "" && city.value !== "") {
+                                if (nation.value !== "" && phone.value !== "") {
+                                    $.post('/updateuser',   // url
+                                        {
+                                            email: mail.value,
+                                            password: pass.value,
+                                            name: name.value,
+                                            surname: surname.value,
+                                            via_1: via_1.value,
+                                            via_2: via_2.value,
+                                            cap: cap.value,
+                                            city: city.value,
+                                            nation: nation.value,
+                                            phone: phone.value,
+                                            admin: false
+                                        }, // data to be submit
+                                        function () {// success callback
+                                            alert("Dati Aggiornati con successo!")
+                                        });
+                                } else {
+                                    alert("Assicurati di aver compilato tutti i campi!");
+                                }
+                            } else {
+                                alert("Assicurati di aver compilato tutti i campi!");
+                            }
+                        } else {
+                            alert("Assicurati di aver compilato tutti i campi!");
+                        }
+                    }
+                    else {
+                        alert("Assicurati di aver compilato tutti i campi!");
+                    }
+                }
+                else{
+                    alert("Assicurati di aver compilato tutti i campi!");
+                }
+            }
+            else{
+                alert("Email non valida!");
+            }
+        });
+    });
+</script>
+</body></html>
+

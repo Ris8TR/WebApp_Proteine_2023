@@ -1,0 +1,167 @@
+<html dir="ltr" lang="en"><head>
+    <title>Aggiungi Prodotto</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+        /* Importing fonts from Google */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        /* Reseting */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #header {
+            background-color: #000000;
+            color: #ffee00;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        body {
+            background: #060606;
+        }
+
+        .wrapper {
+            max-width: 350px;
+            min-height: 500px;
+            margin: 80px auto;
+            padding: 40px 30px 30px 30px;
+            background-color: #ecf0f3;
+            border-radius: 15px;
+            /*! box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #fff; */
+        }
+
+        #logo {
+            width: 100px;
+            height: 100px;
+            margin-right: 10px;
+        }
+
+        .wrapper .name {
+            font-weight: 600;
+            font-size: 1.4rem;
+            letter-spacing: 1.3px;
+            padding-left: 10px;
+            color: #555;
+        }
+
+        .wrapper .form-field input {
+            width: 100%;
+            display: block;
+            border: none;
+            outline: none;
+            background: none;
+            font-size: 1.2rem;
+            color: #666;
+            padding: 10px 15px 10px 10px;
+            /* border: 1px solid red; */
+        }
+
+        .wrapper .form-field {
+            padding-left: 10px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+        }
+
+        .wrapper .form-field .fas {
+            color: #555;
+        }
+
+        .wrapper .btn {
+            box-shadow: none;
+            width: 100%;
+            height: 40px;
+            background-color: #000000;
+            color: #fff;
+            border-radius: 25px;
+            box-shadow: 3px 3px 3px #b1b1b1,
+            -3px -3px 3px #fff;
+            letter-spacing: 1.3px;
+        }
+
+        .wrapper .btn:hover {
+            background-color: #ffee00;
+            color: black;
+        }
+
+        .wrapper a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #121413;
+        }
+
+        .wrapper a:hover {
+            color: #FFFB04;
+        }
+
+        @media(max-width: 380px) {
+            .wrapper {
+                margin: 30px 20px;
+                padding: 40px 15px 15px 15px;
+            }
+        }
+        #back {
+            box-shadow: none;
+            background-color: #ffee00;
+            color: #000000;
+            border-radius: 25px;
+            letter-spacing: 1.3px;
+        }
+        #back:hover{
+            background-color: #000000;
+            color:#ffee00;
+        }
+    </style></head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<body style="background-color: black">
+<div id="header">
+    <img id="logo" src="/logo.png">
+    <h1>Aggiungi Prodotto</h1>
+</div>
+<button id="back" onclick="window.location.replace('http://localhost:8080/admin/catalog')" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Indietro</button>
+<div class="wrapper" style="background-color: white">
+
+    <div class="text-center mt-4 name">NUOVO PRODOTTO</div>
+
+    <form id="upload" class="p-3 mt-3" name="reg" style="height: 673px;">
+        <div class="form-field d-flex align-items-center"><input id="Nome" name="Nome" placeholder="Nome" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="Marchio" name="Marchio" placeholder="Marchio" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="size_cps" name="size_cps" placeholder="size_cps" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="size_gr" name="size_gr" placeholder="size_gr" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="vegan" name="vegan" placeholder="vegan" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="available" name="available" placeholder="available" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="lactose_free" name="lactose_free" placeholder="lactose_free" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="prezzo" name="prezzo" placeholder="prezzo" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="descrizione" name="descrizione" placeholder="descrizione" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="categoria" name="categoria" placeholder="categoria" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input type="file" id="image" name="image" accept="image/*"></div>
+        <button class="btn mt-3" type="submit" id="submit" style="margin-top: -10px;">AGGIUNGI PRODOTTO</button><br>
+    </form>
+        &nbsp;
+        &nbsp;
+</div>
+<script type="text/javascript">
+    $('#upload').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url: '/admin/addprod',
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        })
+    })
+    window.location.replace("http://localhost:8080/admin/catalog");
+</script>
+</body></html>

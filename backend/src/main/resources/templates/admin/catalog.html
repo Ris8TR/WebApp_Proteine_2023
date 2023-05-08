@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Catalogo prodotti</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    th, td {
+        text-align: center;
+        padding: 8px;
+        border: 1px solid black;
+    }
+
+    td {
+        white-space: nowrap;
+        overflow: visible;
+        text-overflow: ellipsis;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: black;
+    }
+
+    #header {
+        background-color: #000000;
+        color: #ffee00;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+    }
+    #content {
+        background-color: #ffffff;
+        /*display: flex;*/
+        /*flex-wrap: wrap;*/
+        /*height: calc(100vh - 60px);*/
+    }
+    #logo {
+        width: 100px;
+        height: 100px;
+        margin-right: 10px;
+    }
+    #back {
+        box-shadow: none;
+        background-color: #000000;
+        color: #fff;
+        border-radius: 25px;
+        box-shadow: 3px 3px 3px #b1b1b1,
+        -3px -3px 3px #fff;
+        letter-spacing: 1.3px;
+    }
+    #back:hover{
+        background-color: #ffee00;
+    }
+
+    #del {
+        box-shadow: none;
+        background-color: #000000;
+        color: #fff;
+        border-radius: 25px;
+        box-shadow: 3px 3px 3px #b1b1b1,
+        -3px -3px 3px #fff;
+        letter-spacing: 1.3px;
+    }
+    #del:hover{
+        background-color: #ffee00;
+    }
+
+    #add {
+        box-shadow: none;
+        background-color: #000000;
+        color: #fff;
+        border-radius: 25px;
+        box-shadow: 3px 3px 3px #b1b1b1,
+        -3px -3px 3px #fff;
+        letter-spacing: 1.3px;
+    }
+    #add:hover{
+        background-color: #ffee00;
+    }
+
+</style>
+<body>
+<div id="header">
+    <img id="logo" src="/logo.png">
+    <h1>Catalogo prodotti</h1>
+</div>
+<button id="back" onclick="window.location.replace('http://localhost:8080/admin')" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Indietro</button>
+<div id="content" style="height: 30px;width: 300px;margin-left: 500px;margin-top: 50px;/*! align-self: center; *//*! background-color: ; */">
+    <table style="margin-left: -450px;">
+        <thead>
+        <tr>
+            <th>ID PRODOTTO</th>
+            <th>NOME</th>
+            <th>MARCHIO</th>
+            <th>SIZE_CPS</th>
+            <th>SIZE_GR</th>
+            <th>VEGANO</th>
+            <th>DISPONIBILITÁ</th>
+            <th>SENZA LATTOSIO</th>
+            <th>PREZZO</th>
+            <th>DESCRIZIONE</th>
+            <th>VALORI NUTRIZIONALI</th>
+            <th>CATEGORIA</th>
+            <th>AZIONI</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterazione sugli ordini presenti nel database -->
+        <tr th:each="prod : ${prodotti}">
+            <td th:text="${prod.id_prodotto}"></td>
+            <td th:text="${prod.nome}"></td>
+            <td th:text="${prod.marchio}"></td>
+            <td><span th:text="${prod.size_cps==0 ? 'N\D' : prod.size_cps}"></span></td>
+            <td><span th:text="${prod.size_gr==0 ? 'N\D' : prod.size_gr}"></span></td>
+            <td><span th:text="${prod.vegan ? 'SI' : 'NO'}"></span></td>
+            <td><span th:text="${prod.available ? 'SI' : 'NO'}"></span></td>
+            <td><span th:text="${prod.lactose_free ? 'SI' : 'NO'}"></span></td>
+            <td th:text="${prod.prezzo}"></td>
+            <td th:text="${prod.descrizione}"></td>
+            <td><img th:src="@{'data:image/png;base64,' + ${prod.val_nutr}}" width="50" height="50"/></td>
+            <td th:text="${prod.categoria}"></td>
+            <td>
+                <form id="canc" th:action="@{'/elimina-prod/' + ${prod.id_prodotto}}" method="post">
+                    <button id="del" type="submit">Elimina</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/admin/newprod.html}">
+        <button id="add" style="margin-top: 50px;width: 200px;height: 30px;margin-bottom: 200px;">Aggiungi nuovo prodotto</button>
+    </a>
+</div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>AreaClienti</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<body>
+<style type="text/css">
+
+    /* Importing fonts from Google */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+    /* Reseting */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: #060606;
+    }
+
+    .wrapper {
+        max-width: 350px;
+        min-height: 500px;
+        margin: 80px auto;
+        padding: 40px 30px 30px 30px;
+        background-color: #ecf0f3;
+        border-radius: 15px;
+        /*! box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #fff; */
+    }
+
+    .logo {
+        width: 300px;
+        margin: auto;
+    }
+
+    .logo img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 50%;
+        box-shadow: 0px 0px 3px #5f5f5f,
+        0px 0px 0px 5px #ecf0f3,
+        8px 8px 15px #a7aaa7,
+        -8px -8px 15px #fff;
+    }
+
+    .wrapper .name {
+        font-weight: 600;
+        font-size: 1.4rem;
+        letter-spacing: 1.3px;
+        padding-left: 10px;
+        color: #555;
+    }
+
+    .wrapper .form-field input {
+        width: 100%;
+        display: block;
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 1.2rem;
+        color: #666;
+        padding: 10px 15px 10px 10px;
+        /* border: 1px solid red; */
+    }
+
+    .wrapper .form-field {
+        padding-left: 10px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+    }
+
+    .wrapper .form-field .fas {
+        color: #555;
+    }
+
+    .wrapper .btn {
+        box-shadow: none;
+        width: 100%;
+        height: 40px;
+        background-color: #000000;
+        color: #fff;
+        border-radius: 25px;
+        box-shadow: 3px 3px 3px #b1b1b1,
+        -3px -3px 3px #fff;
+        letter-spacing: 1.3px;
+    }
+
+    .wrapper .btn:hover {
+        background-color: #ffee00;
+    }
+
+    .wrapper a {
+        text-decoration: none;
+        font-size: 16px;
+        color: #121413;
+    }
+
+    .wrapper a:hover {
+        color: #FFFB04;
+    }
+
+    @media(max-width: 380px) {
+        .wrapper {
+            margin: 30px 20px;
+            padding: 40px 15px 15px 15px;
+        }
+    }
+
+</style>
+<div class="wrapper">
+    <a href="http://localhost:8080/">
+        <div class="logo"><img id="44" alt="" src="/logo.png" /></div></a>
+
+    <div class="text-center mt-4 name" style="margin-left: 90px;">LOGIN</div>
+
+    <form class="p-3 mt-3" style="height: 126px;">
+        <div class="form-field d-flex align-items-center"><input id="userName" name="userName" placeholder="Username" type="text" /></div>
+
+        <div class="form-field d-flex align-items-center"><input id="pwd" name="password" placeholder="Password" type="password" /></div>
+        &nbsp;</form>
+    <div style="text-align: center;"><a id="555"></a></div>
+    <button class="btn mt-3" id="submit">Login</button><br/>
+    <div style="text-align: center;">Non sei ancora iscritto?&nbsp; <span style="font-size:12px;"><a href="http://localhost:8080/register">Registrati!</a></span></div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        let name = document.querySelector("#userName");
+        let pass = document.querySelector("#pwd");
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        $('#submit').click(function () {
+            if(name.value.match(mailformat)) {
+                if(name.value !== "" && pass.value !== "") {
+                    $.post('/login',   // url
+                        {email: name.value,
+                            password: pass.value}, // data to be submit
+                        function (response, status, jqXHR) {// success callback
+                            if(response === -1){
+                                document.getElementById("555").style.color = "red";
+                                document.getElementById("555").textContent = "Password errata, riprova.";
+                            }else if(response === 0){
+                                document.getElementById("555").style.color = "red";
+                                document.getElementById("555").textContent = "Utente non registrato";
+                            }else if(response === 1){
+                               window.location.replace("http://localhost:8080/user");
+                            }
+                            else{
+                                window.location.replace("http://localhost:8080/admin");
+                            }
+                        });
+                }
+                else{
+                    if(name.value === ""){
+                        document.getElementById("555").style.color = "red";
+                        document.getElementById("555").textContent = "Attenzione, email non inserita!";
+                    }
+                    else{
+                        document.getElementById("555").style.color = "red";
+                        document.getElementById("555").textContent = "Attenzione, password non inserita!";
+                    }
+                }
+            }
+            else{
+                document.getElementById("555").style.color = "red";
+                document.getElementById("555").textContent = "Email non valida!";
+            }
+        });
+    });
+</script>
+</body>
+</html>
+

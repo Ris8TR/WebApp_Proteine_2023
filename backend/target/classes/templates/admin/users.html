@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestione Utenti</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid black;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: black;
+    }
+
+    #header {
+        background-color: #000000;
+        color: #ffee00;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+    }
+    #content {
+        background-color: #ffffff;
+        /*display: flex;*/
+        /*flex-wrap: wrap;*/
+        /*height: calc(100vh - 60px);*/
+    }
+    #logo {
+        width: 100px;
+        height: 100px;
+        margin-right: 10px;
+    }
+    #back {
+        box-shadow: none;
+        background-color: #000000;
+        color: #fff;
+        border-radius: 25px;
+        box-shadow: 3px 3px 3px #b1b1b1,
+        -3px -3px 3px #fff;
+        letter-spacing: 1.3px;
+    }
+    #back:hover{
+        background-color: #ffee00;
+    }
+
+    #del {
+        box-shadow: none;
+        background-color: #000000;
+        color: #fff;
+        border-radius: 25px;
+        box-shadow: 3px 3px 3px #b1b1b1,
+        -3px -3px 3px #fff;
+        letter-spacing: 1.3px;
+    }
+    #del:hover{
+        background-color: #ffee00;
+    }
+
+    #add {
+        box-shadow: none;
+        background-color: #000000;
+        color: #fff;
+        border-radius: 25px;
+        box-shadow: 3px 3px 3px #b1b1b1,
+        -3px -3px 3px #fff;
+        letter-spacing: 1.3px;
+    }
+    #add:hover{
+        background-color: #ffee00;
+    }
+</style>
+<body>
+<div id="header">
+    <img id="logo" src="/logo.png">
+    <h1>Gestione Utenti</h1>
+</div>
+<button id="back" onclick="window.location.replace('http://localhost:8080/admin')" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Indietro</button>
+<div id="content" style="height: 30px;width: 300px;margin-left: 500px;margin-top: 50px;/*! align-self: center; *//*! background-color: ; */">
+    <table style="margin-left: -150px;margin-top: 50px;">
+        <thead>
+        <tr>
+            <th>Email</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>via_1</th>
+            <th>via_2</th>
+            <th>CAP</th>
+            <th>Cittá</th>
+            <th>Stato</th>
+            <th>Cellulare</th>
+            <th>Azioni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterazione sugli ordini presenti nel database -->
+        <tr th:each="utente : ${utenti}">
+            <td th:text="${utente.email}"></td>
+            <td th:text="${utente.name}"></td>
+            <td th:text="${utente.lastname}"></td>
+            <td th:text="${utente.street_1}"></td>
+            <td th:text="${utente.street_2}"></td>
+            <td th:text="${utente.cap}"></td>
+            <td th:text="${utente.city}"></td>
+            <td th:text="${utente.country}"></td>
+            <td th:text="${utente.cellphone}"></td>
+            <td>
+                <form th:action="@{'/elimina-utente/' + ${utente.email}}" method="post">
+                    <button id="del" type="submit">Elimina</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/admin/newuser.html}">
+        <button id="add" style="margin-top: 25px;width: 200px;height: 30px; margin-bottom: 100px">Aggiungi nuovo utente</button>
+    </a>
+</div>
+</body>
+</html>

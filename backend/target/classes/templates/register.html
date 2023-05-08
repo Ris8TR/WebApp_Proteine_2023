@@ -1,0 +1,215 @@
+<html dir="ltr" lang="en"><head>
+    <title>Registrazione Clienti</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+        /* Importing fonts from Google */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        /* Reseting */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #060606;
+        }
+
+        .wrapper {
+            max-width: 350px;
+            min-height: 500px;
+            margin: 80px auto;
+            padding: 40px 30px 30px 30px;
+            background-color: #ecf0f3;
+            border-radius: 15px;
+            /*! box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #fff; */
+        }
+
+        .logo {
+            width: 300px;
+            margin: auto;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0px 0px 3px #5f5f5f,
+            0px 0px 0px 5px #ecf0f3,
+            8px 8px 15px #a7aaa7,
+            -8px -8px 15px #fff;
+        }
+
+        .wrapper .name {
+            font-weight: 600;
+            font-size: 1.4rem;
+            letter-spacing: 1.3px;
+            padding-left: 10px;
+            color: #555;
+        }
+
+        .wrapper .form-field input {
+            width: 100%;
+            display: block;
+            border: none;
+            outline: none;
+            background: none;
+            font-size: 1.2rem;
+            color: #666;
+            padding: 10px 15px 10px 10px;
+            /* border: 1px solid red; */
+        }
+
+        .wrapper .form-field {
+            padding-left: 10px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+        }
+
+        .wrapper .form-field .fas {
+            color: #555;
+        }
+
+        .wrapper .btn {
+            box-shadow: none;
+            width: 100%;
+            height: 40px;
+            background-color: #000000;
+            color: #fff;
+            border-radius: 25px;
+            box-shadow: 3px 3px 3px #b1b1b1,
+            -3px -3px 3px #fff;
+            letter-spacing: 1.3px;
+        }
+
+        .wrapper .btn:hover {
+            background-color: #ffee00;
+            color: black;
+        }
+
+        .wrapper a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #121413;
+        }
+
+        .wrapper a:hover {
+            color: #FFFB04;
+        }
+
+        @media(max-width: 380px) {
+            .wrapper {
+                margin: 30px 20px;
+                padding: 40px 15px 15px 15px;
+            }
+        }
+
+    </style></head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<body>
+<div class="wrapper">
+    <a href="http://localhost:8080/">
+    <div class="logo"><img alt="" id="44" src="/logo.png"></div></a>
+
+    <div class="text-center mt-4 name">REGISTRAZIONE</div>
+
+    <form class="p-3 mt-3" name="reg" style="height: 673px;">
+        <div class="form-field d-flex align-items-center"><input id="email" name="email" placeholder="Indirizzo email" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="pwd" name="pwd" placeholder="Password" type="password"></div>
+        <div class="form-field d-flex align-items-center"><input id="Nome" name="Nome" placeholder="Nome" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="Cognome" name="Cognome" placeholder="Cognome" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="via_1" name="via_1" placeholder="via_1" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="via_2" name="via_2" placeholder="via_2" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="cap" name="cap" placeholder="CAP" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="city" name="city" placeholder="Cittá" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="nation" name="nation" placeholder="Nazione" type="text"></div>
+        <div class="form-field d-flex align-items-center"><input id="cell" name="cell" placeholder="Numero di telefono" type="text"></div>
+        &nbsp;</form>
+    <div style="text-align: center;"><a id="555"></a></div>
+    <button class="btn mt-3" id="submit">Registrami</button><br>
+    <div style="text-align: center;">Sei giá iscritto? <span style="font-size:12px;"><a href="http://localhost:8080/login">Accedi!</a></span></div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        let mail = document.querySelector("#email");
+        let pass = document.querySelector("#pwd");
+        let name = document.querySelector("#Nome");
+        let surname = document.querySelector("#Cognome");
+        let via_1 = document.querySelector("#via_1");
+        let via_2 = document.querySelector("#via_2");
+        let cap = document.querySelector("#cap");
+        let city = document.querySelector("#city");
+        let nation = document.querySelector("#nation");
+        let phone = document.querySelector("#cell");
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        $('#submit').click(function () {
+            if(mail.value.match(mailformat)) {
+                if(mail.value !== "" && pass.value !== "") {
+                    if (name.value !== "" && surname.value !== "") {
+                        if (via_1.value !== "") {
+                            if (cap.value !== "" && city.value !== "") {
+                                if (nation.value !== "" && phone.value !== "") {
+                                    $.post('/register',   // url
+                                        {
+                                            email: mail.value,
+                                            password: pass.value,
+                                            name: name.value,
+                                            surname: surname.value,
+                                            via_1: via_1.value,
+                                            via_2: via_2.value,
+                                            cap: cap.value,
+                                            city: city.value,
+                                            nation: nation.value,
+                                            phone: phone.value,
+                                            admin: false
+                                        }, // data to be submit
+                                        function (response, status, jqXHR) {// success callback
+                                            if (response === -1) {
+                                                document.getElementById("555").style.color = "red";
+                                                document.getElementById("555").textContent = "Utente giá registrato!";
+                                            } else {
+                                                document.getElementById("555").style.color = "green";
+                                                document.getElementById("555").textContent = "Registrazione effettuata con successo!";
+                                                window.location.replace("http://localhost:8080/AreaRiservata");
+                                            }
+                                        });
+                                } else {
+                                    document.getElementById("555").style.color = "red";
+                                    document.getElementById("555").textContent = "Assicurati di aver compilato tutti i campi!";
+                                }
+                            } else {
+                                document.getElementById("555").style.color = "red";
+                                document.getElementById("555").textContent = "Assicurati di aver compilato tutti i campi!";
+                            }
+                        } else {
+                            document.getElementById("555").style.color = "red";
+                            document.getElementById("555").textContent = "Assicurati di aver compilato tutti i campi!";
+                        }
+                    }
+                    else {
+                        document.getElementById("555").style.color = "red";
+                        document.getElementById("555").textContent = "Assicurati di aver compilato tutti i campi!";
+                    }
+                }
+                else{
+                    document.getElementById("555").style.color = "red";
+                    document.getElementById("555").textContent = "Assicurati di aver compilato tutti i campi!";
+                }
+            }
+            else{
+                document.getElementById("555").style.color = "red";
+                document.getElementById("555").textContent = "Email non valida!";
+            }
+        });
+    });
+</script>
+</body></html>

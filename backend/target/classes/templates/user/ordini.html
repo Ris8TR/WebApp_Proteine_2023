@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Storico Ordini con Prodotti</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+    #header {
+        background-color: #000000;
+        color: #ffee00;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+    }
+    #logo {
+        width: 100px;
+        height: 100px;
+        margin-right: 10px;
+    }
+    #content {
+        background-color: #ffffff;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid black;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: black;
+    }
+
+    #back {
+        box-shadow: none;
+        background-color: #000000;
+        color: #fff;
+        border-radius: 25px;
+        box-shadow: 3px 3px 3px #b1b1b1,
+        -3px -3px 3px #fff;
+        letter-spacing: 1.3px;
+    }
+    #back:hover{
+        background-color: #ffee00;
+    }
+</style>
+<body>
+<div id="header">
+    <img id="logo" src="/logo.png">
+    <h1>Storico Ordini</h1>
+</div>
+<button id="back" onclick="window.location.replace('http://localhost:8080/user/')" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Indietro</button>
+<div id="content">
+    <table style="margin-top: 100px;margin-left: 370px;font-size: 30px;">
+        <thead>
+        <tr>
+            <th>Numero ordine</th>
+            <th>Data ordine</th>
+            <th>Totale</th>
+            <th>Dettagli</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ordine, index : ${storicoOrdini}">
+            <td th:text="${ordine.n_ordine}"></td>
+            <td th:text="${ordine.data}"></td>
+            <td th:text="${ordine.totale} + '€'"></td>
+            <td>
+                <ul>
+                    <li th:each="entry : ${ordine.prodottoQuantita.entrySet()}"
+                        th:unless="${index != null and index.index != null and index.index>0 and ordine.n_ordine == storicoOrdini[(index.index)-1].n_ordine}">
+                        <span th:text="${entry.key.nome}"></span> x <span th:text="${entry.value}"></span>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+</body>
+
+</html>
