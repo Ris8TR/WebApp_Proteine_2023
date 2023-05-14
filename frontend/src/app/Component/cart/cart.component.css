@@ -6,8 +6,19 @@
   top: 0;
   left: 0;
   right: 0;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
-
 mat-form-field {
   margin-top: 20px;
+  width: 50%;
+  border: 10px
+}
+
+
+.logo {
+  max-width: 3cm;
+  max-height: 10cm;
 }

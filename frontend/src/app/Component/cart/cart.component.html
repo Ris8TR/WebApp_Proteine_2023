@@ -8,19 +8,22 @@
 <body>
 <script integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 <mat-toolbar color="Black">
-  <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon> </button>
+  <button mat-icon-button (click)="sidenav.toggle()"> <mat-icon>menu</mat-icon> </button>
   <button mat-icon-button class="icon" aria-label="Profilo" routerLink="../home" > <mat-icon>home</mat-icon> </button>
-  <span routerLink="home">Coso</span>
+  <span>IL PROGETTO MIGLIORE</span>
   <span class="Spazio_icone"></span>
-  <mat-form-field class="example-form-field" style="width: 50%; border: 10px">
+  <mat-form-field class="example-form-field">
     <input matInput placeholder="Ricerca prodotto">
-    <button mat-button matSuffix> <mat-icon>search</mat-icon>
-    </button> </mat-form-field>
+    <button mat-button matSuffix> <mat-icon>search</mat-icon> </button>
+  </mat-form-field>
+  <img class="logo"  src="./assets/images/logo.png" alt="Logo del sito web">
   <span class="Spazio_icone"></span>
-  <button mat-icon-button class="icon" aria-label="Profilo" routerLink="../user" >
-    <mat-icon>account_circle</mat-icon> </button>
-  <button mat-icon-button class="icon" aria-label="Carrello" >
-    <mat-icon>shopping_cart</mat-icon> </button>
+  <a mat-icon-button href="http://localhost:8080/login"  aria-label="Profilo">
+    <mat-icon>account_circle</mat-icon>
+  </a>
+  <button mat-icon-button class="example-icon" aria-label="Carrello" routerLink="../cart" >
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
 </mat-toolbar>
 <mat-sidenav-container style="height: 100%;">
   <mat-sidenav #sidenav mode="side" closed style="width: 15%">

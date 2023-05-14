@@ -3,9 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserComponent } from './Component/user/user.component';
 import { CartComponent } from './Component/cart/cart.component';
-import { LoginComponent } from './Component/login/login.component';
 import { HomeComponent } from './Component/home/home.component';
 import { CardsComponent } from './Component/cards/cards.component';
 import {FormsModule} from "@angular/forms";
@@ -27,9 +25,7 @@ import { ProductComponent } from './Component/product/product.component';
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
     CartComponent,
-    LoginComponent,
     HomeComponent,
     CardsComponent,
     ProductComponent,

@@ -10,16 +10,18 @@
 <mat-toolbar color="Black">
   <button mat-icon-button (click)="sidenav.toggle()"> <mat-icon>menu</mat-icon> </button>
   <button mat-icon-button class="icon" aria-label="Profilo" routerLink="../home" > <mat-icon>home</mat-icon> </button>
-  <span>Coso</span>
+  <span>IL PROGETTO MIGLIORE</span>
+
   <span class="Spazio_icone"></span>
-  <mat-form-field class="example-form-field" style="width: 50%; border: 10px">
+  <mat-form-field class="example-form-field">
     <input matInput placeholder="Ricerca prodotto">
     <button mat-button matSuffix> <mat-icon>search</mat-icon> </button>
   </mat-form-field>
+  <img class="logo"  src="./assets/images/logo.png" alt="Logo del sito web">
   <span class="Spazio_icone"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Profilo" routerLink="../user" >
+  <a mat-icon-button href="http://localhost:8080/login"  aria-label="Profilo">
     <mat-icon>account_circle</mat-icon>
-  </button>
+  </a>
   <button mat-icon-button class="example-icon" aria-label="Carrello" routerLink="../cart" >
     <mat-icon>shopping_cart</mat-icon>
   </button>
