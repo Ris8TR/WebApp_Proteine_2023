@@ -18,7 +18,7 @@ public class MainController {
             return "login";
         }
         else{
-            resp.sendRedirect("http://localhost:8080/");
+            resp.sendRedirect("http://localhost:8080/user");
             return null;
         }
     }
@@ -32,7 +32,7 @@ public class MainController {
             return "register";
         }
         else{
-            resp.sendRedirect("http://localhost:8080/");
+            resp.sendRedirect("http://localhost:4200/");
             return null;
         }
     }
