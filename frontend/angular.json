@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Porcossio": {
+    "Progettoweb2023Application": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/porcossio",
+            "outputPath": "dist/Progettoweb2023Application",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Porcossio:build:production"
+              "browserTarget": "Progettoweb2023Application:build:production"
             },
             "development": {
-              "browserTarget": "Porcossio:build:development"
+              "browserTarget": "Progettoweb2023Application:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Porcossio:build"
+            "browserTarget": "Progettoweb2023Application:build"
           }
         },
         "test": {
