@@ -14,10 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,6 +24,7 @@ import org.apache.commons.codec.binary.Base64;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 public class PostController {
 
     @PostMapping("/login")
@@ -166,6 +164,54 @@ public class PostController {
 
     }
 
+    @PostMapping("/checkout")
+    @ResponseBody
+    public Object checkout(HttpServletRequest request) {
+        String email = request.getParameter("customerName");
+            int totale = 0;
+            String date = request.getParameter("orderDate");
+            Integer n = Integer.valueOf(request.getParameter("num"));
+            Ordine order = new Ordine();
+            ProdOrd prod = new ProdOrd();
+
+            List<Integer> prods = new ArrayList<>();
+            List<Integer> quantita = new ArrayList<>();
+            order.setEmail(email);
+            order.setData(date);
+            if(n==0){
+                Integer product = Integer.valueOf(request.getParameter("products[0].name"));
+                Integer quantity = Integer.valueOf(request.getParameter("products[0].quantity"));
+                prods.add(product);
+                quantita.add(quantity);
+                int pr = new ProductSQL().getPrezzo(product);
+                totale += pr * quantity;
+                order.setTotale(totale);
+                prod.setId_prodotti(prods);
+                prod.setQuantita(quantita);
+            }
+            else{
+                Integer[] totali = new Integer[n];
+                for(int i=0;i<n;i++){
+                    int id=Integer.valueOf(request.getParameter("products["+i+"].name"));
+                    int quant=Integer.valueOf(request.getParameter("products["+i+"].quantity"));
+                    int p = new ProductSQL().getPrezzo(id);
+                    int tot = p*quant;
+                    totali[i] = tot;
+                    prods.add(id); quantita.add(quant);
+                }
+                int somma = 0;
+                for(int x:totali){
+                    somma+=x;
+                }
+                order.setTotale(somma);
+            }
+            int ordid = new OrderSQL().AddOrder(order);
+            prod.setId_prodotti(prods);
+            prod.setQuantita(quantita);
+            new ProdOrdSQL().AddProdOrd(prod,ordid);
+            return null;
+    }
+
     @PostMapping("/elimina-utente/**")
     @ResponseBody
     public Object deluser(HttpServletRequest request,HttpServletResponse resp) throws IOException {
@@ -237,7 +283,6 @@ public class PostController {
         resp.sendRedirect("http://localhost:8080/admin/catalog");
         return null;
     }
-
 
     private byte[] getimg(HttpServletRequest req) throws ServletException, IOException {
         InputStream inputStream = req.getPart("image").getInputStream();
