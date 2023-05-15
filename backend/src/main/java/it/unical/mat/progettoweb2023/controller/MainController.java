@@ -3,11 +3,13 @@ package it.unical.mat.progettoweb2023.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.IOException;
 
 @Controller
+@CrossOrigin("http://localhost:4200")
 public class MainController {
 
     @GetMapping("/login")
