@@ -29,7 +29,10 @@
         /*flex-wrap: wrap;*/
         /*height: calc(100vh - 60px);*/
     }
-    input[type="text"], textarea {
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    textarea {
         width: 100%;
         display: block;
         border: black;
@@ -42,53 +45,42 @@
         border-radius: 20px;
         box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
     }
-    input[type="number"], textarea {
-        width: 100%;
-        display: block;
-        border: black;
-        outline: none;
-        background: none;
-        font-size: 1.2rem;
-        color: #666;
-        padding: 10px 15px 10px 10px;
-        margin-bottom: 20px;
-        border-radius: 20px;
-        box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
-    }
-    input[type="date"], textarea {
-        width: 100%;
-        display: block;
-        border: black;
-        outline: none;
-        background: none;
-        font-size: 1.2rem;
-        color: #666;
-        padding: 10px 15px 10px 10px;
-        margin-bottom: 20px;
-        border-radius: 20px;
-        box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
-    }
-
     input {
-        margin-right: 100px; /* aggiungi spazio tra gli input */
+        margin-right: 10px; /* aggiungi spazio tra gli input */
     }
-    td{
-        padding-right: 100px;
+    td {
+        padding-right: 10px;
     }
-    th{
-        padding-right: 100px;
+    th {
+        padding-right: 10px;
     }
     button {
         box-shadow: none;
         background-color: #000000;
         color: #fff;
         border-radius: 25px;
-        box-shadow: 3px 3px 3px #b1b1b1,
-        -3px -3px 3px #fff;
+        box-shadow: 3px 3px 3px #b1b1b1, -3px -3px 3px #fff;
         letter-spacing: 1.3px;
     }
-    button:hover{
+    button:hover {
         background-color: #ffee00;
+    }
+
+    /* Aggiunta di media query per il layout responsive */
+    @media only screen and (max-width: 600px) {
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        textarea {
+            font-size: 1rem;
+        }
+        input {
+            margin-right: 0;
+        }
+        td,
+        th {
+            padding-right: 0;
+        }
     }
 </style>
 <body>
@@ -96,38 +88,38 @@
     <img id="logo" src="/logo.png">
     <h1>Nuovo Ordine</h1>
 </div>
-<button id="back" onclick="window.location.replace('http://localhost:8080/admin/orders')" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Indietro</button>
-<div id="content" style="height: 30px;width: 300px;margin-left: 500px;margin-top: 50px;/*! align-self: center; *//*! background-color: ; */">
-<form id="order-form">
-    <div>
-        <label for="customerName">Email cliente:</label>
-        <input type="text" id="customerName" name="customerName" required>
-    </div>
-    <div>
-        <label for="orderDate">Data dell'ordine:</label>
-        <input type="date" id="orderDate" name="orderDate" required>
-    </div>
-    <div>
-        <h2>Prodotti:</h2>
-        <table id="products-table">
-            <thead>
-            <tr>
-                <th>ID prodotto</th>
-                <th>Quantità</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td><input type="text" name="products[0].name" required></td>
-                <td><input type="number" min="1" name="products[0].quantity" required></td>
-            </tr>
-            </tbody>
-        </table>
-        <button type="button" id="add-product-btn" style="width: 200px;height: 30px;">Aggiungi prodotto</button>
-    </div>
-    <input type="number" id="n" name="num" value="0" style="display: none">
-    <button type="submit" style="margin-top: 30px;width: 400px;height: 40px;">Aggiungi ordine</button>
-</form>
+<button id="back" onclick="window.location.replace('http://localhost:8080/admin/orders')" style="margin-left: 10px; margin-top: 10px; width: 100px; height: 30px;">Indietro</button>
+<div id="content" style="margin: 30px auto; max-width: 500px;">
+    <form id="order-form">
+        <div style="margin-bottom: 20px;">
+            <label for="customerName">Email cliente:</label>
+            <input type="text" id="customerName" name="customerName" required>
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label for="orderDate">Data dell'ordine:</label>
+            <input type="date" id="orderDate" name="orderDate" required>
+        </div>
+        <div>
+            <h2>Prodotti:</h2>
+            <table id="products-table" style="width: 100%;">
+                <thead>
+                <tr>
+                    <th>ID prodotto</th>
+                    <th>Quantità</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="text" name="products[0].name" required style="width: 100%;"></td>
+                    <td><input type="number" min="1" name="products[0].quantity" required style="width: 100%;"></td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="button" id="add-product-btn" style="width: 100%; height: 30px; margin-top: 10px;">Aggiungi prodotto</button>
+        </div>
+        <input type="number" id="n" name="num" value="0" style="display: none;">
+        <button type="submit" style="margin-top: 30px; width: 100%; height: 40px;">Aggiungi ordine</button>
+    </form>
 </div>
 <script>
     $(document).ready(function() {
@@ -136,8 +128,8 @@
         $("#add-product-btn").click(function() {
             var newRow = `
                     <tr>
-                        <td><input type="text" name="products[${productIndex}].name" required></td>
-                        <td><input type="number" min="1" name="products[${productIndex}].quantity" required></td>
+                        <td><input type="text" name="products[${productIndex}].name" required style="width: 100%;"></td>
+                        <td><input type="number" min="1" name="products[${productIndex}].quantity" required style="width: 100%;"></td>
                     </tr>
                 `;
             $("#products-table tbody").append(newRow);
@@ -172,4 +164,5 @@
     });
 </script>
 </body>
+
 </html>

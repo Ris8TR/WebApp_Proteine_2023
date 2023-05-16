@@ -13,6 +13,7 @@
 
     table {
         border-collapse: collapse;
+        width: 100%;
     }
 
     th, td {
@@ -23,7 +24,7 @@
 
     td {
         white-space: nowrap;
-        overflow: visible;
+        overflow: hidden;
         text-overflow: ellipsis;
     }
 
@@ -41,63 +42,36 @@
     }
     #content {
         background-color: #ffffff;
-        /*display: flex;*/
-        /*flex-wrap: wrap;*/
-        /*height: calc(100vh - 60px);*/
+        padding: 20px;
     }
     #logo {
         width: 100px;
         height: 100px;
         margin-right: 10px;
     }
-    #back {
+    #back, #del, #add {
         box-shadow: none;
         background-color: #000000;
         color: #fff;
         border-radius: 25px;
-        box-shadow: 3px 3px 3px #b1b1b1,
-        -3px -3px 3px #fff;
+        box-shadow: 3px 3px 3px #b1b1b1, -3px -3px 3px #fff;
         letter-spacing: 1.3px;
+        margin-top: 10px;
     }
-    #back:hover{
-        background-color: #ffee00;
-    }
-
-    #del {
-        box-shadow: none;
-        background-color: #000000;
-        color: #fff;
-        border-radius: 25px;
-        box-shadow: 3px 3px 3px #b1b1b1,
-        -3px -3px 3px #fff;
-        letter-spacing: 1.3px;
-    }
-    #del:hover{
-        background-color: #ffee00;
-    }
-
-    #add {
-        box-shadow: none;
-        background-color: #000000;
-        color: #fff;
-        border-radius: 25px;
-        box-shadow: 3px 3px 3px #b1b1b1,
-        -3px -3px 3px #fff;
-        letter-spacing: 1.3px;
-    }
-    #add:hover{
+    #back:hover, #del:hover, #add:hover {
         background-color: #ffee00;
     }
 
 </style>
+
 <body>
 <div id="header">
     <img id="logo" src="/logo.png">
     <h1>Catalogo prodotti</h1>
 </div>
 <button id="back" onclick="window.location.replace('http://localhost:8080/admin')" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Indietro</button>
-<div id="content" style="height: 30px;width: 300px;margin-left: 500px;margin-top: 50px;/*! align-self: center; *//*! background-color: ; */">
-    <table style="margin-left: -450px;">
+<div id="content">
+    <table>
         <thead>
         <tr>
             <th>ID PRODOTTO</th>

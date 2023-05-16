@@ -1,10 +1,12 @@
-<html dir="ltr" lang="en"><head>
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
     <title>Aggiungi Prodotto</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <style>
-
         /* Importing fonts from Google */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -117,11 +119,11 @@
         }
         #back:hover{
             background-color: #000000;
-            color:#ffee00;
+            color:#ffee00
         }
-    </style></head>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </style>
+</head>
+
 <body style="background-color: black">
 <div id="header">
     <img id="logo" src="/logo.png">
@@ -146,8 +148,8 @@
         <div class="form-field d-flex align-items-center"><input type="file" id="image" name="image" accept="image/*"></div>
         <button class="btn mt-3" type="submit" id="submit" style="margin-top: -10px;">AGGIUNGI PRODOTTO</button><br>
     </form>
-        &nbsp;
-        &nbsp;
+    &nbsp;
+    &nbsp;
 </div>
 <script type="text/javascript">
     $('#upload').submit(function(e) {
@@ -164,4 +166,5 @@
     })
     window.location.replace("http://localhost:8080/admin/catalog");
 </script>
-</body></html>
+</body>
+</html>

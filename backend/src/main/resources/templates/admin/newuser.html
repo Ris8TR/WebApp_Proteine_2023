@@ -1,5 +1,5 @@
 <html dir="ltr" lang="en"><head>
-    <title>Registrazione Clienti</title>
+    <title>Aggiungi Prodotto</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
@@ -119,9 +119,10 @@
             background-color: #000000;
             color:#ffee00;
         }
-    </style></head>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </style>
+</head>
+
+
 <body style="background-color: black">
 <div id="header">
     <img id="logo" src="/logo.png">
@@ -129,9 +130,7 @@
 </div>
 <button id="back" onclick="window.location.replace('http://localhost:8080/admin/users')" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Indietro</button>
 <div class="wrapper" style="background-color: white">
-
     <div class="text-center mt-4 name">NUOVO UTENTE</div>
-
     <form class="p-3 mt-3" name="reg" style="height: 673px;">
         <div class="form-field d-flex align-items-center"><input id="email" name="email" placeholder="Indirizzo email" type="text"></div>
         <div class="form-field d-flex align-items-center"><input id="pwd" name="pwd" placeholder="Password" type="password"></div>
@@ -143,9 +142,9 @@
         <div class="form-field d-flex align-items-center"><input id="city" name="city" placeholder="Cittá" type="text"></div>
         <div class="form-field d-flex align-items-center"><input id="nation" name="nation" placeholder="Nazione" type="text"></div>
         <div class="form-field d-flex align-items-center"><input id="cell" name="cell" placeholder="Numero di telefono" type="text"></div>
-        &nbsp;</form>
+        &nbsp;
+    </form>
     <button class="btn mt-3" id="submit" style="margin-top: 30px;">AGGIUNGI UTENTE</button><br>
-
 </div>
 <script type="text/javascript">
     $(document).ready(function () {

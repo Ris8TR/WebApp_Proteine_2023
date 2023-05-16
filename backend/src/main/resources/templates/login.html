@@ -117,19 +117,29 @@
 </style>
 <div class="wrapper">
     <a href="http://localhost:4200/">
-        <div class="logo"><img id="44" alt="" src="/logo.png" /></div></a>
+        <div class="logo"><img id="44" alt="" src="/logo.png" /></div>
+    </a>
 
-    <div class="text-center mt-4 name" style="margin-left: 90px;">LOGIN</div>
+    <div class="text-center mt-4 name">LOGIN</div>
 
-    <form class="p-3 mt-3" style="height: 126px;">
-        <div class="form-field d-flex align-items-center"><input id="userName" name="userName" placeholder="Username" type="text" /></div>
+    <form class="p-3">
+        <div class="form-field"><input id="userName" name="userName" placeholder="Username" type="text" /></div>
 
-        <div class="form-field d-flex align-items-center"><input id="pwd" name="password" placeholder="Password" type="password" /></div>
-        &nbsp;</form>
+        <div class="form-field"><input id="pwd" name="password" placeholder="Password" type="password" /></div>
+    </form>
+
     <div style="text-align: center;"><a id="555"></a></div>
+
     <button class="btn mt-3" id="submit">Login</button><br/>
-    <div style="text-align: center;">Non sei ancora iscritto?&nbsp; <span style="font-size:12px;"><a href="http://localhost:8080/register">Registrati!</a></span></div>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+    <div style="text-align: center;">
+        Non sei ancora iscritto?&nbsp;
+        <span style="font-size:12px;">
+            <a href="http://localhost:8080/register">Registrati!</a>
+        </span>
+    </div>
+</div>
+
 <script type="text/javascript">
     $(document).ready(function () {
         let name = document.querySelector("#userName");
@@ -138,30 +148,21 @@
         $('#submit').click(function () {
             if(name.value.match(mailformat)) {
                 if(name.value !== "" && pass.value !== "") {
-                    $.post('/login',   // url
-                        {email: name.value,
-                            password: pass.value}, // data to be submit
-                        function (response, status, jqXHR) {// success callback
-                            if(response === -1){
-                                document.getElementById("555").style.color = "red";
-                                document.getElementById("555").textContent = "Password errata, riprova.";
-                            }else if(response === 0){
-                                document.getElementById("555").style.color = "red";
-                                document.getElementById("555").textContent = "Utente non registrato";
-                            }else if(response === 1){
-                               window.location.replace("http://localhost:8080/user");
-                            }
-                            else{
-                                window.location.replace("http://localhost:8080/admin");
-                            }
-                        });
-                }
-                else{
+                    $.post('/login', {email: name.value, password: pass.value}, function (response, status, jqXHR) {
+                        if(response === -1){
+                            document.getElementById("555").style.color = "red";
+                            document.getElementById("555").textContent = "Password errata, riprova.";
+                        } else if(response === 0){
+                            document.getElementById("555").style.color = "red";
+                            document.getElementById("555").textContent = "Utente non registrato";
+                        } else if(response === 1){
+                            window.location.replace("http://localhost:8080/user");
+                        } else{
+                            window.location.replace("http://localhost:8080/admin");
+                        }
+                    });
+                } else{
                     if(name.value === ""){
-                        document.getElementById("555").style.color = "red";
-                        document.getElementById("555").textContent = "Attenzione, email non inserita!";
-                    }
-                    else{
                         document.getElementById("555").style.color = "red";
                         document.getElementById("555").textContent = "Attenzione, password non inserita!";
                     }
