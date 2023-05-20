@@ -1,60 +1,30 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Product} from "../../Model/Product.model";
+import {ProductService} from "../../Service/product.service";
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent {
-  items = [
-    {
-      title: 'Card title',
-      description: 'Some quick example text to build on the card title and make up the bulk of the card s content.',
-      image: 'https://via.placeholder.com/150x150.png?text=Card',
-      link: '#'
-    },
-    {
-      title: 'Card title',
-      description: 'Some quick example text to build on the card title and make up the bulk of the card s content.',
-      image: 'https://via.placeholder.com/150x150.png?text=Card',
-      link: '#'
-    },
-    {
-      title: 'Card title',
-      description: 'Some quick example text to build on the card title and make up the bulk of the card s content.',
-      image: 'https://via.placeholder.com/150x150.png?text=Card',
-      link: '#'
-    },
-    {
-      title: 'Card title',
-      description: 'Some quick example text to build on the card title and make up the bulk of the card s content.',
-      image: 'https://via.placeholder.com/150x150.png?text=Card',
-      link: '#'
-    },
-    {
-      title: 'Card title',
-      description: 'Some quick example text to build on the card title and make up the bulk of the card s content.',
-      image: 'https://via.placeholder.com/150x150.png?text=Card',
-      link: '#'
-    },
-    {
-      title: 'Card title',
-      description: 'Some quick example text to build on the card title and make up the bulk of the card s content.',
-      image: 'https://via.placeholder.com/150x150.png?text=Card',
-      link: '#'
-    },
-    {
-      title: 'Card title',
-      description: 'Some quick example text to build on the card title and make up the bulk of the card s content.',
-      image: 'https://via.placeholder.com/150x150.png?text=Card',
-      link: '#'
-    },
-    {
-      title: 'Card title',
-      description: 'Some quick example text to build on the card title and make up the bulk of the card s content.',
-      image: 'https://via.placeholder.com/150x150.png?text=Card',
-      link: '#'
-    }
-  ]
+export class ProductComponent implements OnInit{
+  products: any[]=[];
+
+  constructor(private productService: ProductService) { }
+
+  ngOnInit(): void {
+    this.getProducts();
+  }
+
+  getProducts(): void {
+    this.productService.getAllProducts(1, "").subscribe(
+      (response: Product[]) => {
+        this.products = response;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
 }

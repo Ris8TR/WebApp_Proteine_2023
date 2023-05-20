@@ -9,6 +9,7 @@ import it.unical.mat.progettoweb2023.persistenza.sql.UserSQL;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +50,12 @@ public class ServletController {
                 return "error";
             }
         }
+    }
+
+    @RequestMapping(value = "/getAllProducts", method = {RequestMethod.GET, RequestMethod.POST})
+    public List<Prodotto> ProductHandler(HttpServletRequest request) {
+           System.out.println( Product(request));
+        return Product(request);
     }
 
     //mapping admin requests
@@ -96,9 +103,11 @@ public class ServletController {
     }
 
 
-    protected void Product(HttpServletRequest request) {
+
+    protected List<Prodotto> Product(HttpServletRequest request) {
         List<Prodotto> prodotti = new ProductSQL().getAllProducts();
         request.setAttribute("prodotti", prodotti);
+        return prodotti;
     }
     protected void Order(HttpServletRequest request) {
         List<Ordine> ordini = new OrderSQL().getAllOrders();

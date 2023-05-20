@@ -19,6 +19,8 @@ import {MatCardModule} from "@angular/material/card";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductComponent } from './Component/product/product.component';
+import { HttpClientModule} from "@angular/common/http";
+
 
 
 
@@ -45,7 +47,8 @@ import { ProductComponent } from './Component/product/product.component';
     MatCardModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

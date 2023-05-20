@@ -5,6 +5,8 @@ import it.unical.mat.progettoweb2023.persistenza.rowmappers.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Random;
 
@@ -12,8 +14,10 @@ import it.unical.mat.progettoweb2023.model.Prodotto;
 import it.unical.mat.progettoweb2023.persistenza.DAO.ProductDAO;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
+@CrossOrigin("http://localhost:4200")
 public class ProductSQL implements ProductDAO {
 
     private JdbcTemplate jdbcTemplate;
@@ -29,11 +33,13 @@ public class ProductSQL implements ProductDAO {
     }
 
     @Override
+    @CrossOrigin("http://localhost:4200")
     public List<Prodotto> getAllProducts() {
         String sql = "SELECT * FROM prodotti";
         List<Prodotto> products = jdbcTemplate.query(sql, new ProductRowMapper());
-        return products;
+        return (List<Prodotto>) products;
     }
+
 
     @Override
     public Prodotto getProductbyId(Integer id_prodotto) {

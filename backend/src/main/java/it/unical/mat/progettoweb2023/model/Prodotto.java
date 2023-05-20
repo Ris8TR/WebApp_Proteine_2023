@@ -1,5 +1,8 @@
 package it.unical.mat.progettoweb2023.model;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+@CrossOrigin("http://localhost:4200")
 public class Prodotto {
     Integer id_prodotto;
     String nome;
