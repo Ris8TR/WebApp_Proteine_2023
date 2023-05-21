@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit{
 
   }
 
+  /*
   public getAllProducts(searchKey: string =""){
     this.productService.getAllProducts(this.pageNumber, searchKey)
       .pipe(
@@ -51,6 +52,25 @@ export class HomeComponent implements OnInit{
           console.log(error);
         }
 
+      );
+  }
+*/
+  public getAllProducts(searchKey: string = "") {
+    this.productService.getAllProducts(this.pageNumber, searchKey)
+      .subscribe(
+        (resp: Product[]) => {
+          console.log(resp);
+          if (resp.length == 8) {
+            this.showLoadButton = true;
+          } else {
+            this.showLoadButton = false;
+          }
+          resp.forEach(p => this.productDetails.push(p));
+          // this.productDetails = resp;
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
       );
   }
 

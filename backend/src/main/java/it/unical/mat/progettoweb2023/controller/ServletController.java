@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.List;
@@ -95,6 +96,14 @@ public class ServletController {
         return null;
     }
 
+
+
+    @RequestMapping(value = "/getAllProduct", method = RequestMethod.GET)
+    public ResponseEntity<List<Prodotto>> getAllProduct(HttpServletRequest request, HttpServletResponse response) {
+        List<Prodotto> prodotti = new ProductSQL().getAllProducts();
+        return ResponseEntity.ok().body(prodotti);
+    }
+
     @RequestMapping(value = "/getAllProducts", method = {RequestMethod.GET})
     public String getAllProducts(HttpServletRequest request, HttpServletResponse response){ //VOLENDO PUOI CAMBIARE ANCHE IL NOME DELLA FUNZIONE
         String resource = request.getRequestURI().substring("/admin/".length()); //modifica l´espressione tra virgolette in base all´url che mappi per evitare errori
@@ -102,7 +111,7 @@ public class ServletController {
             resource = resource.substring(0, resource.indexOf(".html"));//CHE INVIA LA RICHIESTA PER FARE IL PARSING DELLA PAGINA PER EVITARE EVENTUALI ERRORI
         }
         Product(request);
-        return "URL MAPPATO"+resource;
+        return resource;
         //PUOI USARLO COSÍ PERÓ DEVI CREARE UNA PAGINA DI RESOURCE COME LE ALTRE CHE HO FATTO PER AVERE I DATI
         //ALL´INTERNO,ALTRIMENTI PUOI USARE IL REQUEST DISPATCHER E MANDARE LA request CON I DATI DOVE VUOI
     }

@@ -14,7 +14,7 @@ export class ProductService {
 
 
   getAllProducts(pageNumber: number, searchKeyword: string = ""): Observable<Product[]> {
-    const url = `http://localhost:8080/getAllProducts`;
+    const url = `http://localhost:8080/getAllProduct`;
     return this.httpClient.get<Product[]>(url);
   }
 
