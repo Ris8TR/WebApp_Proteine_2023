@@ -14,13 +14,13 @@ export class ProductService {
 
 
   getAllProducts(pageNumber: number, searchKeyword: string = ""): Observable<Product[]> {
-    const url = `http://localhost:8080/getAllProduct`;
+    const url = `http://localhost:8080/getAllProducts`;
     return this.httpClient.get<Product[]>(url);
   }
 
 
-  public getProductbyId(productId){
-    return this.httpClient.get<Product>("http://localhost:8080/getProductbyId/"+productId);
+  public getProductById(productId){
+    return this.httpClient.get<Product>("http://localhost:8080/getProductById/"+productId);
   }
 
 /*

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.List;
@@ -98,23 +99,25 @@ public class ServletController {
 
 
 
-    @RequestMapping(value = "/getAllProduct", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAllProducts", method = RequestMethod.GET)
     public ResponseEntity<List<Prodotto>> getAllProduct(HttpServletRequest request, HttpServletResponse response) {
         List<Prodotto> prodotti = new ProductSQL().getAllProducts();
         return ResponseEntity.ok().body(prodotti);
     }
 
-    @RequestMapping(value = "/getAllProducts", method = {RequestMethod.GET})
-    public String getAllProducts(HttpServletRequest request, HttpServletResponse response){ //VOLENDO PUOI CAMBIARE ANCHE IL NOME DELLA FUNZIONE
-        String resource = request.getRequestURI().substring("/admin/".length()); //modifica l´espressione tra virgolette in base all´url che mappi per evitare errori
-        if(resource.contains(".html")){  //PICCOLO CICLO IF CHE PUOI DECIDERE SE TENERE O MENO IN BASE A COME SCRIVI IL CODICE
-            resource = resource.substring(0, resource.indexOf(".html"));//CHE INVIA LA RICHIESTA PER FARE IL PARSING DELLA PAGINA PER EVITARE EVENTUALI ERRORI
+    @RequestMapping(value = "/getProductsById", method = RequestMethod.GET)
+    public ResponseEntity<Prodotto> getProductById(HttpServletRequest request, HttpServletResponse response, @RequestParam("id") int id) {
+        Prodotto prodotto = new ProductSQL().getProductbyId(id);
+
+        if (prodotto == null) {
+            // Prodotto non trovato, restituisci una risposta 404 Not Found
+            return ResponseEntity.notFound().build();
         }
-        Product(request);
-        return resource;
-        //PUOI USARLO COSÍ PERÓ DEVI CREARE UNA PAGINA DI RESOURCE COME LE ALTRE CHE HO FATTO PER AVERE I DATI
-        //ALL´INTERNO,ALTRIMENTI PUOI USARE IL REQUEST DISPATCHER E MANDARE LA request CON I DATI DOVE VUOI
+
+        return ResponseEntity.ok().body(prodotto);
     }
+
+
 
     @RequestMapping(value = "URL DA MAPPARE", method = {RequestMethod.GET})
     public String getProdbyID(HttpServletRequest request, HttpServletResponse response){ //VOLENDO PUOI CAMBIARE ANCHE IL NOME DELLA FUNZIONE

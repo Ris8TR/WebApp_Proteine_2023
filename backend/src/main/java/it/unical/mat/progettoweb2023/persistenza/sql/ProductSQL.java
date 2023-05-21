@@ -91,4 +91,5 @@ public class ProductSQL implements ProductDAO {
         String sql = "DELETE FROM prodotti WHERE id_prodotto = ?";
         jdbcTemplate.update(sql, ID);
     }
+
 }

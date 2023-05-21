@@ -1,10 +1,11 @@
 import { Component, OnInit  } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {ProductService} from "../../Service/product.service";
 import {Router} from "@angular/router";
 import {ImageProcessingService} from "../../Service/image-processing.service";
 import {Product} from "../../Model/Product.model";
 import { map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 
 
@@ -21,18 +22,13 @@ export class HomeComponent implements OnInit{
   showLoadButton = false;
   constructor(private productService: ProductService,
               private imageProcessingService: ImageProcessingService,
+              private http: HttpClient,
               private router : Router) { }
 
   ngOnInit(): void {
     this.getAllProducts();
   }
-  searchByKeyword(searchkeyword){
 
-    this.pageNumber= 0;
-    this.productDetails = [];
-    this.getAllProducts(searchkeyword);
-
-  }
 
   /*
   public getAllProducts(searchKey: string =""){
@@ -55,32 +51,40 @@ export class HomeComponent implements OnInit{
       );
   }
 */
-  public getAllProducts(searchKey: string = "") {
-    this.productService.getAllProducts(this.pageNumber, searchKey)
-      .subscribe(
-        (resp: Product[]) => {
-          console.log(resp);
-          if (resp.length == 8) {
-            this.showLoadButton = true;
-          } else {
-            this.showLoadButton = false;
-          }
-          resp.forEach(p => this.productDetails.push(p));
-          // this.productDetails = resp;
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error);
-        }
-      );
-  }
 
-  public loadMoreProduct(){
+getProductById(id: number) {
+  const url = `/getProductsById?id=${id}`;
+  return this.http.get<Product>(url);
+}
+
+
+
+public getAllProducts(searchKey: string = "") {
+  this.productService.getAllProducts(this.pageNumber, searchKey)
+    .pipe(
+      tap((resp: Product[]) => {
+        console.log(resp);
+        this.showLoadButton = resp.length == 8;
+        resp.forEach(p => this.productDetails.push(p));
+        // this.productDetails = resp;
+      })
+    )
+    .subscribe(
+      () => {},
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
+}
+
+
+public loadMoreProduct(){
     this.pageNumber = this.pageNumber+1;
     this.getAllProducts();
   }
 
   showProductDetails(productId){
-    this.router.navigate(['/productViewDetails' , {productId: productId}]);
+    this.router.navigate(['/product' , {productId: productId}]);
 
   }
 

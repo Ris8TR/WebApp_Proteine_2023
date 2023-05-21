@@ -8,4 +8,5 @@ export interface Product {
   productActualPrice: number,
   productImages: FileHandel[]
 
+
 }

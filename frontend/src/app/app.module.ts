@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CartComponent } from './Component/cart/cart.component';
 import { HomeComponent } from './Component/home/home.component';
-import { CardsComponent } from './Component/cards/cards.component';
 import {FormsModule} from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from "@angular/material/input";
@@ -20,6 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductComponent } from './Component/product/product.component';
 import { HttpClientModule} from "@angular/common/http";
+import { HeaderComponent } from './Component/header/header.component';
 
 
 
@@ -29,8 +29,8 @@ import { HttpClientModule} from "@angular/common/http";
     AppComponent,
     CartComponent,
     HomeComponent,
-    CardsComponent,
     ProductComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
