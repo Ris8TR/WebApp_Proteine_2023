@@ -9,7 +9,6 @@ import it.unical.mat.progettoweb2023.persistenza.sql.UserSQL;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,15 +51,9 @@ public class ServletController {
         }
     }
 
-    @RequestMapping(value = "/getAllProducts", method = {RequestMethod.GET, RequestMethod.POST})
-    public List<Prodotto> ProductHandler(HttpServletRequest request) {
-           System.out.println( Product(request));
-        return Product(request);
-    }
-
     //mapping admin requests
     @RequestMapping(value = "/admin/**", method = {RequestMethod.GET, RequestMethod.POST})
-    public String adminHandler(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String adminHandler(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String adm = new Getc(request.getCookies(),"admin").Get();
         String resource = request.getRequestURI().substring("/admin/".length());
         if (adm==null){
@@ -102,12 +95,37 @@ public class ServletController {
         return null;
     }
 
+    @RequestMapping(value = "/getAllProducts", method = {RequestMethod.GET})
+    public String getAllProducts(HttpServletRequest request, HttpServletResponse response){ //VOLENDO PUOI CAMBIARE ANCHE IL NOME DELLA FUNZIONE
+        String resource = request.getRequestURI().substring("/admin/".length()); //modifica l´espressione tra virgolette in base all´url che mappi per evitare errori
+        if(resource.contains(".html")){  //PICCOLO CICLO IF CHE PUOI DECIDERE SE TENERE O MENO IN BASE A COME SCRIVI IL CODICE
+            resource = resource.substring(0, resource.indexOf(".html"));//CHE INVIA LA RICHIESTA PER FARE IL PARSING DELLA PAGINA PER EVITARE EVENTUALI ERRORI
+        }
+        Product(request);
+        return "URL MAPPATO"+resource;
+        //PUOI USARLO COSÍ PERÓ DEVI CREARE UNA PAGINA DI RESOURCE COME LE ALTRE CHE HO FATTO PER AVERE I DATI
+        //ALL´INTERNO,ALTRIMENTI PUOI USARE IL REQUEST DISPATCHER E MANDARE LA request CON I DATI DOVE VUOI
+    }
+
+    @RequestMapping(value = "URL DA MAPPARE", method = {RequestMethod.GET})
+    public String getProdbyID(HttpServletRequest request, HttpServletResponse response){ //VOLENDO PUOI CAMBIARE ANCHE IL NOME DELLA FUNZIONE
+        String resource = request.getRequestURI().substring("/admin/".length()); //modifica l´espressione tra virgolette in base all´url che mappi per evitare errori
+        if(resource.contains(".html")){  //PICCOLO CICLO IF CHE PUOI DECIDERE SE TENERE O MENO IN BASE A COME SCRIVI IL CODICE
+            resource = resource.substring(0, resource.indexOf(".html"));//CHE INVIA LA RICHIESTA PER FARE IL PARSING DELLA PAGINA PER EVITARE EVENTUALI ERRORI
+        }
+        Integer id = Integer.valueOf(request.getParameter("id")); //QUA PUOI MODIFICARE id IN BASE A COME HAI CHIAMATO IL PARAMETRO NEL FRONT
+        Prodotto prod = new ProductSQL().getProductbyId(id);
+        request.setAttribute("prodotto",prod); //qua setto l´oggetto prodotto estratto dal db
+        return "URL MAPPATO"+resource;
+        //PUOI USARLO COSÍ PERÓ DEVI CREARE UNA PAGINA DI RESOURCE COME LE ALTRE CHE HO FATTO PER AVERE I DATI
+        //ALL´INTERNO,ALTRIMENTI PUOI USARE IL REQUEST DISPATCHER E MANDARE LA request CON I DATI DOVE VUOI
+    }
 
 
-    protected List<Prodotto> Product(HttpServletRequest request) {
+
+    protected void Product(HttpServletRequest request) {
         List<Prodotto> prodotti = new ProductSQL().getAllProducts();
         request.setAttribute("prodotti", prodotti);
-        return prodotti;
     }
     protected void Order(HttpServletRequest request) {
         List<Ordine> ordini = new OrderSQL().getAllOrders();
