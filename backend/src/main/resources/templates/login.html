@@ -81,14 +81,6 @@
         color: #555;
     }
 
-    #back-button {
-        margin-top: 20px;
-    }
-
-    #back-button a {
-        color: #fff;
-    }
-
     .wrapper .btn {
         box-shadow: none;
         width: 100%;
@@ -115,6 +107,17 @@
         color: #FFFB04;
     }
 
+    #back {
+        box-shadow: none;
+        background-color: #ffffff;
+        color: #000000;
+        border-radius: 25px;
+        letter-spacing: 1.3px;
+    }
+    #back:hover {
+        background-color: #ffee00;
+    }
+
     @media(max-width: 380px) {
         .wrapper {
             margin: 30px 20px;
@@ -123,12 +126,7 @@
     }
 
 </style>
-<div class= "btn" id="back-button">
-    <a href="http://localhost:4200">
-        <i class="fas fa-arrow-left"></i>
-        Torna al sito web
-    </a>
-</div>
+<button id="back" onclick="window.location.replace('http://localhost:4200/')" style="margin-left: 10px; margin-top: 10px; width: 100px; height: 30px;">Indietro</button>
 <div class="wrapper">
     <a href="http://localhost:4200/">
         <div class="logo"><img id="44" alt="" src="/logo.png" /></div>
