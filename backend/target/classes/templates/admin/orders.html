@@ -86,7 +86,9 @@
 </head>
 <body>
 <div id="header">
-    <img id="logo" src="/logo.png">
+    <a href="http://localhost:4200/">
+    <img id="logo" src="/logo.png" >
+    </a>
     <h1>Gestione Ordini</h1>
 </div>
 <button id="back" onclick="window.location.replace('http://localhost:8080/admin')" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Indietro</button>
@@ -126,7 +128,7 @@
         </tbody>
     </table>
     <a th:href="@{/admin/neworder.html}">
-        <button id="add" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Aggiungi nuovo ordine</button>
+        <button id="add" style="margin-left: 100px;margin-top: 25px;width: 200px;height: 25px;">Aggiungi nuovo ordine</button>
     </a>
 </div>
 </body>

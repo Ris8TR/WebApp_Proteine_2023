@@ -1,19 +1,19 @@
 
   <mat-sidenav-content>
-    <h1 style="align-self: center">Dai un occhiata alle ultime novità: </h1>
+    <h1 style="align-self: center">Dai un'occhiata alle ultime novità:</h1>
     <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;">
-      <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let item of productDetails; let i = index"> <img [src]="item.image" class="card-img-top" alt="{{item.title}}">
-        <div class="card" style="width: 18rem;">
-          <a [routerLink]="['/product', item.id_prodotto]">
-            <img src="/assets/images/logo.png" class="card-img-top" alt="{{item.title}}">
-          </a>
-          <div class="card-body">
-            <h5 class="card-title">{{item.nome + " " + i}}</h5>
-            <p class="card-text">{{item.marchio}}</p>
-            <a href="{{item.link}}" class="btn btn-primary">Aggiungi al carrello</a>
+      <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let item of productDetails; let i = index">
+          <img [src]="item.image" class="card-img-top" alt="{{item.title}}">
+          <div class="card" style="width: 18rem;">
+            <a [routerLink]="['/product', item.id_prodotto]">
+              <img src="/assets/images/logo.png" class="card-img-top" alt="{{item.title}}">
+            </a>
+            <div class="card-body">
+              <h5 class="card-title">{{item.nome + " " + i}}</h5>
+              <p class="card-text">{{item.marchio}}</p>
+              <a href="{{item.link}}" class="btn btn-primary">Aggiungi al carrello</a>
+            </div>
           </div>
-        </div>
       </div>
     </div>
-
   </mat-sidenav-content>

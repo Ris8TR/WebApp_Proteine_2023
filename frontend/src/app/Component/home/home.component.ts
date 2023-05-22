@@ -4,7 +4,6 @@ import {ProductService} from "../../Service/product.service";
 import {Router} from "@angular/router";
 import {ImageProcessingService} from "../../Service/image-processing.service";
 import {Product} from "../../Model/Product.model";
-import { map } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
 
 
@@ -18,7 +17,7 @@ export class HomeComponent implements OnInit{
 
 
   pageNumber: number = 0;
-  productDetails  =[ [] as any];
+  productDetails: any[] = [];
   showLoadButton = false;
   constructor(private productService: ProductService,
               private imageProcessingService: ImageProcessingService,
@@ -30,27 +29,6 @@ export class HomeComponent implements OnInit{
   }
 
 
-  /*
-  public getAllProducts(searchKey: string =""){
-    this.productService.getAllProducts(this.pageNumber, searchKey)
-      .pipe(
-        map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
-      )
-      .subscribe(
-        (resp: Product[]) =>{
-          console.log(resp);
-          if(resp.length == 8){
-            this.showLoadButton = true;
-          }else{this.showLoadButton = false}
-          resp.forEach(p => this.productDetails.push(p));
-          // this.productDetails = resp;
-        }, (error: HttpErrorResponse) => {
-          console.log(error);
-        }
-
-      );
-  }
-*/
 
 getProductById(id: number) {
   const url = `/getProductsById?id=${id}`;

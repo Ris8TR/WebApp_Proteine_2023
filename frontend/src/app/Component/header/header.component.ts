@@ -18,13 +18,11 @@ export class HeaderComponent {
   productDetails = [[] as any];
   showLoadButton = false;
 
-  constructor(private productService: ProductService,
-              private imageProcessingService: ImageProcessingService,
-              private router: Router) {
-  }
+  constructor(private productService: ProductService){}
+
+
 
   ngOnInit(): void {
-    this.getAllProducts();
   }
 
   searchByKeyword(searchkeyword) {
@@ -55,15 +53,6 @@ export class HeaderComponent {
   }
 
 
-  public loadMoreProduct() {
-    this.pageNumber = this.pageNumber + 1;
-    this.getAllProducts();
-  }
-
-  showProductDetails(productId) {
-    this.router.navigate(['/productViewDetails', {productId: productId}]);
-
-  }
 
 
 }

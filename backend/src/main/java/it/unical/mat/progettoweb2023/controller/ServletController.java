@@ -108,6 +108,7 @@ public class ServletController {
     @RequestMapping(value = "/getProductsById", method = RequestMethod.GET)
     public ResponseEntity<Prodotto> getProductById(HttpServletRequest request, HttpServletResponse response, @RequestParam("id") int id) {
         Prodotto prodotto = new ProductSQL().getProductbyId(id);
+        System.out.print(id);
 
         if (prodotto == null) {
             // Prodotto non trovato, restituisci una risposta 404 Not Found

@@ -20,6 +20,7 @@ export class ProductService {
 
 
   public getProductById(productId){
+    console.log(productId)
     return this.httpClient.get<Product>("http://localhost:8080/getProductById/"+productId);
   }
 

@@ -42,7 +42,9 @@ public class ProductSQL implements ProductDAO {
 
 
     @Override
+    @CrossOrigin("http://localhost:4200")
     public Prodotto getProductbyId(Integer id_prodotto) {
+        System.out.print(id_prodotto);
         String sql = "SELECT * FROM prodotti WHERE id_prodotto = ?";
         try{Prodotto product = jdbcTemplate.queryForObject(sql, new Object[]{id_prodotto}, new ProductRowMapper());
             return product;}
