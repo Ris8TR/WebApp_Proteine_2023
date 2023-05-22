@@ -109,8 +109,6 @@ public class ServletController {
     public ResponseEntity<Prodotto> getProductById(HttpServletRequest request) {
         String resource = request.getRequestURI().substring("/getProductById/".length());
         Prodotto prodotto = new ProductSQL().getProductbyId(Integer.valueOf(resource));
-        System.out.print(resource);
-
         if (prodotto == null) {
             // Prodotto non trovato, restituisci una risposta 404 Not Found
             return ResponseEntity.notFound().build();

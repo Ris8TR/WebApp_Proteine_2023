@@ -1,24 +1,41 @@
-.Spazio_icone {
-  flex: 1 1 auto;
-}
-.mat-toolbar {
-  position: relative;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: auto;
+.container {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-mat-form-field {
-  margin-top: 20px;
-  width: 50%;
-  border: 10px
+  flex-wrap: wrap;
+  flex-grow: 1;
+  flex-direction: row;
+
 }
 
 
-.logo {
-  max-width: 3cm;
-  max-height: 10cm;
+.card:first-child {
+  margin-right: 10px;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+  border-radius: 5px 5px 0 0;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-text {
+  margin-bottom: 10px;
+}
+
+.card-button-container {
+  text-align: right;
+}
+
+.description-container {
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.card-button-container .btn {
+  margin-top: 10px;
 }

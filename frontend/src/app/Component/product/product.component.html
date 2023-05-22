@@ -1,20 +1,27 @@
 <mat-sidenav-content>
   <div>
     <h1>Specifiche prodotto:</h1>
-    <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;" >
-      <div style="width: 150rem; margin: 10px; flex-basis: 20%;" *ngFor="let item of product; let i = index"> <img [src]="item.image" class="card-img-top" alt="{{item.title}}">
-        <div class="card" style="width: 100rem;">
-          <img class="card-img-top" src="/./assets/images/logo.png" alt="{{item.nome}}">
-          <div class="card-body">
-            <h5 class="card-title">{{item.nome + " " + i}}</h5>
-            <p class="card-text">{{item.marchio}}</p>
-            <a href="" class="btn btn-primary">Aggiungi al carrello</a>
+    <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;">
+      <div class="card" style="width: 50%;">
+        <img class="card-img-top" src="/./assets/images/logo.png">
+        <div class="card-body">
+          <h1 class="card-text">{{ product.marchio }}</h1>
+      <div class="card" style="width: 25rem;">
+        <div class="card-body">
+          <h1 class="card-text">{{ product.marchio }}</h1>
+          <h1 class="card-text">{{ product.nome }}</h1>
+          <div class="description-container">
+            <h3 class="card-text">{{ product.descrizione }}</h3>
+            <h3 class="card-text">Prezzo: ${{ product.prezzo }}</h3>
           </div>
         </div>
+    </div>
+          <div class="card-button-container">
+            <a href="" class="btn btn-primary" style="margin-top: 10px;">Aggiungi al carrello</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  </div>
-  </div>
-
-
-
 </mat-sidenav-content>
+

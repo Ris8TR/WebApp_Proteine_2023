@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
   ID: number | undefined;
-  product: any[] = [];
+  product: any = {};
 
   constructor(
     private productService: ProductService,
