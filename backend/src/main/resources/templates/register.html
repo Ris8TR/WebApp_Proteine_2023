@@ -104,6 +104,17 @@
             color: #FFFB04;
         }
 
+        #back {
+            box-shadow: none;
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 25px;
+            letter-spacing: 1.3px;
+        }
+        #back:hover {
+            background-color: #ffee00;
+        }
+
         @media(max-width: 380px) {
             .wrapper {
                 margin: 30px 20px;
@@ -115,6 +126,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <body>
+<button id="back" onclick="window.location.replace('http://localhost:4200/')" style="margin-left: 10px; margin-top: 10px; width: 100px; height: 30px;">Indietro</button>
 <div class="wrapper">
     <a href="http://localhost:4200/">
     <div class="logo"><img alt="" id="44" src="/logo.png"></div></a>

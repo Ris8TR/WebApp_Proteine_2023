@@ -122,6 +122,17 @@
         color: #FFFB04;
     }
 
+    #back {
+        box-shadow: none;
+        background-color: #ffffff;
+        color: #000000;
+        border-radius: 25px;
+        letter-spacing: 1.3px;
+    }
+    #back:hover {
+        background-color: #ffee00;
+    }
+
     @media(max-width: 380px) {
         .wrapper {
             margin: 30px 20px;
@@ -130,6 +141,7 @@
     }
 
 </style>
+<button id="back" onclick="window.location.replace('http://localhost:4200/')" style="margin-left: 10px; margin-top: 10px; width: 100px; height: 30px;">Indietro</button>
 <div class="wrapper">
     <a href="http://localhost:4200/">
         <div class="logo"><img alt="" src="/logo.png" style="margin-top: -29px;margin-bottom: 20px;"></div></a>
