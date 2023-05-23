@@ -13,7 +13,7 @@ export class ProductService {
 
 
 
-  getAllProducts(pageNumber: number, searchKeyword: string = ""): Observable<Product[]> {
+  public getAllProducts(pageNumber: number, searchKeyword: string = ""): Observable<Product[]> {
     const url = `http://localhost:8080/getAllProducts`;
     return this.httpClient.get<Product[]>(url);
   }
@@ -27,10 +27,6 @@ export class ProductService {
 /*
   public deleteProduct(productId: number){
     return this.httpClient.delete("http://localhost:8080/deleteProductDetails/"+productId);
-  }
-
-  public getProductDetails(isSingeProductCheckout,productId){
-    return this.httpClient.get<Product[]>("http://localhost:8080/getProductDetails/"+isSingeProductCheckout+"/"+productId);
   }
 
 */
