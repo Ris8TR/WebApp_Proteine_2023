@@ -2,19 +2,19 @@
   <mat-sidenav-content>
     <h1 style="align-self: center">Dai un'occhiata alle ultime novità:</h1>
     <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;">
-      <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let item of productDetails; let i = index">
-          <img [src]="item.image" class="card-img-top" alt="{{item.title}}">
-          <div class="card" style="width: 18rem;">
-            <a [routerLink]="['/product', item.id_prodotto]">
-              <img src="/assets/images/logo.png" class="card-img-top" alt="{{item.title}}">
+      <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let product of productDetails; let i = index">
+          <img [src]="product.image" class="card-img-top" alt="{{product.title}}">
+          <div class="card" style="width: 300px">
+            <a [routerLink]="['/product', product.id_prodotto]">
+              <img src="/assets/images/logo.png" class="card-img-top" alt="{{product.title}}">
             </a>
             <div class="card-body">
-              <h5 class="card-title">{{item.nome}}</h5>
-              <p class="card-text">{{item.marchio}}</p>
-              <button class="btn btn-primary custom-button" [disabled]="productAddedToCart === item.id_prodotto" [ngClass]="{'product-added': productAddedToCart === item.id_prodotto}" (click)="addToCart(item.id_prodotto)">
-                {{ productAddedToCart === item.id_prodotto ? 'Prodotto aggiunto' : 'Aggiungi al carrello' }}
+              <h5 class="card-title">{{product.nome}}</h5>
+              <p class="card-text">{{product.marchio}}</p>
+              <button *ngIf="product.available" class="btn btn-primary custom-button" [disabled]="productAddedToCart === product.id_prodotto" [ngClass]="{'product-added': productAddedToCart === product.id_prodotto}" (click)="addToCart(product.id_prodotto)">
+                {{ productAddedToCart === product.id_prodotto ? 'Prodotto aggiunto' : 'Aggiungi al carrello' }}
               </button>
-
+              <span *ngIf="!product.available" class="btn not-available-text" style="color: red; border-color: red" >Prodotto non disponibile</span>
             </div>
           </div>
       </div>
