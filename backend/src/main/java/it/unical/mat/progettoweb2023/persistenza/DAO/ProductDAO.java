@@ -12,7 +12,6 @@ public interface ProductDAO {
 
     Prodotto getProductbyId(Integer id_prodotto);
 
-    List<Prodotto> getProductsbyCat(String cat);
 
     Integer getPrezzo(Integer id_prodotto);
 
