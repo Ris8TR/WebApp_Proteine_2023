@@ -5,8 +5,6 @@ import it.unical.mat.progettoweb2023.persistenza.rowmappers.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Random;
 
@@ -14,10 +12,8 @@ import it.unical.mat.progettoweb2023.model.Prodotto;
 import it.unical.mat.progettoweb2023.persistenza.DAO.ProductDAO;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
-@CrossOrigin("http://localhost:4200")
 public class ProductSQL implements ProductDAO {
 
     private JdbcTemplate jdbcTemplate;
@@ -28,25 +24,31 @@ public class ProductSQL implements ProductDAO {
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/progetto2023");
         dataSource.setUsername("postgres");
-        dataSource.setPassword("toor");
+        dataSource.setPassword("progetto2023");
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
-    @CrossOrigin("http://localhost:4200")
     public List<Prodotto> getAllProducts() {
         String sql = "SELECT * FROM prodotti";
         List<Prodotto> products = jdbcTemplate.query(sql, new ProductRowMapper());
-        return (List<Prodotto>) products;
+        return products;
     }
 
-
     @Override
-    @CrossOrigin("http://localhost:4200")
     public Prodotto getProductbyId(Integer id_prodotto) {
-        System.out.print(id_prodotto);
         String sql = "SELECT * FROM prodotti WHERE id_prodotto = ?";
         try{Prodotto product = jdbcTemplate.queryForObject(sql, new Object[]{id_prodotto}, new ProductRowMapper());
+            return product;}
+        catch (EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+
+    @Override
+    public List<Prodotto> getProductsbyCat(String cat) {
+        String sql = "SELECT * FROM prodotti WHERE categoria = ?";
+        try{List<Prodotto> product = jdbcTemplate.query(sql, new Object[]{cat}, new ProductRowMapper());
             return product;}
         catch (EmptyResultDataAccessException e){
             return null;
@@ -93,5 +95,4 @@ public class ProductSQL implements ProductDAO {
         String sql = "DELETE FROM prodotti WHERE id_prodotto = ?";
         jdbcTemplate.update(sql, ID);
     }
-
 }
