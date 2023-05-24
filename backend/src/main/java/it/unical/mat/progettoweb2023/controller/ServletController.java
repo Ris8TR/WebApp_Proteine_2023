@@ -6,7 +6,6 @@ import it.unical.mat.progettoweb2023.model.User;
 import it.unical.mat.progettoweb2023.persistenza.sql.OrderSQL;
 import it.unical.mat.progettoweb2023.persistenza.sql.ProductSQL;
 import it.unical.mat.progettoweb2023.persistenza.sql.UserSQL;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.List;
@@ -109,6 +107,8 @@ public class ServletController {
     public ResponseEntity<Prodotto> getProductById(HttpServletRequest request) {
         String resource = request.getRequestURI().substring("/getProductById/".length());
         Prodotto prodotto = new ProductSQL().getProductbyId(Integer.valueOf(resource));
+        System.out.print(resource);
+
         if (prodotto == null) {
             // Prodotto non trovato, restituisci una risposta 404 Not Found
             return ResponseEntity.notFound().build();
@@ -117,7 +117,16 @@ public class ServletController {
         return ResponseEntity.ok().body(prodotto);
     }
 
-
+    @RequestMapping(value = "/category/**", method = RequestMethod.GET)
+    public ResponseEntity<List<Prodotto>> getProductsByCat(HttpServletRequest request) {
+        String resource = request.getRequestURI().substring("/category/".length());
+        List<Prodotto> prodotto = new ProductSQL().getProductsbyCat(resource);
+        if (prodotto == null) {
+            // Prodotto non trovato, restituisci una risposta 404 Not Found
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(prodotto);
+    }
 
     protected void Product(HttpServletRequest request) {
         List<Prodotto> prodotti = new ProductSQL().getAllProducts();
