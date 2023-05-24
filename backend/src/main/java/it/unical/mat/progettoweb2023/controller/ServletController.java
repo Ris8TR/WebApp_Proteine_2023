@@ -9,6 +9,7 @@ import it.unical.mat.progettoweb2023.persistenza.sql.UserSQL;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jdk.jfr.Category;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -116,6 +117,19 @@ public class ServletController {
 
         return ResponseEntity.ok().body(prodotto);
     }
+
+    @RequestMapping(value = "/getProductByCategory/**", method = RequestMethod.GET)
+    public ResponseEntity<List<Prodotto>> getAllProductByCategory(HttpServletRequest request, HttpServletResponse response) {
+        String resource = request.getRequestURI().substring("/getProductByCategory/".length());
+        List <Prodotto> prodotti = new ProductSQL().getAllProductsByCategory(resource);
+        if (prodotti == null) {
+            // Prodotto non trovato, restituisci una risposta 404 Not Found
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(prodotti);
+    }
+
 
 
 

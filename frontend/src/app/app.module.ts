@@ -20,6 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProductComponent } from './Component/product/product.component';
 import { HttpClientModule} from "@angular/common/http";
 import { HeaderComponent } from './Component/header/header.component';
+import { CookieService } from 'ngx-cookie-service';
+import { CategoryComponent } from './Component/category/category.component';
 
 
 
@@ -31,6 +33,7 @@ import { HeaderComponent } from './Component/header/header.component';
     HomeComponent,
     ProductComponent,
     HeaderComponent,
+    CategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,9 +51,10 @@ import { HeaderComponent } from './Component/header/header.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

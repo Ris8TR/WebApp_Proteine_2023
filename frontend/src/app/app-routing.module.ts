@@ -4,6 +4,7 @@ import {HomeComponent} from "./Component/home/home.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CartComponent} from "./Component/cart/cart.component";
 import {ProductComponent} from "./Component/product/product.component";
+import {CategoryComponent} from "./Component/category/category.component";
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'cart', component: CartComponent},
   {path: 'product/:id', component: ProductComponent},
+  {path: 'category/:categoryid', component: CategoryComponent},
 ];
 
 @NgModule({

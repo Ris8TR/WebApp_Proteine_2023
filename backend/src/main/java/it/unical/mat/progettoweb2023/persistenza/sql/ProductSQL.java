@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Random;
 
@@ -37,6 +36,14 @@ public class ProductSQL implements ProductDAO {
     public List<Prodotto> getAllProducts() {
         String sql = "SELECT * FROM prodotti";
         List<Prodotto> products = jdbcTemplate.query(sql, new ProductRowMapper());
+        return (List<Prodotto>) products;
+    }
+
+    @Override
+    @CrossOrigin("http://localhost:4200")
+    public List<Prodotto> getAllProductsByCategory(String Category) {
+        String sql = "SELECT * FROM prodotti WHERE categoria = ?";
+        List<Prodotto> products = jdbcTemplate.query(sql, new Object[]{Category}, new ProductRowMapper());
         return (List<Prodotto>) products;
     }
 

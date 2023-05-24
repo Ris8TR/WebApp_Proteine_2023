@@ -39,3 +39,27 @@
 .card-button-container .btn {
   margin-top: 10px;
 }
+
+.custom-button {
+  background-color: black;
+  border-color: #ffee00;
+  color: white;
+}
+
+.custom-button:hover {
+  background-color: #ffee00;
+  border-color: #ffee00;
+  color: black;
+}
+
+.back{
+  background-color: white;
+  border-color: black;
+  color: black;
+}
+
+.back:hover{
+  background-color: #ffee00;
+  border-color: black;
+  color: black;
+}

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../Service/product.service';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CartService} from "../../Service/cart.service";
 
 @Component({
   selector: 'app-product',
@@ -11,11 +12,14 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductComponent implements OnInit {
   ID: number | undefined;
   product: any = {};
+  productAddedToCart: number | null = null;
 
   constructor(
     private productService: ProductService,
     private http: HttpClient,
-    private route: ActivatedRoute
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,5 +39,16 @@ export class ProductComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/home');
+  }
+  addToCart(ID){
+    this.cartService.addToCart(ID);
+    this.productAddedToCart = ID;
+    setTimeout(() => {
+      this.productAddedToCart = null;
+    }, 1000);
   }
 }

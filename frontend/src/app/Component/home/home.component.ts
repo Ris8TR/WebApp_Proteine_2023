@@ -5,6 +5,8 @@ import {Router} from "@angular/router";
 import {ImageProcessingService} from "../../Service/image-processing.service";
 import {Product} from "../../Model/Product.model";
 import { tap } from 'rxjs/operators';
+import {CookieService} from "ngx-cookie-service";
+import {CartService} from "../../Service/cart.service";
 
 
 
@@ -19,9 +21,12 @@ export class HomeComponent implements OnInit{
   pageNumber: number = 0;
   productDetails: any[] = [];
   showLoadButton = false;
+  productAddedToCart: number | null = null;
   constructor(private productService: ProductService,
               private imageProcessingService: ImageProcessingService,
               private http: HttpClient,
+              private cartService: CartService,
+              private cookieService: CookieService,
               private router : Router) { }
 
   ngOnInit(): void {
@@ -65,7 +70,12 @@ public loadMoreProduct(){
     this.router.navigate(['/product' , {productId: productId}]);
 
   }
-
-
+  addToCart(ID){
+    this.cartService.addToCart(ID);
+    this.productAddedToCart = ID;
+    setTimeout(() => {
+      this.productAddedToCart = null;
+    }, 1000);
+  }
 
 }

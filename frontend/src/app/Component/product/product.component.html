@@ -2,6 +2,7 @@
   <div>
     <h1>Specifiche prodotto:</h1>
     <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;">
+      <button class="btn btn-primary back "  (click)="goBack()">	<mat-icon>keyboard_backspace</mat-icon> <br>Indietro</button>
       <div class="card" style="width: 50%; display: flex;">
         <img class="card-img-top" src="/./assets/images/logo.png" style="flex: 1;">
         <div class="card-body" style="flex: 2;">
@@ -12,16 +13,16 @@
               <h3 class="card-text">{{ product.descrizione }}</h3>
               <h3 class="card-text">Prezzo: ${{ product.prezzo }}</h3>
             </div>
-            <div class="card-button-container">
-              <a href="" class="btn btn-primary" *ngIf="product.available" style="margin-top: 10px;">Aggiungi al carrello</a>
-            </div>
+            <button class="btn btn-primary custom-button" [disabled]="productAddedToCart === product.id_prodotto" [ngClass]="{'product-added': productAddedToCart === product.id_prodotto}" (click)="addToCart(product.id_prodotto)">
+              {{ productAddedToCart === product.id_prodotto ? 'Prodotto aggiunto' : 'Aggiungi al carrello' }}
+            </button>
           </div>
         </div>
       </div>
-      <div class="card" style=" height: fit-content;">
-        <div class="card-body" style="flex: 2;">
+      <div class="card" style=" height: fit-content; border-color: black; margin-left: 20px">
+        <div class="card-body" style="flex: 2;" >
           <div style="display: flex; flex-direction: column; height: 30%;">
-            <h1 class="card-text">Proprietà del prodotto:</h1>
+            <h1 class="card-text" >Proprietà del prodotto:</h1>
             <span *ngIf="product.available; else notAvailable"  style="color: green;">Disponibile</span>
             <ng-template #notAvailable>
               <span style="color: red;">Non disponibile</span>

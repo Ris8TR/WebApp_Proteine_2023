@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {tap} from "rxjs/operators";
 import {Product} from "../../Model/Product.model";
 import {HttpErrorResponse} from "@angular/common/http";
+import {MatSidenav} from "@angular/material/sidenav";
 
 
 @Component({
@@ -51,9 +52,6 @@ export class HeaderComponent {
         }
       );
   }
-
-
-
 
 }
 

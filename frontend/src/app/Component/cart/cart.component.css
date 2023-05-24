@@ -1,24 +1,24 @@
-.Spazio_icone {
-  flex: 1 1 auto;
+.custom-button {
+  background-color: black;
+  border-color: #ffee00;
+  color: white;
 }
-.mat-toolbar {
-  position: relative;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: auto;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-mat-form-field {
-  margin-top: 20px;
-  width: 50%;
-  border: 10px
+
+.custom-button:hover {
+  background-color: #ffee00;
+  border-color: #ffee00;
+  color: black;
 }
 
 
-.logo {
-  max-width: 3cm;
-  max-height: 10cm;
+.on-click {
+  background-color: #ffee00 !important;
+  border-color: #ffee00 !important;
+  color: black !important;
+}
+
+.on-click:hover {
+  background-color: #ffee00 !important;
+  border-color: #ffee00 !important;
+  color: black !important;
 }
