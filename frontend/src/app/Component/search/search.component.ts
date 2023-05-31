@@ -1,20 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import {ProductService} from "../../Service/product.service";
 import {ImageProcessingService} from "../../Service/image-processing.service";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
+import {CartService} from "../../Service/cart.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
-import {CartService} from "../../Service/cart.service";
-
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.css']
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
 })
-export class CategoryComponent implements OnInit{
+export class SearchComponent {
 
-  Category: string | undefined;
+
+  search: string | undefined;
   pageNumber: number = 0;
   product: any[] = [];
   showLoadButton = false;
@@ -29,24 +29,19 @@ export class CategoryComponent implements OnInit{
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-    this.Category = String(params.get('categoryid'));
-    this.getProductByCategory();
-  });
-  }
-
-  getCategory(){
-    return this.Category;
+      this.search = String(params.get('searchstring'));
+      this.getProductsBySearch();
+    });
   }
 
 
-
-  getProductByCategory() {
-      this.productService.getProductByCategory(this.Category).subscribe(
-        (data: any) => {
-          this.product = data;
-          console.log(this.product);
-        },
-        (error) => {
+  getProductsBySearch() {
+    this.productService.getProductsBySearch(this.search).subscribe(
+      (data: any) => {
+        this.product = data;
+        console.log(this.product);
+      },
+      (error) => {
         console.log(error);
       }
     );
@@ -55,7 +50,7 @@ export class CategoryComponent implements OnInit{
 
   public loadMoreProduct(){
     this.pageNumber = this.pageNumber+1;
-    this.getProductByCategory();
+    this.getProductsBySearch();
   }
 
   showProductDetails(productId){
@@ -70,6 +65,8 @@ export class CategoryComponent implements OnInit{
       this.productAddedToCart = null;
     }, 1000);
   }
+
+
 
 
 }

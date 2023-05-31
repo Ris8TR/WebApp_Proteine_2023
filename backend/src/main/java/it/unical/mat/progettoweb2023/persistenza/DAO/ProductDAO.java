@@ -10,8 +10,10 @@ public interface ProductDAO {
     @CrossOrigin("http://localhost:4200")
     List<Prodotto> getAllProductsByCategory(String Category);
 
-    Prodotto getProductbyId(Integer id_prodotto);
+    @CrossOrigin("http://localhost:4200")
+    List<Prodotto> getProductsBySearch(String Category);
 
+    Prodotto getProductbyId(Integer id_prodotto);
 
     Integer getPrezzo(Integer id_prodotto);
 

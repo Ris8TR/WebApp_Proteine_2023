@@ -20,7 +20,7 @@ public class ProdOrdSQL implements ProdOrdDAO {
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/progetto2023");
         dataSource.setUsername("postgres");
-        dataSource.setPassword("progetto2023");
+        dataSource.setPassword("toor");
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

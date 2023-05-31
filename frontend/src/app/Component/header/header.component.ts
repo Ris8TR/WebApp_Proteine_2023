@@ -19,18 +19,18 @@ export class HeaderComponent {
   productDetails = [[] as any];
   showLoadButton = false;
 
-  constructor(private productService: ProductService){}
+  constructor(private productService: ProductService,
+              private router: Router){}
 
 
 
   ngOnInit(): void {
   }
 
-  searchByKeyword(searchkeyword) {
 
-    this.pageNumber = 0;
-    this.productDetails = [];
-    this.getAllProducts(searchkeyword);
+  redirectToSearch(searchKeyword: string) {
+
+    this.router.navigate(['/search', searchKeyword]);
 
   }
 

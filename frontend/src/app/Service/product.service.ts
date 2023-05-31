@@ -28,6 +28,10 @@ export class ProductService {
     console.log(productCategory)
     return this.httpClient.get<Product[]>("http://localhost:8080/getProductByCategory/"+productCategory);
   }
+
+  public getProductsBySearch(Search){
+    return this.httpClient.get<Product[]>("http://localhost:8080/getProductsBySearch/"+Search);
+  }
 /*
   public deleteProduct(productId: number){
     return this.httpClient.delete("http://localhost:8080/deleteProductDetails/"+productId);

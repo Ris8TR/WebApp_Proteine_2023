@@ -36,7 +36,7 @@ public class ProductSQL implements ProductDAO {
     public List<Prodotto> getAllProducts() {
         String sql = "SELECT * FROM prodotti";
         List<Prodotto> products = jdbcTemplate.query(sql, new ProductRowMapper());
-        return (List<Prodotto>) products;
+        return products;
     }
 
     @Override
@@ -44,8 +44,17 @@ public class ProductSQL implements ProductDAO {
     public List<Prodotto> getAllProductsByCategory(String Category) {
         String sql = "SELECT * FROM prodotti WHERE categoria = ?";
         List<Prodotto> products = jdbcTemplate.query(sql, new Object[]{Category}, new ProductRowMapper());
-        return (List<Prodotto>) products;
+        return products;
     }
+
+    @Override
+    @CrossOrigin("http://localhost:4200")
+    public List<Prodotto> getProductsBySearch(String Search) {
+        String sql = "SELECT * FROM prodotti WHERE prodotti.nome = ? or prodotti.marchio = ?";
+        List<Prodotto> products = jdbcTemplate.query(sql, new Object[]{Search, Search}, new ProductRowMapper());
+        return products;
+    }
+
 
 
     @Override

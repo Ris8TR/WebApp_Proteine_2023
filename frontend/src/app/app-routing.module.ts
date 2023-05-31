@@ -5,6 +5,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {CartComponent} from "./Component/cart/cart.component";
 import {ProductComponent} from "./Component/product/product.component";
 import {CategoryComponent} from "./Component/category/category.component";
+import {SearchComponent} from "./Component/search/search.component";
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'cart', component: CartComponent},
   {path: 'product/:id', component: ProductComponent},
   {path: 'category/:categoryid', component: CategoryComponent},
+  {path: 'search/:searchstring', component: SearchComponent},
 ];
 
 @NgModule({

@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @CrossOrigin("http://localhost:4200")
@@ -98,8 +101,6 @@ public class ServletController {
         return null;
     }
 
-
-
     @RequestMapping(value = "/getAllProducts", method = RequestMethod.GET)
     public ResponseEntity<List<Prodotto>> getAllProduct(HttpServletRequest request, HttpServletResponse response) {
         List<Prodotto> prodotti = new ProductSQL().getAllProducts();
@@ -122,6 +123,20 @@ public class ServletController {
     public ResponseEntity<List<Prodotto>> getAllProductByCategory(HttpServletRequest request, HttpServletResponse response) {
         String resource = request.getRequestURI().substring("/getProductByCategory/".length());
         List <Prodotto> prodotti = new ProductSQL().getAllProductsByCategory(resource);
+        if (prodotti == null) {
+            // Prodotto non trovato, restituisci una risposta 404 Not Found
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(prodotti);
+    }
+
+
+    @RequestMapping(value = "/getProductsBySearch/**", method = RequestMethod.GET)
+    public ResponseEntity<List<Prodotto>> getProducstBySearch(HttpServletRequest request, HttpServletResponse response) {
+        String resource = request.getRequestURI().substring("/getProductsBySearch/".length());
+        List <Prodotto> prodotti = new ProductSQL().getProductsBySearch(resource);
+        System.out.println(resource);
         if (prodotti == null) {
             // Prodotto non trovato, restituisci una risposta 404 Not Found
             return ResponseEntity.notFound().build();
