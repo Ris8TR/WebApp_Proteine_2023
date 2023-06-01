@@ -26,6 +26,7 @@ import { SearchComponent } from './Component/search/search.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,4 +59,5 @@ import { SearchComponent } from './Component/search/search.component';
   providers: [CookieService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

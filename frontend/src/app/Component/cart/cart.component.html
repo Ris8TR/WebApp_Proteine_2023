@@ -12,10 +12,10 @@
               <p class="card-text">{{item.product?.marchio}}</p>
               <p>Quantità: {{ item.quantity }}</p>
               <div class="btn-group" role="group">
-                <button class="btn btn-primary custom-button" (click)="decreaseQuantity(i)">-</button>
-                <button class="btn btn-primary custom-button" (click)="increaseQuantity(i)" style="margin-right: 100px">+</button>
+                <button class="btn  custom-button" (click)="decreaseQuantity(i)">-</button>
+                <button class="btn  custom-button" (click)="increaseQuantity(i)" style="margin-right: 100px">+</button>
               </div>
-              <button class="btn btn-primary custom-button" (click)="removeFromCart(i)">Rimuovi</button>
+              <button class="btn custom-button" (click)="removeFromCart(i)">Rimuovi</button>
             </div>
             </div>
         </div>

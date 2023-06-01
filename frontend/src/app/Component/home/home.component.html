@@ -11,10 +11,10 @@
             <div class="card-body">
               <h5 class="card-title">{{product.nome}}</h5>
               <p class="card-text">{{product.marchio}}</p>
-              <button *ngIf="product.available" class="btn btn-primary custom-button" [disabled]="productAddedToCart === product.id_prodotto" [ngClass]="{'product-added': productAddedToCart === product.id_prodotto}" (click)="addToCart(product.id_prodotto)">
+              <button *ngIf="product.available" class="btn custom-button" [disabled]="productAddedToCart === product.id_prodotto" [ngClass]="{'product-added': productAddedToCart === product.id_prodotto}" (click)="addToCart(product.id_prodotto)">
                 {{ productAddedToCart === product.id_prodotto ? 'Prodotto aggiunto' : 'Aggiungi al carrello' }}
               </button>
-              <span *ngIf="!product.available" class="btn not-available-text" style="color: red; border-color: red" >Prodotto non disponibile</span>
+              <span *ngIf="!product.available" class="btn not-available-text" style="color: red; border-color: red; border-radius: 25px; letter-spacing: 1.3px;">Prodotto non disponibile</span>
             </div>
           </div>
       </div>
