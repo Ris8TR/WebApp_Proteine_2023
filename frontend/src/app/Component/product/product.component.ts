@@ -12,6 +12,7 @@ import {CartService} from "../../Service/cart.service";
 export class ProductComponent implements OnInit {
   ID: number | undefined;
   product: any = {};
+  productImageUrl: any;
   productAddedToCart: number | null = null;
 
   constructor(
@@ -34,11 +35,24 @@ export class ProductComponent implements OnInit {
       (data: any) => {
         this.product = data;
         console.log(this.product);
+        this.setProductImageSrc(this.product.val_nutr);
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  setProductImageSrc(base64Image: string): void {
+    if (!base64Image) {
+      this.productImageUrl = '/./assets/images/logo.png';
+      console.log("DSAD")
+      return;
+    }
+
+    const imageBlob = this.base64ToBlob(base64Image);
+    this.productImageUrl = URL.createObjectURL(imageBlob);
+
   }
 
   goBack() {
@@ -51,4 +65,33 @@ export class ProductComponent implements OnInit {
       this.productAddedToCart = null;
     }, 1000);
   }
+  getProductImageSrc(base64Image: string): string {
+    if (!base64Image) {
+      return '';
+    }
+
+    const imageBlob = this.base64ToBlob(base64Image);
+    const imageUrl = URL.createObjectURL(imageBlob);
+
+    setTimeout(() => {
+      this.productImageUrl = imageUrl; // Assegna il valore all'attributo 'src' dopo il ciclo di rilevamento dei cambiamenti
+    });
+
+    return this.productImageUrl;
+  }
+
+  base64ToBlob(base64Data: string): Blob {
+    const byteString = atob(base64Data);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([arrayBuffer], { type: 'image/jpeg' }); // Assumendo che l'immagine sia in formato JPEG
+
+    return blob;
+  }
+
 }

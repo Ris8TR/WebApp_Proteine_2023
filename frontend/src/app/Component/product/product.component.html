@@ -4,7 +4,8 @@
     <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;">
       <button class="btn back "  (click)="goBack()">	<mat-icon>keyboard_backspace</mat-icon> <br>Indietro</button>
       <div class="card" style="width: 50%; display: flex;">
-        <img class="card-img-top" src="/./assets/images/logo.png" style="flex: 1;">
+        <img class="card-img-top" [src]="productImageUrl" style="flex: 1;">
+
         <div class="card-body" style="flex: 2;">
           <div style="display: flex; flex-direction: column; height: 100%;">
             <h1 class="card-text">{{ product.marchio }}</h1>
