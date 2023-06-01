@@ -9,8 +9,8 @@
           <img src="/assets/images/logo.png" class="card-img-top" alt="{{item.title}}">
         </a>
         <div class="card-body">
-          <h5 class="card-title">{{item.nome}}</h5>
-          <p class="card-text">{{item.marchio}}</p>
+          <h5 class="card-title">{{item.marchio}}</h5>
+          <h2 class="card-text">{{item.nome}}</h2>
           <button *ngIf="item.available" class="btn  custom-button" [disabled]="productAddedToCart === item.id_prodotto" [ngClass]="{'product-added': productAddedToCart === item.id_prodotto}" (click)="addToCart(item.id_prodotto)">
             {{ productAddedToCart === item.id_prodotto ? 'Prodotto aggiunto' : 'Aggiungi al carrello' }}
           </button>

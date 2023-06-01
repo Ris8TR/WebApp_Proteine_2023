@@ -1,6 +1,6 @@
 
   <mat-sidenav-content>
-    <h1 style="align-self: center">Dai un'occhiata alle ultime novità:</h1>
+    <h1 style="align-self: center">Dai un'occhiata al nostro catalogo:</h1>
     <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;">
       <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let product of productDetails; let i = index">
           <img [src]="product.image" class="card-img-top" alt="{{product.title}}">
@@ -9,8 +9,8 @@
               <img src="/assets/images/logo.png" class="card-img-top" alt="{{product.title}}">
             </a>
             <div class="card-body">
-              <h5 class="card-title">{{product.nome}}</h5>
-              <p class="card-text">{{product.marchio}}</p>
+              <h5 class="card-title">{{product.marchio}}</h5>
+              <h2 class="card-text">{{product.nome}}</h2>
               <button *ngIf="product.available" class="btn custom-button" [disabled]="productAddedToCart === product.id_prodotto" [ngClass]="{'product-added': productAddedToCart === product.id_prodotto}" (click)="addToCart(product.id_prodotto)">
                 {{ productAddedToCart === product.id_prodotto ? 'Prodotto aggiunto' : 'Aggiungi al carrello' }}
               </button>

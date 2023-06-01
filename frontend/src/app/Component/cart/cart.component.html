@@ -8,8 +8,8 @@
               <img src="/assets/images/logo.png" class="card-img-top" alt="{{item.product?.nome}}">
             </a>
             <div class="card-body">
-              <h5 class="card-title">{{item.product?.nome }}</h5>
-              <p class="card-text">{{item.product?.marchio}}</p>
+              <h5 class="card-title">{{item.product?.marchio }}</h5>
+              <h2 class="card-text">{{item.product?.nome}}</h2>
               <p>Quantità: {{ item.quantity }}</p>
               <div class="btn-group" role="group">
                 <button class="btn  custom-button" (click)="decreaseQuantity(i)">-</button>
