@@ -2,12 +2,16 @@
   background-color: black;
   border-color: #ffee00;
   color: white;
+  border-radius: 25px;
+  letter-spacing: 1.3px;
 }
 
 .custom-button:hover {
   background-color: #ffee00;
   border-color: #ffee00;
   color: black;
+  border-radius: 25px;
+  letter-spacing: 1.3px;
 }
 
 
@@ -15,10 +19,14 @@
   background-color: #ffee00 !important;
   border-color: #ffee00 !important;
   color: black !important;
+  border-radius: 25px;
+  letter-spacing: 1.3px;
 }
 
 .on-click:hover {
   background-color: #ffee00 !important;
   border-color: #ffee00 !important;
   color: black !important;
+  border-radius: 25px;
+  letter-spacing: 1.3px;
 }

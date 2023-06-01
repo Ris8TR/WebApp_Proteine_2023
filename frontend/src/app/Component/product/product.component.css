@@ -44,12 +44,17 @@
   background-color: black;
   border-color: #ffee00;
   color: white;
+  margin-top: 20px;
+  border-radius: 25px;
+  letter-spacing: 1.3px;
 }
 
 .custom-button:hover {
   background-color: #ffee00;
   border-color: #ffee00;
   color: black;
+  border-radius: 25px;
+  letter-spacing: 1.3px;
 }
 
 .back{
