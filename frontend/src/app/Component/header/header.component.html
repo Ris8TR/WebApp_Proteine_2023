@@ -22,11 +22,12 @@
 
   <img class="logo"  src="./assets/images/logo.png" alt="Logo del sito web">
   <span class="Spazio_icone"></span>
-  <span>{{ logStringResult }}</span>
+  <a href="http://localhost:8080/login" style="color:white;">
+  <span>{{ logStringResult }}</span></a>
   <a mat-icon-button href="http://localhost:8080/login"  aria-label="Profilo">
     <mat-icon>account_circle</mat-icon>
   </a>
-  <button mat-icon-button aria-label="Carrello" routerLink="../cart" style="margin-left: 5px">
+  <button mat-icon-button aria-label="Carrello" routerLink="../cart" style="margin-left: 10px">
     <mat-icon>shopping_cart</mat-icon>
   </button>
 </mat-toolbar>

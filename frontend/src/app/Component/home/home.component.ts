@@ -15,54 +15,59 @@ import {CartService} from "../../Service/cart.service";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
-
-
+export class HomeComponent implements OnInit {
   pageNumber: number = 0;
   product: any[] = [];
-  productImageUrl: any;
   showLoadButton = false;
   productAddedToCart: number | null = null;
-  constructor(private productService: ProductService,
-              private imageProcessingService: ImageProcessingService,
-              private http: HttpClient,
-              private cartService: CartService,
-              private cookieService: CookieService,
-              private router : Router) { }
+
+  constructor(
+    private productService: ProductService,
+    private imageProcessingService: ImageProcessingService,
+    private http: HttpClient,
+    private cartService: CartService,
+    private cookieService: CookieService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getAllProducts();
   }
 
+  getProductById(id: number) {
+    const url = `/getProductsById?id=${id}`;
+    return this.http.get<Product>(url);
+  }
+
+  public getAllProducts(searchKey: string = "") {
+    this.pageNumber = 0;
+    this.product = [];
+    this.loadProducts();
+  }
+
+  private loadProducts() {
+    this.productService
+      .getAllProducts(this.pageNumber)
+      .pipe(
+        tap((resp: Product[]) => {
+          console.log(resp);
+          this.showLoadButton = resp.length == 10;
+          resp.forEach((p: Product) => {
+            p.imageUrl = this.setProductImageSrc(p.val_nutr);
+            this.product.push(p);
+          });
+        })
+      )
+      .subscribe(
+        () => {},
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      );
+  }
 
 
-getProductById(id: number) {
-  const url = `/getProductsById?id=${id}`;
-  return this.http.get<Product>(url);
-}
 
-
-
-public getAllProducts(searchKey: string = "") {
-  this.productService.getAllProducts(this.pageNumber, searchKey)
-    .pipe(
-      tap((resp: Product[]) => {
-        console.log(resp);
-        this.showLoadButton = resp.length == 8;
-        resp.forEach((p: Product) => {
-          p.imageUrl = this.setProductImageSrc(p.val_nutr); // Aggiungi questa riga
-          this.product.push(p);
-        });
-        // this.productDetails = resp;
-      })
-    )
-    .subscribe(
-      () => {},
-      (error: HttpErrorResponse) => {
-        console.log(error);
-      }
-    );
-}
   setProductImageSrc(base64Image: string): string {
     if (!base64Image) {
       return '/./assets/images/logo.png';
@@ -72,6 +77,7 @@ public getAllProducts(searchKey: string = "") {
     const imageBlob = this.base64ToBlob(cleanedBase64Image);
     return URL.createObjectURL(imageBlob);
   }
+
   base64ToBlob(base64Data: string): Blob {
     const byteString = atob(base64Data);
     const arrayBuffer = new ArrayBuffer(byteString.length);
@@ -86,21 +92,20 @@ public getAllProducts(searchKey: string = "") {
     return blob;
   }
 
-public loadMoreProduct(){
-    this.pageNumber = this.pageNumber+1;
-    this.getAllProducts();
+  public loadMoreProduct() {
+    this.pageNumber++;
+    this.loadProducts();
   }
 
-  showProductDetails(productId){
-    this.router.navigate(['/product' , {productId: productId}]);
-
+  showProductDetails(productId) {
+    this.router.navigate(['/product', { productId: productId }]);
   }
-  addToCart(ID){
+
+  addToCart(ID) {
     this.cartService.addToCart(ID);
     this.productAddedToCart = ID;
     setTimeout(() => {
       this.productAddedToCart = null;
     }, 1000);
   }
-
 }

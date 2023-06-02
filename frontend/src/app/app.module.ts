@@ -22,6 +22,7 @@ import { HeaderComponent } from './Component/header/header.component';
 import { CookieService } from 'ngx-cookie-service';
 import { CategoryComponent } from './Component/category/category.component';
 import { SearchComponent } from './Component/search/search.component';
+import { InfoComponent } from './Component/info/info.component';
 
 
 
@@ -36,6 +37,7 @@ import { SearchComponent } from './Component/search/search.component';
     HeaderComponent,
     CategoryComponent,
     SearchComponent,
+    InfoComponent,
   ],
   imports: [
     BrowserModule,

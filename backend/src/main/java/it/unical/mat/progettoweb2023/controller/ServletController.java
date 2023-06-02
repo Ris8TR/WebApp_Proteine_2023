@@ -98,13 +98,27 @@ public class ServletController {
 
 
 
-    ////Mapping delle richieste fatte da ANGULAR
+    //Mapping delle richieste fatte da ANGULAR
 
     @RequestMapping(value = "/getAllProducts", method = RequestMethod.GET)
-    public ResponseEntity<List<Prodotto>> getAllProduct(HttpServletRequest request, HttpServletResponse response) {
-        List<Prodotto> prodotti = new ProductSQL().getAllProducts();
-        return ResponseEntity.ok().body(prodotti);
+    public ResponseEntity<List<Prodotto>> getAllProduct(
+            @RequestParam("pageNumber") int pageNumber,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        List<Prodotto> allProdotti = new ProductSQL().getAllProducts();
+        int batchSize = 10;
+        int startIndex = pageNumber * batchSize;
+        int endIndex = Math.min(startIndex + batchSize, allProdotti.size());
+        List<Prodotto> prodotti = allProdotti.subList(startIndex, endIndex);
+
+        boolean showLoadButton = endIndex < allProdotti.size();
+
+        return ResponseEntity.ok()
+                .header("showLoadButton", Boolean.toString(showLoadButton))
+                .body(prodotti);
     }
+
 
     @RequestMapping(value = "/getProductByCategory/**", method = RequestMethod.GET)
     public ResponseEntity<List<Prodotto>> getAllProductByCategory(HttpServletRequest request, HttpServletResponse response) {
