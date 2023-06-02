@@ -1,3 +1,4 @@
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 <mat-sidenav-content>
   <div>
     <h1>Specifiche prodotto:</h1>
@@ -38,9 +39,50 @@
                 <span style="color: red;">Contiene lattosio</span>
               </ng-template>
             </h3>
+            <a target="_blank" class="btn btn-info btn-sm m-1" style="height: 50px;"
+            [href]="'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('http://localhost:4200/product/' + product.id_prodotto)">
+                        <i class="fa-brands fa-facebook">Condividi su Facebook</i>
+            </a>
+
+
+
           </div>
         </div>
       </div>
     </div>
   </div>
 </mat-sidenav-content>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '716286400096074',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v15.0'
+    });
+  };
+
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Gestisci il clic sul pulsante di condivisione di Facebook
+  document.getElementById('fb-share-button').addEventListener('click', function() {
+    FB.ui({
+      method: 'feed',
+      link: 'localhost:4200/prodotto' + product.id_prodotto,
+      picture: productImageUrl,
+      name: product.nome,
+      description: product.descrizione
+    }, function(response){
+      console.log(response);
+    });
+  });
+
+
+</script>

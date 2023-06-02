@@ -3,6 +3,7 @@ import { ProductService } from '../../Service/product.service';
 import { HttpClient } from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CartService} from "../../Service/cart.service";
+import {FacebookService, InitParams} from "ngx-facebook";
 
 @Component({
   selector: 'app-product',
@@ -20,8 +21,17 @@ export class ProductComponent implements OnInit {
     private http: HttpClient,
     private cartService: CartService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private facebookService: FacebookService
+  ) {
+    const initParams: InitParams = {
+      appId: '560352242616863',
+      xfbml: true,
+      version: 'v2.8'
+    };
+
+    facebookService.init(initParams);
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -93,4 +103,5 @@ export class ProductComponent implements OnInit {
     return blob;
   }
 
+  protected readonly encodeURIComponent = encodeURIComponent;
 }
