@@ -46,7 +46,6 @@ export class ProductComponent implements OnInit {
   setProductImageSrc(base64Image: string): void {
     if (!base64Image) {
       this.productImageUrl = '/./assets/images/logo.png';
-      console.log("DSAD")
       return;
     }
 

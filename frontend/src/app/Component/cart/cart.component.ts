@@ -9,7 +9,7 @@ import {Product} from "../../Model/Product.model";
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  cartItems: any[] = [];
+  product: any[] = [];
 
   constructor(private cookieService: CookieService, private productService: ProductService) {}
 
@@ -18,9 +18,9 @@ export class CartComponent implements OnInit {
 
     const cartItemsCookie = this.cookieService.get('cartItems');
     if (cartItemsCookie) {
-      this.cartItems = JSON.parse(cartItemsCookie);
+      this.product = JSON.parse(cartItemsCookie);
     } else {
-      this.cartItems = [];
+      this.product = [];
     }
 
     // Carica i dettagli dei prodotti solo quando il carrello viene inizialmente caricato
@@ -28,17 +28,20 @@ export class CartComponent implements OnInit {
   }
 
   loadProductDetails(): void {
-    for (const cartItem of this.cartItems) {
+    for (const cartItem of this.product) {
       this.getProductById(cartItem.product_id);
     }
   }
 
+
+
   getProductById(productId: number): void {
     this.productService.getProductById(productId).subscribe(
       (data: any) => {
-        const cartItem = this.cartItems.find(item => item.product_id === productId);
+        const cartItem = this.product.find(item => item.product_id === productId);
         if (cartItem) {
           cartItem.product = data;
+          this.setProductImageSrc(cartItem.product.val_nutr, cartItem);
         }
       },
       (error) => {
@@ -47,45 +50,48 @@ export class CartComponent implements OnInit {
     );
   }
 
-addToCart(productId: number): void {
-  // Leggi l'elenco dei prodotti nel carrello dai cookie
-  let cartItems: { product_id: number, quantity: number }[] = [];
-const cartItemsCookie = this.cookieService.get('cartItems');
+  setProductImageSrc(base64Image: string, cartItem: any): void {
+    if (!base64Image) {
+      cartItem.product.imageUrl = '/./assets/images/logo.png';
+      return;
+    }
 
-if (cartItemsCookie) {
-  cartItems = JSON.parse(cartItemsCookie) as { product_id: number, quantity: number }[];
-}
+    const cleanedBase64Image = base64Image.replace(/\s/g, '');
+    const imageBlob = this.base64ToBlob(cleanedBase64Image);
+    cartItem.product.imageUrl = URL.createObjectURL(imageBlob);
+  }
 
-// Verifica se il prodotto è già presente nel carrello
-const existingProductIndex = cartItems.findIndex(item => item.product_id === productId);
+  base64ToBlob(base64Data: string): Blob {
+    const byteString = atob(base64Data);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
 
-if (existingProductIndex !== -1) {
-  // Se il prodotto è già presente, incrementa la quantità
-  cartItems[existingProductIndex].quantity += 1;
-} else {
-  // Se il prodotto non è presente, aggiungi una nuova voce al carrello
-  cartItems.push({ product_id: productId, quantity: 1 });
-}
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
 
-// Salva l'elenco dei prodotti nel carrello nei cookie con una scadenza di un'ora
-this.saveCartItems(cartItems);
-}
+    const blob = new Blob([arrayBuffer], { type: 'image/jpeg' }); // Assumendo che l'immagine sia in formato JPEG
 
-decreaseQuantity(index: number): void {
-  if (this.cartItems[index].quantity > 1) {
-  this.cartItems[index].quantity--;
-  this.saveCartItems(this.cartItems);
+    return blob;
+  }
+
+
+
+  decreaseQuantity(index: number): void {
+  if (this.product[index].quantity > 1) {
+  this.product[index].quantity--;
+  this.saveCartItems(this.product);
 }
 }
 
 increaseQuantity(index: number): void {
-  this.cartItems[index].quantity++;
-  this.saveCartItems(this.cartItems);
+  this.product[index].quantity++;
+  this.saveCartItems(this.product);
 }
 
 removeFromCart(index: number): void {
-  this.cartItems.splice(index, 1);
-  this.saveCartItems(this.cartItems);
+  this.product.splice(index, 1);
+  this.saveCartItems(this.product);
 }
 
 private saveCartItems(cartItems: { product_id: number, quantity: number }[]): void {

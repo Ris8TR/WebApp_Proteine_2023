@@ -1,20 +1,18 @@
-
   <mat-sidenav-content>
     <h1 style="align-self: center">Dai un'occhiata al nostro catalogo:</h1>
     <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;">
-      <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let product of productDetails; let i = index">
-          <img [src]="product.image" class="card-img-top" alt="{{product.title}}">
+      <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let item of product; let i = index">
           <div class="card" style="width: 300px">
-            <a [routerLink]="['/product', product.id_prodotto]">
-              <img src="/assets/images/logo.png" class="card-img-top" alt="{{product.title}}">
+            <a [routerLink]="['/product', item.id_prodotto]">
+              <img [src]="item.imageUrl" class="card-img-top" alt="{{item.title}}">
             </a>
             <div class="card-body">
-              <h5 class="card-title">{{product.marchio}}</h5>
-              <h2 class="card-text">{{product.nome}}</h2>
-              <button *ngIf="product.available" class="btn custom-button" [disabled]="productAddedToCart === product.id_prodotto" [ngClass]="{'product-added': productAddedToCart === product.id_prodotto}" (click)="addToCart(product.id_prodotto)">
-                {{ productAddedToCart === product.id_prodotto ? 'Prodotto aggiunto' : 'Aggiungi al carrello' }}
+              <h5 class="card-title">{{item.marchio}}</h5>
+              <h2 class="card-text">{{item.nome}}</h2>
+              <button *ngIf="item.available" class="btn custom-button" [disabled]="productAddedToCart === item.id_prodotto" [ngClass]="{'product-added': productAddedToCart === item.id_prodotto}" (click)="addToCart(item.id_prodotto)">
+                {{ productAddedToCart === item.id_prodotto ? 'Prodotto aggiunto' : 'Aggiungi al carrello' }}
               </button>
-              <span *ngIf="!product.available" class="btn not-available-text" style="color: red; border-color: red; border-radius: 25px; letter-spacing: 1.3px;">Prodotto non disponibile</span>
+              <span *ngIf="!item.available" class="btn not-available-text" style="color: red; border-color: red; border-radius: 25px; letter-spacing: 1.3px;">Prodotto non disponibile</span>
             </div>
           </div>
       </div>

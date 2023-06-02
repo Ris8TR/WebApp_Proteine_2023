@@ -2,10 +2,10 @@
     <div>
       <h1>Carrello:</h1>
       <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;">
-        <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let item of cartItems; let i = index">
+        <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let item of product; let i = index">
           <div class="card" style="width: 18rem;">
             <a [routerLink]="['/product', item.product_id]">
-              <img src="/assets/images/logo.png" class="card-img-top" alt="{{item.product?.nome}}">
+              <img [src]="item.product?.imageUrl" class="card-img-top" alt="{{item.product?.nome}}">
             </a>
             <div class="card-body">
               <h5 class="card-title">{{item.product?.marchio }}</h5>

@@ -19,7 +19,8 @@ export class HomeComponent implements OnInit{
 
 
   pageNumber: number = 0;
-  productDetails: any[] = [];
+  product: any[] = [];
+  productImageUrl: any;
   showLoadButton = false;
   productAddedToCart: number | null = null;
   constructor(private productService: ProductService,
@@ -48,7 +49,10 @@ public getAllProducts(searchKey: string = "") {
       tap((resp: Product[]) => {
         console.log(resp);
         this.showLoadButton = resp.length == 8;
-        resp.forEach(p => this.productDetails.push(p));
+        resp.forEach((p: Product) => {
+          p.imageUrl = this.setProductImageSrc(p.val_nutr); // Aggiungi questa riga
+          this.product.push(p);
+        });
         // this.productDetails = resp;
       })
     )
@@ -59,7 +63,28 @@ public getAllProducts(searchKey: string = "") {
       }
     );
 }
+  setProductImageSrc(base64Image: string): string {
+    if (!base64Image) {
+      return '/./assets/images/logo.png';
+    }
 
+    const cleanedBase64Image = base64Image.replace(/\s/g, '');
+    const imageBlob = this.base64ToBlob(cleanedBase64Image);
+    return URL.createObjectURL(imageBlob);
+  }
+  base64ToBlob(base64Data: string): Blob {
+    const byteString = atob(base64Data);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([arrayBuffer], { type: 'image/jpeg' }); // Assumendo che l'immagine sia in formato JPEG
+
+    return blob;
+  }
 
 public loadMoreProduct(){
     this.pageNumber = this.pageNumber+1;

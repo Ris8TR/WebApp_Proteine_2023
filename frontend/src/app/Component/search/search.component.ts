@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import {ProductService} from "../../Service/product.service";
 import {ImageProcessingService} from "../../Service/image-processing.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import {CartService} from "../../Service/cart.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {tap} from "rxjs/operators";
+import {Product} from "../../Model/Product.model";
 
 @Component({
   selector: 'app-search',
@@ -36,15 +38,48 @@ export class SearchComponent {
 
 
   getProductsBySearch() {
-    this.productService.getProductsBySearch(this.search).subscribe(
-      (data: any) => {
-        this.product = data;
-        console.log(this.product);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.product = []; // Reset dell'array product
+    this.productService.getProductsBySearch(this.search)
+      .pipe(
+        tap((resp: Product[]) => {
+          console.log(resp);
+          this.showLoadButton = resp.length == 8;
+          resp.forEach((p: Product) => {
+            p.imageUrl = this.setProductImageSrc(p.val_nutr);
+            this.product.push(p);
+          });
+        })
+      )
+      .subscribe(
+        () => {},
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      );
+  }
+
+  setProductImageSrc(base64Image: string): string {
+    if (!base64Image) {
+      return '/./assets/images/logo.png';
+    }
+
+    const cleanedBase64Image = base64Image.replace(/\s/g, '');
+    const imageBlob = this.base64ToBlob(cleanedBase64Image);
+    return URL.createObjectURL(imageBlob);
+  }
+
+  base64ToBlob(base64Data: string): Blob {
+    const byteString = atob(base64Data);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([arrayBuffer], { type: 'image/jpeg' }); // Assumendo che l'immagine sia in formato JPEG
+
+    return blob;
   }
 
 

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductService} from "../../Service/product.service";
 import {ImageProcessingService} from "../../Service/image-processing.service";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
@@ -6,6 +6,8 @@ import {CookieService} from "ngx-cookie-service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 import {CartService} from "../../Service/cart.service";
+import {tap} from "rxjs/operators";
+import {Product} from "../../Model/Product.model";
 
 @Component({
   selector: 'app-category',
@@ -40,16 +42,49 @@ export class CategoryComponent implements OnInit{
 
 
 
-  getProductByCategory() {
-      this.productService.getProductByCategory(this.Category).subscribe(
-        (data: any) => {
-          this.product = data;
-          console.log(this.product);
-        },
-        (error) => {
-        console.log(error);
-      }
-    );
+
+  public getProductByCategory() {
+    this.product = []; // Reset dell'array product
+    this.productService.getProductByCategory(this.Category)
+      .pipe(
+        tap((resp: Product[]) => {
+          console.log(resp);
+          this.showLoadButton = resp.length == 8;
+          resp.forEach((p: Product) => {
+            p.imageUrl = this.setProductImageSrc(p.val_nutr);
+            this.product.push(p);
+          });
+        })
+      )
+      .subscribe(
+        () => {},
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      );
+  }
+  setProductImageSrc(base64Image: string): string {
+    if (!base64Image) {
+      return '/./assets/images/logo.png';
+    }
+
+    const cleanedBase64Image = base64Image.replace(/\s/g, '');
+    const imageBlob = this.base64ToBlob(cleanedBase64Image);
+    return URL.createObjectURL(imageBlob);
+  }
+
+  base64ToBlob(base64Data: string): Blob {
+    const byteString = atob(base64Data);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([arrayBuffer], { type: 'image/jpeg' }); // Assumendo che l'immagine sia in formato JPEG
+
+    return blob;
   }
 
 
@@ -70,6 +105,5 @@ export class CategoryComponent implements OnInit{
       this.productAddedToCart = null;
     }, 1000);
   }
-
 
 }
