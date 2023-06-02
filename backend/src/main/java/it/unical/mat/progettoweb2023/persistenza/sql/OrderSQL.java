@@ -9,6 +9,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class OrderSQL implements OrderDAO {
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/progetto2023");
         dataSource.setUsername("postgres");
-        dataSource.setPassword("toor");
+        dataSource.setPassword("progetto2023");
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

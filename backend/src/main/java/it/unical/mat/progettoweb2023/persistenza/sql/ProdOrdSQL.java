@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 @Repository
@@ -19,7 +20,7 @@ public class ProdOrdSQL implements ProdOrdDAO {
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/progetto2023");
         dataSource.setUsername("postgres");
-        dataSource.setPassword("toor");
+        dataSource.setPassword("progetto2023");
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

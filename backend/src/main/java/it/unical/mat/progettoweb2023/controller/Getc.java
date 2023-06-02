@@ -2,7 +2,6 @@ package it.unical.mat.progettoweb2023.controller;
 
 import jakarta.servlet.http.Cookie;
 
-
 public class Getc {
 
     Cookie[] cook = null;
@@ -23,7 +22,5 @@ public class Getc {
         }
         return null;
     }
-
-
     
 }

@@ -15,15 +15,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import org.apache.commons.codec.binary.Base64;
 import java.util.List;
-
-
-
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -263,7 +261,8 @@ public class PostController {
         Integer prezzo = Integer.valueOf(req.getParameter("prezzo"));
         String descrizione = req.getParameter("descrizione");
         String categoria = req.getParameter("categoria");
-        byte[] val_nutr = getimg(req);
+        byte[] val_nutr = getval_nutr(req);
+        byte[] foto_prod = getfoto_prod(req);
         Prodotto prod = new Prodotto();
         prod.setId_prodotto(id); prod.setNome(nome); prod.setMarchio(marchio);
         if(size_cps==0){prod.setSize_cps(null);}else{prod.setSize_cps(size_cps);}
@@ -272,6 +271,7 @@ public class PostController {
         if(available.equals("NO")){prod.setAvailable(false);}else{prod.setAvailable(true);}
         if(lactose_free.equals("NO")){prod.setLactose_free(false);}else{prod.setLactose_free(true);}
         prod.setPrezzo(prezzo); prod.setDescrizione(descrizione); prod.setVal_nutr(val_nutr);
+        prod.setFoto(foto_prod);
         prod.setCategoria(categoria);
         new ProductSQL().AddProduct(prod);
         return null;
@@ -286,13 +286,7 @@ public class PostController {
         return null;
     }
 
-
-
-
-
-
-
-    private byte[] getimg(HttpServletRequest req) throws ServletException, IOException {
+    private byte[] getval_nutr(HttpServletRequest req) throws ServletException, IOException {
         InputStream inputStream = req.getPart("image").getInputStream();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[4096];
@@ -308,6 +302,21 @@ public class PostController {
         return bytes;
     }
 
+    private byte[] getfoto_prod(HttpServletRequest req) throws ServletException, IOException{
+        InputStream inputStream = req.getPart("imgprod").getInputStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[4096];
+        int bytesRead = -1;
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+        byte[] bytess = outputStream.toByteArray();
+        inputStream.close();
+        outputStream.close();
+        String bs64 = Base64.encodeBase64String(bytess);
+        byte[] bytes = bs64.getBytes();
+        return bytes;
+    }
 }
 
 

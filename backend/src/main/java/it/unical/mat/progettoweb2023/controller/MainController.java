@@ -39,7 +39,6 @@ public class MainController {
         }
     }
 
-
     @GetMapping ("/")
     public String homepage() {
         return "homepage";
