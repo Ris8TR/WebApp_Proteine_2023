@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import java.util.List;
+
 @Repository
 public class UserSQL implements UserDAO {
 
@@ -23,6 +24,7 @@ public class UserSQL implements UserDAO {
         dataSource.setPassword("toor");
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
+
     @Override
     public List<User> getAllUsers() {
         String sql = "SELECT * FROM utenti";
@@ -64,5 +66,6 @@ public class UserSQL implements UserDAO {
         String sql = "DELETE FROM utenti WHERE email = ?";
         jdbcTemplate.update(sql, email);
     }
+
 }
 

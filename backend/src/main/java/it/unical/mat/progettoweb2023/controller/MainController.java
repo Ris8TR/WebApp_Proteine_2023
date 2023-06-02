@@ -39,6 +39,18 @@ public class MainController {
         }
     }
 
+    @GetMapping ("/ogstring")
+    public String Logstring(HttpServletRequest req) {
+        String user = new Getc(req.getCookies(),"user").Get();
+        String sess = new Getc(req.getCookies(),"sessionId").Get();
+        if((user==null && sess==null)){
+            return "Login";
+        }
+        else{
+            return "Ciao, "+ user;
+        }
+    }
+
     @GetMapping ("/")
     public String homepage() {
         return "homepage";

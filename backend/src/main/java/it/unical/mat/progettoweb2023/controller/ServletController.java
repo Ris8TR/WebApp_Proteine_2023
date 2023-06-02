@@ -1,33 +1,28 @@
 package it.unical.mat.progettoweb2023.controller;
 
+
 import it.unical.mat.progettoweb2023.model.Ordine;
 import it.unical.mat.progettoweb2023.model.Prodotto;
 import it.unical.mat.progettoweb2023.model.User;
 import it.unical.mat.progettoweb2023.persistenza.sql.OrderSQL;
 import it.unical.mat.progettoweb2023.persistenza.sql.ProductSQL;
 import it.unical.mat.progettoweb2023.persistenza.sql.UserSQL;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jdk.jfr.Category;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 @Controller
 @CrossOrigin("http://localhost:4200")
 public class ServletController {
 
-    //mapping user requests
+
+
+    //Mapping delle richieste fatte da USER
     @RequestMapping(value = "/user/**", method = {RequestMethod.GET, RequestMethod.POST})
     public String userHandler(HttpServletRequest request,HttpServletResponse resp) throws IOException {
         String user = new Getc(request.getCookies(),"user").Get();
@@ -57,7 +52,7 @@ public class ServletController {
         }
     }
 
-    //mapping admin requests
+    //Mapping delle richieste fatte da ADMIN
     @RequestMapping(value = "/admin/**", method = {RequestMethod.GET, RequestMethod.POST})
     public String adminHandler(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String adm = new Getc(request.getCookies(),"admin").Get();
@@ -101,9 +96,25 @@ public class ServletController {
         return null;
     }
 
+
+
+    ////Mapping delle richieste fatte da ANGULAR
+
     @RequestMapping(value = "/getAllProducts", method = RequestMethod.GET)
     public ResponseEntity<List<Prodotto>> getAllProduct(HttpServletRequest request, HttpServletResponse response) {
         List<Prodotto> prodotti = new ProductSQL().getAllProducts();
+        return ResponseEntity.ok().body(prodotti);
+    }
+
+    @RequestMapping(value = "/getProductByCategory/**", method = RequestMethod.GET)
+    public ResponseEntity<List<Prodotto>> getAllProductByCategory(HttpServletRequest request, HttpServletResponse response) {
+        String resource = request.getRequestURI().substring("/getProductByCategory/".length());
+        List <Prodotto> prodotti = new ProductSQL().getAllProductsByCategory(resource);
+        if (prodotti == null) {
+            // Prodotto non trovato, restituisci una risposta 404 Not Found
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok().body(prodotti);
     }
 
@@ -119,19 +130,6 @@ public class ServletController {
         return ResponseEntity.ok().body(prodotto);
     }
 
-    @RequestMapping(value = "/getProductByCategory/**", method = RequestMethod.GET)
-    public ResponseEntity<List<Prodotto>> getAllProductByCategory(HttpServletRequest request, HttpServletResponse response) {
-        String resource = request.getRequestURI().substring("/getProductByCategory/".length());
-        List <Prodotto> prodotti = new ProductSQL().getAllProductsByCategory(resource);
-        if (prodotti == null) {
-            // Prodotto non trovato, restituisci una risposta 404 Not Found
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok().body(prodotti);
-    }
-
-
     @RequestMapping(value = "/getProductsBySearch/**", method = RequestMethod.GET)
     public ResponseEntity<List<Prodotto>> getProducstBySearch(HttpServletRequest request, HttpServletResponse response) {
         String resource = request.getRequestURI().substring("/getProductsBySearch/".length());
@@ -144,6 +142,12 @@ public class ServletController {
 
         return ResponseEntity.ok().body(prodotti);
     }
+
+
+
+
+
+
 
 
 

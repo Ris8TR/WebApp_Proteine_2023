@@ -15,13 +15,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import org.apache.commons.codec.binary.Base64;
 import java.util.List;
+
+
+
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -283,6 +285,12 @@ public class PostController {
         resp.sendRedirect("http://localhost:8080/admin/catalog");
         return null;
     }
+
+
+
+
+
+
 
     private byte[] getimg(HttpServletRequest req) throws ServletException, IOException {
         InputStream inputStream = req.getPart("image").getInputStream();

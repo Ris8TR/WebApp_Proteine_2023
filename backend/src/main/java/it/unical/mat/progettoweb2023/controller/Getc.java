@@ -1,6 +1,11 @@
 package it.unical.mat.progettoweb2023.controller;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 public class Getc {
 
@@ -22,5 +27,7 @@ public class Getc {
         }
         return null;
     }
+
+
     
 }

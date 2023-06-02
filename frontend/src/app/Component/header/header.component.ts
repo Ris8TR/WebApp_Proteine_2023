@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductService} from "../../Service/product.service";
 import {ImageProcessingService} from "../../Service/image-processing.service";
 import {Router} from "@angular/router";
 import {tap} from "rxjs/operators";
 import {Product} from "../../Model/Product.model";
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {MatSidenav} from "@angular/material/sidenav";
+import {CookieService} from "ngx-cookie-service";
 
 
 @Component({
@@ -13,18 +14,21 @@ import {MatSidenav} from "@angular/material/sidenav";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
 
   pageNumber: number = 0;
+  logStringResult: string | undefined;
   productDetails = [[] as any];
   showLoadButton = false;
 
   constructor(private productService: ProductService,
-              private router: Router){}
+              private router: Router,
+              private cookieService: CookieService){}
 
 
 
   ngOnInit(): void {
+    this.checkUserCookie()
   }
 
 
@@ -32,6 +36,16 @@ export class HeaderComponent {
 
     this.router.navigate(['/search', searchKeyword]);
 
+  }
+
+  checkUserCookie(): void {
+    const userCookie = this.cookieService.get('user');
+
+    if (userCookie) {
+      this.logStringResult = userCookie;
+    } else {
+      this.logStringResult = 'Login';
+    }
   }
 
   public getAllProducts(searchKey: string = "") {
