@@ -2,12 +2,12 @@
 <mat-sidenav-content>
   <div>
     <h1>Specifiche prodotto:</h1>
-    <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;">
-      <button class="btn back "  (click)="goBack()">	<mat-icon>keyboard_backspace</mat-icon> <br>Indietro</button>
-      <div class="card" style="width: 50%; display: flex;">
+    <div class="container" style="display: flex; min-height: 1050px; flex-wrap: wrap; flex-grow: 1;">
+      <button class="btn back "  (click)="goBack()" style="margin-bottom: 30px">	<mat-icon>keyboard_backspace</mat-icon> <br>Indietro</button>
+      <div class="card" style="width: 45%; display: flex; margin-bottom: 30px">
         <img class="card-img-top" [src]="productImageUrl" style="flex: 1;">
 
-        <div class="card-body" style="flex: 2;">
+        <div class="card-body" style="flex: 1;">
           <div style="display: flex; flex-direction: column; height: 100%;">
             <h1 class="card-text">{{ product.marchio }}</h1>
             <h1 class="card-text">{{ product.nome }}</h1>

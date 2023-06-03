@@ -1,6 +1,6 @@
 <mat-sidenav-content>
   <h1 style="align-self: center">Dai un'occhiata al nostro catalogo:</h1>
-  <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;">
+  <div class="container" style="display: flex; min-height: 1050px; flex-wrap: wrap; flex-grow: 1;">
     <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let item of product; let i = index">
       <div class="card custom-card" style="width: 300px; position: relative;">
         <a [routerLink]="['/product', item.id_prodotto]">
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div style="width: 100%;">
-      <button class="btn custom-button" style="margin-left: 50%; margin-top: 5%; margin-bottom: 5%" (click)="loadMoreProduct()" [disabled]="disableLoadMore || !(product.length > 0 && (product.length % 12 === 0))">Carica altri prodotti</button>
+      <button class="btn custom-button" style="margin-left: 40%; margin-top: 5%; margin-bottom: 5%" (click)="loadMoreProduct()" [disabled]="disableLoadMore || !(product.length > 0 && (product.length % 12 === 0))">Carica altri prodotti</button>
     </div>
   </div>
 </mat-sidenav-content>
