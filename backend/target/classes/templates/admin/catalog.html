@@ -85,6 +85,7 @@
             <th>PREZZO</th>
             <th>DESCRIZIONE</th>
             <th>VALORI NUTRIZIONALI</th>
+            <th>FOTO PRODOTTO</th>
             <th>CATEGORIA</th>
             <th>AZIONI</th>
         </tr>
@@ -103,6 +104,8 @@
             <td th:text="${prod.prezzo}"></td>
             <td th:text="${prod.descrizione}"></td>
             <td><img th:src="@{'data:image/png;base64,' + ${prod.val_nutr}}" width="50" height="50"/></td>
+            <td><img th:src="@{'data:image/png;base64,' + ${prod.foto}}" width="50" height="50"/></td>
+
             <td th:text="${prod.categoria}"></td>
             <td>
                 <form id="canc" th:action="@{'/elimina-prod/' + ${prod.id_prodotto}}" method="post">

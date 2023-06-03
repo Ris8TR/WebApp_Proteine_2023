@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +27,9 @@ import java.util.Set;
 @Controller
 @CrossOrigin("http://localhost:4200")
 public class ServletController {
+
+
+
 
     //mapping user requests
     @RequestMapping(value = "/user/**", method = {RequestMethod.GET, RequestMethod.POST})
@@ -103,9 +107,28 @@ public class ServletController {
 
     @RequestMapping(value = "/getAllProducts", method = RequestMethod.GET)
     public ResponseEntity<List<Prodotto>> getAllProduct(HttpServletRequest request, HttpServletResponse response) {
+        int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+        int pageSize = 10; // Numero di prodotti per pagina
+
+        // Calcola l'indice di inizio per la pagina corrente
+        int startIndex = (pageNumber) * pageSize;
+
         List<Prodotto> prodotti = new ProductSQL().getAllProducts();
-        return ResponseEntity.ok().body(prodotti);
+
+        // Controlla se l'indice di inizio è superiore alla dimensione della lista dei prodotti
+        if (startIndex >= prodotti.size()) {
+            return ResponseEntity.ok().body(Collections.emptyList()); // Non ci sono più prodotti
+        }
+
+        // Calcola l'indice di fine per la pagina corrente
+        int endIndex = Math.min(startIndex + pageSize, prodotti.size());
+
+        // Estrai i prodotti per la pagina corrente
+        List<Prodotto> prodottiPagina = prodotti.subList(startIndex, endIndex);
+
+        return ResponseEntity.ok().body(prodottiPagina);
     }
+
 
     @RequestMapping(value = "/getProductById/**", method = RequestMethod.GET)
     public ResponseEntity<Prodotto> getProductById(HttpServletRequest request) {

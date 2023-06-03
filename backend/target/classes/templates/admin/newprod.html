@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
-
-<head>
+<html dir="ltr" lang="en"><head>
     <title>Aggiungi Prodotto</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -122,20 +119,20 @@
             color:#ffee00
         }
     </style>
-</head>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></head>
+
+
 <body style="background-color: black">
 <div id="header">
     <a href="http://localhost:4200">    <img id="logo" src="/logo.png" alt="Logo">
     </a>
 </div>
 <button id="back" onclick="window.location.replace('http://localhost:8080/admin/catalog')" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Indietro</button>
-<div class="wrapper" style="background-color: white">
+<div class="wrapper" style="background-color: white;height: 1000px;">
 
     <div class="text-center mt-4 name">NUOVO PRODOTTO</div>
 
-    <form id="upload" class="p-3 mt-3" name="reg" style="height: fit-content;">
+    <form id="upload" class="p-3 mt-3" name="reg" style="height: 673px;">
         <div class="form-field d-flex align-items-center"><input id="Nome" name="Nome" placeholder="Nome" type="text"></div>
         <div class="form-field d-flex align-items-center"><input id="Marchio" name="Marchio" placeholder="Marchio" type="text"></div>
         <div class="form-field d-flex align-items-center"><input id="size_cps" name="size_cps" placeholder="size_cps" type="text"></div>
@@ -146,8 +143,16 @@
         <div class="form-field d-flex align-items-center"><input id="prezzo" name="prezzo" placeholder="prezzo" type="text"></div>
         <div class="form-field d-flex align-items-center"><input id="descrizione" name="descrizione" placeholder="descrizione" type="text"></div>
         <div class="form-field d-flex align-items-center"><input id="categoria" name="categoria" placeholder="categoria" type="text"></div>
-        <div class="form-field d-flex align-items-center"><input type="file" id="image" name="image" accept="image/*"></div>
-        <button class="btn mt-3" type="submit" id="submit" style="margin-top: -10px;">AGGIUNGI PRODOTTO</button><br>
+        <label for="image" style="margin-left: 10px;">Valori Nutrizionali:</label>
+        <div class="form-field d-flex align-items-center" style="margin-bottom: 0px;">
+            <input type="file" id="image" name="image" accept="image/*" style="">
+        </div>
+
+        <label for="image" style="margin-left: 10px;margin-top: 10px;">Foto Prodotto:</label>
+        <div class="form-field d-flex align-items-center" style="margin-bottom: 0px;">
+            <input type="file" id="imgprod" name="imgprod" accept="image/*" style="">
+        </div>
+        <button class="btn mt-3" type="submit" id="submit" style="margin-top: 20px;">AGGIUNGI PRODOTTO</button><br>
     </form>
     &nbsp;
     &nbsp;
@@ -169,5 +174,5 @@
         })
     })
 </script>
-</body>
-</html>
+
+</body></html>

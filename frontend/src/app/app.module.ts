@@ -23,7 +23,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { CategoryComponent } from './Component/category/category.component';
 import { SearchComponent } from './Component/search/search.component';
 import { InfoComponent } from './Component/info/info.component';
-import { FacebookModule } from 'ngx-facebook';
+import { FacebookModule, InitParams } from 'ngx-facebook';
 
 
 
@@ -58,7 +58,8 @@ import { FacebookModule } from 'ngx-facebook';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FacebookModule,
+    FacebookModule.forRoot()
+
 
   ],
   providers: [CookieService],

@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {ProductService} from "../../Service/product.service";
 import {Router} from "@angular/router";
@@ -15,7 +15,7 @@ import {CartService} from "../../Service/cart.service";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   pageNumber: number = 0;
   product: any[] = [];
   showLoadButton = false;
@@ -107,5 +107,9 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
       this.productAddedToCart = null;
     }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    this.product =[];
   }
 }

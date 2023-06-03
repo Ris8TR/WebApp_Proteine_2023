@@ -10,6 +10,7 @@ import {FacebookService, InitParams} from "ngx-facebook";
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
+
 export class ProductComponent implements OnInit {
   ID: number | undefined;
   product: any = {};
@@ -23,17 +24,20 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private facebookService: FacebookService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     const initParams: InitParams = {
       appId: '560352242616863',
       xfbml: true,
       version: 'v2.8'
     };
 
-    facebookService.init(initParams);
-  }
+    // Inizializza il servizio di Facebook dopo che la libreria è stata caricata correttamente
+    window.onload = () => {
+      this.facebookService.init(initParams);
+    };
 
-  ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.ID = Number(params.get('id'));
       this.getProductById();
@@ -61,19 +65,20 @@ export class ProductComponent implements OnInit {
 
     const imageBlob = this.base64ToBlob(base64Image);
     this.productImageUrl = URL.createObjectURL(imageBlob);
-
   }
 
   goBack() {
     this.router.navigateByUrl('/home');
   }
-  addToCart(ID){
+
+  addToCart(ID) {
     this.cartService.addToCart(ID);
     this.productAddedToCart = ID;
     setTimeout(() => {
       this.productAddedToCart = null;
     }, 1000);
   }
+
   getProductImageSrc(base64Image: string): string {
     if (!base64Image) {
       return '';
@@ -83,7 +88,7 @@ export class ProductComponent implements OnInit {
     const imageUrl = URL.createObjectURL(imageBlob);
 
     setTimeout(() => {
-      this.productImageUrl = imageUrl; // Assegna il valore all'attributo 'src' dopo il ciclo di rilevamento dei cambiamenti
+      this.productImageUrl = imageUrl;
     });
 
     return this.productImageUrl;
@@ -98,7 +103,7 @@ export class ProductComponent implements OnInit {
       uint8Array[i] = byteString.charCodeAt(i);
     }
 
-    const blob = new Blob([arrayBuffer], { type: 'image/jpeg' }); // Assumendo che l'immagine sia in formato JPEG
+    const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
 
     return blob;
   }
