@@ -56,7 +56,6 @@ export class ProductComponent implements OnInit {
     this.productService.getProductById(this.ID).subscribe(
       (data: any) => {
         this.product = data;
-        console.log(this.product);
         this.setProductImageSrc(this.product.foto);
         this.setProductValSrc(this.product.val_nutr);
       },

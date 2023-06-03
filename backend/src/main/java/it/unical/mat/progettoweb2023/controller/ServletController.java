@@ -142,29 +142,55 @@ public class ServletController {
         return ResponseEntity.ok().body(prodotto);
     }
 
-    @RequestMapping(value = "/getProductByCategory/**", method = RequestMethod.GET)
-    public ResponseEntity<List<Prodotto>> getAllProductByCategory(HttpServletRequest request, HttpServletResponse response) {
-        String resource = request.getRequestURI().substring("/getProductByCategory/".length());
-        List <Prodotto> prodotti = new ProductSQL().getAllProductsByCategory(resource);
-        if (prodotti == null) {
-            // Prodotto non trovato, restituisci una risposta 404 Not Found
-            return ResponseEntity.notFound().build();
+    @RequestMapping(value = "/getProductByCategory", method = RequestMethod.GET)
+    public ResponseEntity<List<Prodotto>> getProductByCategory(HttpServletRequest request, HttpServletResponse response,
+                                                               @RequestParam("pageNumber") int pageNumber) {
+        int pageSize = 12; // Numero di prodotti per pagina
+
+        // Calcola l'indice di inizio per la pagina corrente
+        int startIndex = (pageNumber) * pageSize;
+
+        String productCategory = request.getParameter("productCategory");
+        List<Prodotto> prodotti = new ProductSQL().getAllProductsByCategory(productCategory);
+
+        // Controlla se l'indice di inizio è superiore alla dimensione della lista dei prodotti
+        if (startIndex >= prodotti.size()) {
+            return ResponseEntity.ok().body(Collections.emptyList()); // Non ci sono più prodotti
         }
 
-        return ResponseEntity.ok().body(prodotti);
+        // Calcola l'indice di fine per la pagina corrente
+        int endIndex = Math.min(startIndex + pageSize, prodotti.size());
+
+        // Estrai i prodotti per la pagina corrente
+        List<Prodotto> prodottiPagina = prodotti.subList(startIndex, endIndex);
+
+        return ResponseEntity.ok().body(prodottiPagina);
     }
 
 
-    @RequestMapping(value = "/getProductsBySearch/**", method = RequestMethod.GET)
-    public ResponseEntity<List<Prodotto>> getProducstBySearch(HttpServletRequest request, HttpServletResponse response) {
-        String resource = request.getRequestURI().substring("/getProductsBySearch/".length());
-        List <Prodotto> prodotti = new ProductSQL().getProductsBySearch(resource);
-        if (prodotti == null) {
-            // Prodotto non trovato, restituisci una risposta 404 Not Found
-            return ResponseEntity.notFound().build();
+    @RequestMapping(value = "/getProductsBySearch", method = RequestMethod.GET)
+    public ResponseEntity<List<Prodotto>> getProductsBySearch(HttpServletRequest request, HttpServletResponse response,
+    @RequestParam("pageNumber") int pageNumber) {
+        int pageSize = 12; // Numero di prodotti per pagina
+
+        // Calcola l'indice di inizio per la pagina corrente
+        int startIndex = (pageNumber) * pageSize;
+
+        String searchKeyword = request.getParameter("searchKeyword");
+        List<Prodotto> prodotti = new ProductSQL().getProductsBySearch(searchKeyword);
+
+        // Controlla se l'indice di inizio è superiore alla dimensione della lista dei prodotti
+        if (startIndex >= prodotti.size()) {
+            return ResponseEntity.ok().body(Collections.emptyList()); // Non ci sono più prodotti
         }
 
-        return ResponseEntity.ok().body(prodotti);
+        // Calcola l'indice di fine per la pagina corrente
+        int endIndex = Math.min(startIndex + pageSize, prodotti.size());
+
+        // Estrai i prodotti per la pagina corrente
+        List<Prodotto> prodottiPagina = prodotti.subList(startIndex, endIndex);
+
+        return ResponseEntity.ok().body(prodottiPagina);
     }
 
 

@@ -50,7 +50,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .getAllProducts(this.pageNumber)
       .pipe(
         tap((resp: Product[]) => {
-          console.log(resp);
           resp.forEach((p: Product) => {
             p.imageUrl = this.setProductImageSrc(p.foto);
             this.product.push(p);

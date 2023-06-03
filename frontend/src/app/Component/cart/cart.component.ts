@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {ProductService} from "../../Service/product.service";
-import {Product} from "../../Model/Product.model";
+
 
 @Component({
   selector: 'app-cart',
@@ -94,9 +94,16 @@ removeFromCart(index: number): void {
   this.saveCartItems(this.product);
 }
 
-private saveCartItems(cartItems: { product_id: number, quantity: number }[]): void {
-  this.cookieService.set('cartItems', JSON.stringify(cartItems), 1, '/');
-}
+  private saveCartItems(cartItems: { product_id: number, quantity: number }[]): void {
+    // Elimina il cookie precedente per i carrelli
+    this.cookieService.delete('cartItems', '/');
+
+    // Crea un nuovo array di oggetti con ID prodotto e quantità
+    const updatedCartItems = cartItems.map(item => ({ product_id: item.product_id, quantity: item.quantity }));
+
+    // Salva il nuovo array di oggetti come cookie
+    this.cookieService.set('cartItems', JSON.stringify(updatedCartItems), 1, '/');
+  }
 
 
 

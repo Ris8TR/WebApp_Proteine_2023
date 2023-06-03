@@ -18,7 +18,7 @@ export class CategoryComponent implements OnInit{
   Category: string | undefined;
   pageNumber: number = 0;
   product: any[] = [];
-  showLoadButton = false;
+  disableLoadMore
   productAddedToCart: number | null = null;
   constructor(private productService: ProductService,
               private http: HttpClient,
@@ -27,27 +27,15 @@ export class CategoryComponent implements OnInit{
               private route: ActivatedRoute,
               private router : Router) { }
 
-  ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-    this.Category = String(params.get('categoryid'));
-    this.getProductByCategory();
-  });
-  }
-
-  getCategory(){
-    return this.Category;
-  }
 
 
-
-
-  public getProductByCategory() {
-    this.product = []; // Reset dell'array product
-    this.productService.getProductByCategory(this.Category)
+  public getProductByCategory(pageNumber: number) {
+    this.pageNumber = pageNumber;
+    this.productService.getProductByCategory(pageNumber, this.Category)
       .pipe(
         tap((resp: Product[]) => {
           console.log(resp);
-          this.showLoadButton = resp.length == 8;
+          this.disableLoadMore = resp.length == 8;
           resp.forEach((p: Product) => {
             p.imageUrl = this.setProductImageSrc(p.foto);
             this.product.push(p);
@@ -61,6 +49,43 @@ export class CategoryComponent implements OnInit{
         }
       );
   }
+
+  public getmoreProductByCategory(pageNumber: number) {
+    this.pageNumber = pageNumber;
+    this.productService.getProductByCategory(pageNumber, this.Category)
+      .pipe(
+        tap((resp: Product[]) => {
+          this.disableLoadMore = resp.length == 8;
+          resp.forEach((p: Product) => {
+            p.imageUrl = this.setProductImageSrc(p.foto);
+            this.product.push(p);
+          });
+        })
+      )
+      .subscribe(
+        () => {},
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      );
+  }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.Category = String(params.get('categoryid'));
+      this.pageNumber = 0;
+      this.product = []; // Reset dell'array product
+      this.getProductByCategory(this.pageNumber);
+    });
+  }
+
+
+
+  getCategory(){
+    return this.Category;
+  }
+
+
   setProductImageSrc(base64Image: string): string {
     if (!base64Image) {
       return '/./assets/images/logo.png';
@@ -88,7 +113,7 @@ export class CategoryComponent implements OnInit{
 
   public loadMoreProduct(){
     this.pageNumber = this.pageNumber+1;
-    this.getProductByCategory();
+    this.getmoreProductByCategory(this.pageNumber);
   }
 
   showProductDetails(productId){

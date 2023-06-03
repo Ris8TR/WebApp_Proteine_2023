@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductService} from "../../Service/product.service";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
@@ -12,13 +12,13 @@ import {Product} from "../../Model/Product.model";
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit{
 
 
   search: string | undefined;
   pageNumber: number = 0;
   product: any[] = [];
-  showLoadButton = false;
+  disableLoadMore= false;
   productAddedToCart: number | null = null;
   constructor(private productService: ProductService,
               private http: HttpClient,
@@ -30,18 +30,20 @@ export class SearchComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.search = String(params.get('searchstring'));
-      this.getProductsBySearch();
+      this.getProductsBySearch(0);
     });
   }
 
 
-  getProductsBySearch() {
+  public getProductsBySearch(pageNumber: number) {
     this.product = []; // Reset dell'array product
-    this.productService.getProductsBySearch(this.search)
+    if (!this.search || this.search.trim() === '') {
+      return; // Non eseguire la chiamata API se la barra di ricerca è vuota
+    }
+    this.productService.getProductsBySearch(pageNumber, this.search)
       .pipe(
         tap((resp: Product[]) => {
-          console.log(resp);
-          this.showLoadButton = resp.length == 8;
+          this.disableLoadMore = resp.length == 8;
           resp.forEach((p: Product) => {
             p.imageUrl = this.setProductImageSrc(p.foto);
             this.product.push(p);
@@ -55,6 +57,28 @@ export class SearchComponent {
         }
       );
   }
+
+  public getmoreProductsBySearch(pageNumber: number) {
+
+    this.productService.getProductsBySearch(pageNumber, this.search)
+      .pipe(
+        tap((resp: Product[]) => {
+          console.log(resp);
+          this.disableLoadMore = resp.length == 8;
+          resp.forEach((p: Product) => {
+            p.imageUrl = this.setProductImageSrc(p.foto);
+            this.product.push(p);
+          });
+        })
+      )
+      .subscribe(
+        () => {},
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      );
+  }
+
 
   setProductImageSrc(base64Image: string): string {
     if (!base64Image) {
@@ -83,7 +107,7 @@ export class SearchComponent {
 
   public loadMoreProduct(){
     this.pageNumber = this.pageNumber+1;
-    this.getProductsBySearch();
+    this.getmoreProductsBySearch(this.pageNumber);
   }
 
   showProductDetails(productId){

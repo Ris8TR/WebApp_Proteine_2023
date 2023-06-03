@@ -19,5 +19,8 @@
         </div>
       </div>
     </div>
+    <div style="width: 100%;">
+      <button class="btn custom-button" style="margin-left: 40%; margin-top: 5%; margin-bottom: 5%" (click)="loadMoreProduct()" [disabled]="disableLoadMore || !(product.length > 0 && (product.length % 12 === 0))">Carica altri prodotti</button>
+    </div>
   </div>
 </mat-sidenav-content>
