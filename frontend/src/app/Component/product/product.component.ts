@@ -5,6 +5,13 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {CartService} from "../../Service/cart.service";
 import {FacebookService, InitParams} from "ngx-facebook";
 
+declare global {
+  interface Window {
+    fbAsyncInit: any;
+    FB: any;
+  }
+}
+
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
