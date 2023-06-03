@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from "../../Service/product.service";
-import {ImageProcessingService} from "../../Service/image-processing.service";
 import {Router} from "@angular/router";
 import {tap} from "rxjs/operators";
 import {Product} from "../../Model/Product.model";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {MatSidenav} from "@angular/material/sidenav";
 import {CookieService} from "ngx-cookie-service";
 
 
@@ -34,7 +32,8 @@ export class HeaderComponent implements OnInit{
 
   redirectToSearch(searchKeyword: string) {
 
-    this.router.navigate(['/search', searchKeyword]);
+    const formattedSearch = searchKeyword.toUpperCase();
+    this.router.navigate(['/search', formattedSearch]);
 
   }
 

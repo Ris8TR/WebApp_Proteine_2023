@@ -6,9 +6,10 @@ export interface Product {
   productDescription: String,
   productDiscountedPrice: number,
   productActualPrice: number,
-  productImages: any
   val_nutr: any;
+  foto:any
   imageUrl: any;
+
 
 
 }

@@ -2,23 +2,25 @@
   <h1 style="align-self: center">Dai un'occhiata al nostro catalogo:</h1>
   <div class="container" style="display: flex; flex-wrap: wrap; flex-grow: 1;">
     <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let item of product; let i = index">
-      <div class="card" style="width: 300px">
+      <div class="card custom-card" style="width: 300px; position: relative;">
         <a [routerLink]="['/product', item.id_prodotto]">
-          <img [src]="item.imageUrl" class="card-img-top" alt="{{item.title}}">
+          <img [src]="item.imageUrl" class="card-img-top card-image" alt="{{item.title}}">
         </a>
         <div class="card-body">
           <h5 class="card-title">{{item.marchio}}</h5>
           <h2 class="card-text">{{item.nome}}</h2>
-          <button *ngIf="item.available" class="btn custom-button" [disabled]="productAddedToCart === item.id_prodotto" [ngClass]="{'product-added': productAddedToCart === item.id_prodotto}" (click)="addToCart(item.id_prodotto)">
-            {{ productAddedToCart === item.id_prodotto ? 'Prodotto aggiunto' : 'Aggiungi al carrello' }}
-          </button>
-          <span *ngIf="!item.available" class="btn not-available-text" style="color: red; border-color: red; border-radius: 25px; letter-spacing: 1.3px;">Prodotto non disponibile</span>
+          <div class="add-to-cart-wrapper">
+            <h2 class="card-text" style="margin-top: 5px">{{item.prezzo}}€</h2>
+            <button *ngIf="item.available" class="btn custom-button" [disabled]="productAddedToCart === item.id_prodotto" [ngClass]="{'product-added': productAddedToCart === item.id_prodotto}" (click)="addToCart(item.id_prodotto)">
+              {{ productAddedToCart === item.id_prodotto ? 'Prodotto aggiunto' : 'Aggiungi al carrello' }}
+            </button>
+            <span *ngIf="!item.available" class="btn not-available-text" style="color: red; border-color: red; border-radius: 25px; letter-spacing: 1.3px;">Prodotto non disponibile</span>
+          </div>
         </div>
       </div>
     </div>
     <div style="width: 100%;">
-      <button class="btn custom-button" style="margin-left: 50%; margin-top: 5%; margin-bottom: 5%" (click)="loadMoreProduct()" [disabled]="!(product.length > 0 && (product.length % 10 === 0))">Carica altri prodotti</button>
+      <button class="btn custom-button" style="margin-left: 50%; margin-top: 5%; margin-bottom: 5%" (click)="loadMoreProduct()" [disabled]="disableLoadMore || !(product.length > 0 && (product.length % 12 === 0))">Carica altri prodotti</button>
     </div>
-
   </div>
 </mat-sidenav-content>

@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductService} from "../../Service/product.service";
-import {ImageProcessingService} from "../../Service/image-processing.service";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -22,7 +21,6 @@ export class CategoryComponent implements OnInit{
   showLoadButton = false;
   productAddedToCart: number | null = null;
   constructor(private productService: ProductService,
-              private imageProcessingService: ImageProcessingService,
               private http: HttpClient,
               private cookieService: CookieService,
               private cartService: CartService,
@@ -51,7 +49,7 @@ export class CategoryComponent implements OnInit{
           console.log(resp);
           this.showLoadButton = resp.length == 8;
           resp.forEach((p: Product) => {
-            p.imageUrl = this.setProductImageSrc(p.val_nutr);
+            p.imageUrl = this.setProductImageSrc(p.foto);
             this.product.push(p);
           });
         })

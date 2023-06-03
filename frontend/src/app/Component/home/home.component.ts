@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {ProductService} from "../../Service/product.service";
 import {Router} from "@angular/router";
-import {ImageProcessingService} from "../../Service/image-processing.service";
 import {Product} from "../../Model/Product.model";
 import { tap } from 'rxjs/operators';
 import {CookieService} from "ngx-cookie-service";
@@ -18,12 +17,12 @@ import {CartService} from "../../Service/cart.service";
 export class HomeComponent implements OnInit, OnDestroy {
   pageNumber: number = 0;
   product: any[] = [];
-  showLoadButton = false;
+  disableLoadMore = false;
+
   productAddedToCart: number | null = null;
 
   constructor(
     private productService: ProductService,
-    private imageProcessingService: ImageProcessingService,
     private http: HttpClient,
     private cartService: CartService,
     private cookieService: CookieService,
@@ -42,6 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public getAllProducts(searchKey: string = "") {
     this.pageNumber = 0;
     this.product = [];
+    this.disableLoadMore = false; // Resetta il flag di disabilitazione
     this.loadProducts();
   }
 
@@ -51,9 +51,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(
         tap((resp: Product[]) => {
           console.log(resp);
-          this.showLoadButton = resp.length == 10;
           resp.forEach((p: Product) => {
-            p.imageUrl = this.setProductImageSrc(p.val_nutr);
+            p.imageUrl = this.setProductImageSrc(p.foto);
             this.product.push(p);
           });
         })
@@ -65,8 +64,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       );
   }
-
-
 
   setProductImageSrc(base64Image: string): string {
     if (!base64Image) {
@@ -110,6 +107,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.product =[];
+    this.product = [];
   }
 }

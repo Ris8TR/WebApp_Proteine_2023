@@ -15,18 +15,15 @@ export class ProductService {
 
 
   public getAllProducts(pageNumber: number, searchKeyword: string = ""): Observable<Product[]> {
-    const url = `http://localhost:8080/getAllProducts?pageNumber=${pageNumber}`;
-    return this.httpClient.get<Product[]>(url);
+    return this.httpClient.get<Product[]>('http://localhost:8080/getAllProducts?pageNumber='+pageNumber);
   }
 
 
 
   public getProductById(productId){
-    console.log(productId)
     return this.httpClient.get<Product>("http://localhost:8080/getProductById/"+productId);
   }
   public getProductByCategory(productCategory){
-    console.log(productCategory)
     return this.httpClient.get<Product[]>("http://localhost:8080/getProductByCategory/"+productCategory);
   }
 

@@ -108,7 +108,7 @@ public class ServletController {
     @RequestMapping(value = "/getAllProducts", method = RequestMethod.GET)
     public ResponseEntity<List<Prodotto>> getAllProduct(HttpServletRequest request, HttpServletResponse response) {
         int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-        int pageSize = 10; // Numero di prodotti per pagina
+        int pageSize = 12; // Numero di prodotti per pagina
 
         // Calcola l'indice di inizio per la pagina corrente
         int startIndex = (pageNumber) * pageSize;
@@ -159,7 +159,6 @@ public class ServletController {
     public ResponseEntity<List<Prodotto>> getProducstBySearch(HttpServletRequest request, HttpServletResponse response) {
         String resource = request.getRequestURI().substring("/getProductsBySearch/".length());
         List <Prodotto> prodotti = new ProductSQL().getProductsBySearch(resource);
-        System.out.println(resource);
         if (prodotti == null) {
             // Prodotto non trovato, restituisci una risposta 404 Not Found
             return ResponseEntity.notFound().build();

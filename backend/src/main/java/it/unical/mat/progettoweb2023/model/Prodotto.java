@@ -15,7 +15,7 @@ public class Prodotto {
     Integer prezzo;
     String descrizione;
     byte[] val_nutr;   //base64
-    byte[] foto; //base64
+    byte[] foto_prod; //base64
     String categoria;
 
 
@@ -65,11 +65,11 @@ public class Prodotto {
     }
 
     public String getFoto() {
-        if(foto==null){
+        if(foto_prod==null){
             return null;
         }
         else{
-            return new String(foto);
+            return new String(foto_prod);
         }
     }
 
@@ -138,7 +138,7 @@ public class Prodotto {
     }
 
     public void setFoto(byte[] foto) {
-        this.foto = foto;
+        this.foto_prod = foto;
     }
 
     public void setVal_nutr(byte[] val_nutr) {

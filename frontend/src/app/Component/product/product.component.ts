@@ -22,6 +22,7 @@ export class ProductComponent implements OnInit {
   ID: number | undefined;
   product: any = {};
   productImageUrl: any;
+  productValueUrl: any;
   productAddedToCart: number | null = null;
 
   constructor(
@@ -56,12 +57,23 @@ export class ProductComponent implements OnInit {
       (data: any) => {
         this.product = data;
         console.log(this.product);
-        this.setProductImageSrc(this.product.val_nutr);
+        this.setProductImageSrc(this.product.foto);
+        this.setProductValSrc(this.product.val_nutr);
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  setProductValSrc(base64Image: string): void {
+    if (!base64Image) {
+      this.productValueUrl = '/./assets/images/logo.png';
+      return;
+    }
+
+    const imageBlob = this.base64ToBlob(base64Image);
+    this.productValueUrl = URL.createObjectURL(imageBlob);
   }
 
   setProductImageSrc(base64Image: string): void {

@@ -41,7 +41,7 @@ export class CartComponent implements OnInit {
         const cartItem = this.product.find(item => item.product_id === productId);
         if (cartItem) {
           cartItem.product = data;
-          this.setProductImageSrc(cartItem.product.val_nutr, cartItem);
+          this.setProductImageSrc(cartItem.product.foto, cartItem);
         }
       },
       (error) => {

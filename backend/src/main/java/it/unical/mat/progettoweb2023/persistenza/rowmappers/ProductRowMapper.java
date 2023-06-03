@@ -18,6 +18,7 @@ public class ProductRowMapper implements RowMapper<Prodotto> {
         product.setPrezzo(rs.getInt("prezzo"));
         product.setDescrizione(rs.getString("descrizione"));
         product.setVal_nutr(rs.getBytes("valori_nutrizionali"));
+        product.setFoto(rs.getBytes("foto_prod"));
         product.setCategoria(rs.getString("categoria"));
         return product;
     }

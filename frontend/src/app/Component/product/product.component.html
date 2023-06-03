@@ -13,7 +13,7 @@
             <h1 class="card-text">{{ product.nome }}</h1>
             <div class="description-container">
               <h3 class="card-text">{{ product.descrizione }}</h3>
-              <h3 class="card-text">Prezzo: ${{ product.prezzo }}</h3>
+              <h3 class="card-text">Prezzo: {{ product.prezzo }}€</h3>
             </div>
             <button *ngIf="product.available" class="btn  custom-button" [disabled]="productAddedToCart === product.id_prodotto" [ngClass]="{'product-added': productAddedToCart === product.id_prodotto}" (click)="addToCart(product.id_prodotto)">
               {{ productAddedToCart === product.id_prodotto ? 'Prodotto aggiunto' : 'Aggiungi al carrello' }}
@@ -39,13 +39,11 @@
                 <span style="color: red;">Contiene lattosio</span>
               </ng-template>
             </h3>
+            <img class="card-img-top"  [src]="productValueUrl" style="flex: 1; max-height: 400px">
             <a target="_blank" class="btn btn-info btn-sm m-1" style="height: 50px;"
             [href]="'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('http://localhost:4200/product/' + product.id_prodotto)">
                         <i class="fa-brands fa-facebook">Condividi su Facebook</i>
             </a>
-
-
-
           </div>
         </div>
       </div>

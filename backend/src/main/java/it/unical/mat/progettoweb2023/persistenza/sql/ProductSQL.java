@@ -49,11 +49,13 @@ public class ProductSQL implements ProductDAO {
 
     @Override
     @CrossOrigin("http://localhost:4200")
-    public List<Prodotto> getProductsBySearch(String Search) {
-        String sql = "SELECT * FROM prodotti WHERE prodotti.nome = ? or prodotti.marchio = ?";
-        List<Prodotto> products = jdbcTemplate.query(sql, new Object[]{Search, Search}, new ProductRowMapper());
+    public List<Prodotto> getProductsBySearch(String search) {
+        String sql = "SELECT * FROM prodotti WHERE LOWER(prodotti.nome) ILIKE LOWER(?) OR LOWER(prodotti.marchio) ILIKE LOWER(?)";
+        String searchTerm = "%" + search.toLowerCase() + "%";
+        List<Prodotto> products = jdbcTemplate.query(sql, new Object[]{searchTerm, searchTerm}, new ProductRowMapper());
         return products;
     }
+
 
 
 
