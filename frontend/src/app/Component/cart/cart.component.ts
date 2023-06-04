@@ -125,6 +125,7 @@ removeFromCart(index: number): void {
 
     this.productService.sendOrder(order).subscribe(
       (response) => {
+
         console.log('Order created:', response);
         // Clear the cart items after successful order creation
         this.product = [];
@@ -133,6 +134,7 @@ removeFromCart(index: number): void {
       },
       (error) => {
         this.ordineCreato=false;
+        console.log(order)
         console.error('Error creating order:', error);
       }
     );
