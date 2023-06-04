@@ -19,8 +19,8 @@ public class UserSQL implements UserDAO {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/progetto2023");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("toor");
+        dataSource.setUsername(Data.USER);
+        dataSource.setPassword(Data.PASS);
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
     @Override
