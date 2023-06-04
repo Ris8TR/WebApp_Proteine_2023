@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {ProductService} from "../../Service/product.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Product} from "../../Model/Product.model";
 import { tap } from 'rxjs/operators';
 import {CookieService} from "ngx-cookie-service";
 import {CartService} from "../../Service/cart.service";
+import {NavigationService} from "../../Service/navigation.service";
 
 
 
@@ -26,17 +27,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private cartService: CartService,
     private cookieService: CookieService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private navigationService: NavigationService
   ) {}
 
   ngOnInit(): void {
     this.getAllProducts();
   }
 
-  getProductById(id: number) {
-    const url = `/getProductsById?id=${id}`;
-    return this.http.get<Product>(url);
-  }
 
   public getAllProducts(searchKey: string = "") {
     this.pageNumber = 0;
@@ -94,7 +93,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   showProductDetails(productId) {
-    this.router.navigate(['/product', { productId: productId }]);
+    const currentRoute = this.router.url;
+    this.navigationService.setPreviousComponent(currentRoute);
+    this.router.navigate(['/product',  productId ]);
   }
 
   addToCart(ID) {

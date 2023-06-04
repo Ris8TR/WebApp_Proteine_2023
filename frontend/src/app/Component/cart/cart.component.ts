@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {ProductService} from "../../Service/product.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {NavigationService} from "../../Service/navigation.service";
 
 
 @Component({
@@ -11,7 +13,10 @@ import {ProductService} from "../../Service/product.service";
 export class CartComponent implements OnInit {
   product: any[] = [];
 
-  constructor(private cookieService: CookieService, private productService: ProductService) {}
+  constructor(private cookieService: CookieService,
+              private productService: ProductService,
+              private navigationService: NavigationService,
+              private router: Router) {}
 
   ngOnInit(): void {
     // Leggi l'elenco dei prodotti dal cookie
@@ -48,6 +53,12 @@ export class CartComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  showProductDetails(productId){
+    const currentRoute = this.router.url;
+    this.navigationService.setPreviousComponent(currentRoute);
+    this.router.navigate(['/product',  productId ]);
   }
 
   setProductImageSrc(base64Image: string, cartItem: any): void {

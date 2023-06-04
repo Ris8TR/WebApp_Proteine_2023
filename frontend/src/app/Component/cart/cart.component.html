@@ -3,28 +3,28 @@
   <div class="container" style="display: flex; min-height: 1050px; min-height: 1050px; flex-wrap: wrap; flex-grow: 1;">
     <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let item of product; let i = index">
       <div class="card custom-card" style="width: 300px; position: relative;">
-        <a [routerLink]="['/product', item.id_prodotto]">
+        <a (click)=showProductDetails(item.product?.id_prodotto)>
           <img [src]="item.product?.imageUrl" class="card-img-top card-image" alt="{{item.title}}">
         </a>
         <div class="card-body">
           <h5 class="card-title">{{item.product?.marchio}}</h5>
-          <h2 class="card-text">{{item.product?.nome}}</h2>
-          <div class="add-to-cart-wrapper">
-              <div class="art-wrapper" style="width: 100%; margin-top: 20px; overflow: hidden; white-space: nowrap;">
-                <p>Quantità: {{ item.quantity }}</p>
-                <p style="display: inline-block;"></p>
-                <div class="btn-group" style="display: inline-block;">
-                  <button class="btn custom-button" (click)="decreaseQuantity(i)">-</button>
-                  <button class="btn custom-button" (click)="increaseQuantity(i)">+</button>
-                  <button class="btn custom-button" style="margin: 10px" (click)="removeFromCart(i)">Rimuovi</button>
-                </div>
-                </div>
+          <h2 class="card-text" style="margin-bottom: 10px;">{{item.product?.nome}}</h2>
+          <div class="cart-wrapper">
+            <div class="art-wrapper" style="width: 100%; margin-top: 20px; overflow: hidden; white-space: nowrap;">
+              <p style="display: inline-block;">Quantità: {{ item.quantity }}</p>
+              <div class="btn-group" style="display: inline-block; margin-left: 30px;">
+                <button class="btn custom-button" (click)="decreaseQuantity(i)">-</button>
+                <button class="btn custom-button" (click)="increaseQuantity(i)">+</button>
+                <button class="btn custom-button" style="margin-left: 5px;" (click)="removeFromCart(i)">Rimuovi</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-  </mat-sidenav-content>
+    </div>
+  </div>
+</mat-sidenav-content>
+
 
 
 

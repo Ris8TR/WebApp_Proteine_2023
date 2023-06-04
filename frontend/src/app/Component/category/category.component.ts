@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CartService} from "../../Service/cart.service";
 import {tap} from "rxjs/operators";
 import {Product} from "../../Model/Product.model";
+import {NavigationService} from "../../Service/navigation.service";
 
 @Component({
   selector: 'app-category',
@@ -25,6 +26,7 @@ export class CategoryComponent implements OnInit{
               private cookieService: CookieService,
               private cartService: CartService,
               private route: ActivatedRoute,
+              private navigationService: NavigationService,
               private router : Router) { }
 
 
@@ -117,7 +119,9 @@ export class CategoryComponent implements OnInit{
   }
 
   showProductDetails(productId){
-    this.router.navigate(['/product' , {productId: productId}]);
+    const currentRoute = this.router.url;
+    this.navigationService.setPreviousComponent(currentRoute);
+    this.router.navigate(['/product',  productId ]);
   }
 
 

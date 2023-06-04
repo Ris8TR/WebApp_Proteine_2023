@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CartService} from "../../Service/cart.service";
 import {FacebookService, InitParams} from "ngx-facebook";
+import {NavigationService} from "../../Service/navigation.service";
 
 declare global {
   interface Window {
@@ -31,7 +32,8 @@ export class ProductComponent implements OnInit {
     private cartService: CartService,
     private route: ActivatedRoute,
     private router: Router,
-    private facebookService: FacebookService
+    private facebookService: FacebookService,
+    private navigationService: NavigationService
   ) {}
 
   ngOnInit(): void {
@@ -86,7 +88,7 @@ export class ProductComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigateByUrl('/home');
+      this.navigationService.goBack();
   }
 
   addToCart(ID) {
@@ -97,20 +99,6 @@ export class ProductComponent implements OnInit {
     }, 1000);
   }
 
-  getProductImageSrc(base64Image: string): string {
-    if (!base64Image) {
-      return '';
-    }
-
-    const imageBlob = this.base64ToBlob(base64Image);
-    const imageUrl = URL.createObjectURL(imageBlob);
-
-    setTimeout(() => {
-      this.productImageUrl = imageUrl;
-    });
-
-    return this.productImageUrl;
-  }
 
   base64ToBlob(base64Data: string): Blob {
     const byteString = atob(base64Data);
