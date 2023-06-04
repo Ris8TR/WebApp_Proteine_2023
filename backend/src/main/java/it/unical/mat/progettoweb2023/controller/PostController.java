@@ -267,9 +267,9 @@ public class PostController {
         prod.setId_prodotto(id); prod.setNome(nome); prod.setMarchio(marchio);
         if(size_cps==0){prod.setSize_cps(null);}else{prod.setSize_cps(size_cps);}
         if(size_gr==0){prod.setSize_gr(null);}else{prod.setSize_gr(size_gr);}
-        if(vegan.equals("NO")){prod.setVegan(false);}else{prod.setVegan(true);}
-        if(available.equals("NO")){prod.setAvailable(false);}else{prod.setAvailable(true);}
-        if(lactose_free.equals("NO")){prod.setLactose_free(false);}else{prod.setLactose_free(true);}
+        if(vegan==null){prod.setVegan(false);}else{prod.setVegan(true);}
+        if(available==null){prod.setAvailable(false);}else{prod.setAvailable(true);}
+        if(lactose_free==null){prod.setLactose_free(false);}else{prod.setLactose_free(true);}
         prod.setPrezzo(prezzo); prod.setDescrizione(descrizione); prod.setVal_nutr(val_nutr);
         prod.setFoto(foto_prod);
         prod.setCategoria(categoria);
