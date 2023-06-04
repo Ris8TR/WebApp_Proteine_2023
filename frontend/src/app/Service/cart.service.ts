@@ -11,6 +11,9 @@ export class CartService {
   constructor( private cookieService: CookieService,private productService: ProductService) { }
 
 
+
+
+
   addToCart(productId: number): void {
     // Leggi l'elenco dei prodotti nel carrello dai cookie
     let cartItems: { product_id: number, quantity: number }[] = [];

@@ -10,14 +10,19 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
 }
 mat-form-field {
   margin-top: 20px;
   width: 50%;
   border: 10px;
-
-
 }
+
+.mat-form-field-appearance-fill .mat-form-field-infix {
+  background-color: yellow;
+}
+
+
 
 
 .logo {

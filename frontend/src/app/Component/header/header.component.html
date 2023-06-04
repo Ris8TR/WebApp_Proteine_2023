@@ -6,14 +6,14 @@
 </head>
 
 <body style="background-color: black; height: auto">
-<mat-toolbar style= "background-color: Black">
+<mat-toolbar style= "background-color: Black; ">
   <button mat-icon-button (click)="sidenav.toggle()"  style="margin-right: 5px"> <mat-icon>menu</mat-icon> </button>
   <button mat-icon-button class="icon" aria-label="Profilo" routerLink="../home" style="margin-right: 20px"> <mat-icon>home</mat-icon>
   </button>
   <span>IL PROGETTO MIGLIORE</span>
 
   <span class="Spazio_icone"></span>
-  <mat-form-field class="w-50">
+  <mat-form-field class="w-50" >
 
       <input #searchkeyword matInput name="Ricerca" id="searchKey" placeholder="Ricerca prodotto" (keyup)="redirectToSearch(searchkeyword.value)">
       <button mat-button matSuffix (click)="redirectToSearch(searchkeyword.value)">

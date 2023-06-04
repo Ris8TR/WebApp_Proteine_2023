@@ -4,6 +4,7 @@ import {Product} from "../Model/Product.model";
 import {Observable} from "rxjs";
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,11 +31,9 @@ export class ProductService {
   public getProductById(productId){
     return this.httpClient.get<Product>("http://localhost:8080/getProductById/"+productId);
   }
-/*
-  public deleteProduct(productId: number){
-    return this.httpClient.delete("http://localhost:8080/deleteProductDetails/"+productId);
-  }
 
-*/
+  public sendOrder(order: { items: { quantity: any; product_id: any }[] }): Observable<any> {
+    return this.httpClient.post('http://localhost:8080/checkout', order);
+  }
 
 }

@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit{
 
   redirectToSearch(searchKeyword: string) {
 
-    const formattedSearch = searchKeyword.toUpperCase();
+    const formattedSearch = searchKeyword.toLowerCase();
     this.router.navigate(['/search', formattedSearch]);
 
   }

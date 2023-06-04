@@ -15,6 +15,10 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        .wrapper .form-field input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
         #header {
             background-color: #000000;
             color: #ffee00;
@@ -51,7 +55,7 @@
             color: #555;
         }
 
-        .wrapper .form-field input {
+        .wrapper .form-field input[type="text"] {
             width: 100%;
             display: block;
             border: none;
@@ -63,7 +67,7 @@
             /* border: 1px solid red; */
         }
 
-        .wrapper .form-field {
+        .wrapper .form-field input[type="text"] {
             padding-left: 10px;
             margin-bottom: 20px;
             border-radius: 20px;
@@ -128,7 +132,7 @@
     </a>
 </div>
 <button id="back" onclick="window.location.replace('http://localhost:8080/admin/catalog')" style="margin-left: 100px;margin-top: 25px;width: 100px;height: 25px;">Indietro</button>
-<div class="wrapper" style="background-color: white;height: 1000px;">
+<div class="wrapper" style="background-color: white;height: 850px;">
 
     <div class="text-center mt-4 name">NUOVO PRODOTTO</div>
 
@@ -137,17 +141,16 @@
         <div class="form-field d-flex align-items-center"><input id="Marchio" name="Marchio" placeholder="Marchio" type="text"></div>
         <div class="form-field d-flex align-items-center"><input id="size_cps" name="size_cps" placeholder="size_cps" type="text"></div>
         <div class="form-field d-flex align-items-center"><input id="size_gr" name="size_gr" placeholder="size_gr" type="text"></div>
-        <div class="form-field d-flex align-items-center"><input id="vegan" name="vegan" placeholder="vegan" type="text"></div>
-        <div class="form-field d-flex align-items-center"><input id="available" name="available" placeholder="available" type="text"></div>
-        <div class="form-field d-flex align-items-center"><input id="lactose_free" name="lactose_free" placeholder="lactose_free" type="text"></div>
         <div class="form-field d-flex align-items-center"><input id="prezzo" name="prezzo" placeholder="prezzo" type="text"></div>
         <div class="form-field d-flex align-items-center"><input id="descrizione" name="descrizione" placeholder="descrizione" type="text"></div>
         <div class="form-field d-flex align-items-center"><input id="categoria" name="categoria" placeholder="categoria" type="text"></div>
+        <div class="form-field d-flex align-items-center" style="margin-bottom: 10px;margin-left: 30px;"><input id="vegan" name="vegan" type="checkbox"><label for="vegan" style="">Vegan</label></div>
+        <div class="form-field d-flex align-items-center" style="margin-bottom: 10px;margin-left: 30px;"><input id="available" name="available" type="checkbox"><label for="available">Available</label></div>
+        <div class="form-field d-flex align-items-center" style="margin-bottom: 10px;margin-left: 30px;"><input id="lactose_free" name="lactose_free" type="checkbox"><label for="lactose_free">Lactose_free</label></div>
         <label for="image" style="margin-left: 10px;">Valori Nutrizionali:</label>
         <div class="form-field d-flex align-items-center" style="margin-bottom: 0px;">
             <input type="file" id="image" name="image" accept="image/*" style="">
         </div>
-
         <label for="image" style="margin-left: 10px;margin-top: 10px;">Foto Prodotto:</label>
         <div class="form-field d-flex align-items-center" style="margin-bottom: 0px;">
             <input type="file" id="imgprod" name="imgprod" accept="image/*" style="">

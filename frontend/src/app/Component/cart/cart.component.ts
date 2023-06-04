@@ -3,6 +3,7 @@ import {CookieService} from "ngx-cookie-service";
 import {ProductService} from "../../Service/product.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NavigationService} from "../../Service/navigation.service";
+import {HttpClient} from "@angular/common/http";
 
 
 @Component({
@@ -12,14 +13,15 @@ import {NavigationService} from "../../Service/navigation.service";
 })
 export class CartComponent implements OnInit {
   product: any[] = [];
-
+  ordineCreato=false;
   constructor(private cookieService: CookieService,
               private productService: ProductService,
               private navigationService: NavigationService,
+              private http: HttpClient,
               private router: Router) {}
 
   ngOnInit(): void {
-    // Leggi l'elenco dei prodotti dal cookie
+    // Leggo l'elenco dei prodotti da cookie
 
     const cartItemsCookie = this.cookieService.get('cartItems');
     if (cartItemsCookie) {
@@ -27,8 +29,7 @@ export class CartComponent implements OnInit {
     } else {
       this.product = [];
     }
-
-    // Carica i dettagli dei prodotti solo quando il carrello viene inizialmente caricato
+    // Carico i dettagli dei prodotti
     this.loadProductDetails();
   }
 
@@ -115,6 +116,30 @@ removeFromCart(index: number): void {
     // Salva il nuovo array di oggetti come cookie
     this.cookieService.set('cartItems', JSON.stringify(updatedCartItems), 1, '/');
   }
+
+  createOrder(): void {
+    const orderItems = this.product.map(item => ({ product_id: item.product_id, quantity: item.quantity }));
+    const order = {
+      items: orderItems
+    };
+
+    this.productService.sendOrder(order).subscribe(
+      (response) => {
+        console.log('Order created:', response);
+        // Clear the cart items after successful order creation
+        this.product = [];
+        this.saveCartItems([]);
+        this.ordineCreato=true;
+      },
+      (error) => {
+        this.ordineCreato=false;
+        console.error('Error creating order:', error);
+      }
+    );
+
+  }
+
+
 
 
 
