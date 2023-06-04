@@ -37,9 +37,9 @@
   height: auto;
 }
 
-cart-wrapper {
+
+.add-to-cart-wrapper {
   position: absolute;
-  top:15px;
   bottom: 15px;
   left: 0;
   right: 10px;
