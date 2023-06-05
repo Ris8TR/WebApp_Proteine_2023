@@ -116,3 +116,6 @@ export class ProductComponent implements OnInit {
 
   protected readonly encodeURIComponent = encodeURIComponent;
 }
+
+
+

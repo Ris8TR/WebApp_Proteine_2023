@@ -167,11 +167,49 @@ public class PostController {
     @PostMapping("/checkout")
     @ResponseBody
     public Object checkout(HttpServletRequest request) {
-        String[] email = request.getParameterValues("items");
-        for(var c: email){
-            System.out.println(c);
-        }
-        return null;
+        String email = request.getParameter("customerName");
+            int totale = 0;
+            String date = request.getParameter("orderDate");
+            Integer n = Integer.valueOf(request.getParameter("num"));
+            Ordine order = new Ordine();
+            ProdOrd prod = new ProdOrd();
+
+            List<Integer> prods = new ArrayList<>();
+            List<Integer> quantita = new ArrayList<>();
+            order.setEmail(email);
+            order.setData(date);
+            if(n==0){
+                Integer product = Integer.valueOf(request.getParameter("products[0].name"));
+                Integer quantity = Integer.valueOf(request.getParameter("products[0].quantity"));
+                prods.add(product);
+                quantita.add(quantity);
+                int pr = new ProductSQL().getPrezzo(product);
+                totale += pr * quantity;
+                order.setTotale(totale);
+                prod.setId_prodotti(prods);
+                prod.setQuantita(quantita);
+            }
+            else{
+                Integer[] totali = new Integer[n];
+                for(int i=0;i<n;i++){
+                    int id=Integer.valueOf(request.getParameter("products["+i+"].name"));
+                    int quant=Integer.valueOf(request.getParameter("products["+i+"].quantity"));
+                    int p = new ProductSQL().getPrezzo(id);
+                    int tot = p*quant;
+                    totali[i] = tot;
+                    prods.add(id); quantita.add(quant);
+                }
+                int somma = 0;
+                for(int x:totali){
+                    somma+=x;
+                }
+                order.setTotale(somma);
+            }
+            int ordid = new OrderSQL().AddOrder(order);
+            prod.setId_prodotti(prods);
+            prod.setQuantita(quantita);
+            new ProdOrdSQL().AddProdOrd(prod,ordid);
+            return null;
     }
 
     @PostMapping("/elimina-utente/**")

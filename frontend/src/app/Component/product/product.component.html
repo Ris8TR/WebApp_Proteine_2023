@@ -41,6 +41,10 @@
             </h3>
             <img class="card-img-top"  [src]="productValueUrl" style="flex: 1; max-height: 400px">
             <a target="_blank" class="btn btn-info btn-sm m-1" style="height: 50px;"
+               [href]="'https://twitter.com/intent/tweet?text=' + encodeURIComponent('Guarda questo fantastico prodotto: ' + ('http://localhost:4200/product/' + product.id_prodotto))">
+              <i class="fa-brands fa-twitter"></i> Condividi su Twitter
+            </a>
+            <a target="_blank" class="btn btn-info btn-sm m-1" style="height: 50px;"
             [href]="'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent('http://localhost:4200/product/' + product.id_prodotto)">
                         <i class="fa-brands fa-facebook">Condividi su Facebook</i>
             </a>
@@ -83,4 +87,52 @@
   });
 
 
+</script>
+
+
+
+<script>
+  // Importa la libreria Twit
+const Twit = require('twit');
+
+// Crea un'istanza di Twit con le tue chiavi API
+const T = new Twit({
+  consumer_key: 'consumer_key',
+  consumer_secret: 'consumer_secret',
+  access_token: '3091353795-B1b0YQCZDrMdOQ3461pVIczYlViHjne3GnjbhG9',
+  access_token_secret: 'XwAuNomgtXAUiDhn83EQO9rDDqHhhU8TUJc5KFir3XYkL'
+});
+
+// Funzione per inviare un tweet
+function inviaTweet(testo) {
+  // Parametri del tweet
+  const params = {
+    status: testo
+  };
+
+  // Invia il tweet
+  T.post('statuses/update', params, (err, data, response) => {
+    if (err) {
+      console.log('Errore durante l\'invio del tweet:', err);
+    } else {
+      console.log('Tweet inviato con successo!');
+    }
+  });
+}
+
+// Funzione per gestire il click del bottone di invio tweet
+function handleClick() {
+  const prodotto = 'Nome prodotto'; // Nome del prodotto da twittare
+
+  // Creare il testo del tweet con le informazioni del prodotto
+  const testoTweet = `Sto utilizzando il fantastico prodotto ${prodotto}! #prodotto #twittare`;
+
+  // Invia il tweet
+  inviaTweet(testoTweet);
+}
+function shareOnTwitter(product) {
+  var tweetText = 'Guarda questo fantastico prodotto: ' + product.id_prodotto;
+  var tweetUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText);
+  window.open(tweetUrl, '_blank');
+}
 </script>

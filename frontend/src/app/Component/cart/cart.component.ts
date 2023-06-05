@@ -14,6 +14,7 @@ import {HttpClient} from "@angular/common/http";
 export class CartComponent implements OnInit {
   product: any[] = [];
   ordineCreato=false;
+  logStringResult=false;
   constructor(private cookieService: CookieService,
               private productService: ProductService,
               private navigationService: NavigationService,
@@ -22,7 +23,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     // Leggo l'elenco dei prodotti da cookie
-
+    this.checkUserCookie()
     const cartItemsCookie = this.cookieService.get('cartItems');
     if (cartItemsCookie) {
       this.product = JSON.parse(cartItemsCookie);
@@ -141,8 +142,15 @@ removeFromCart(index: number): void {
 
   }
 
+  checkUserCookie(): void {
+    const userCookie = this.cookieService.get('user');
 
-
+    if (userCookie) {
+      this.logStringResult = true;
+    } else {
+      this.logStringResult = false;
+    }
+  }
 
 
 }
