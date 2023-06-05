@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {ProductService} from "./product.service";
+import {Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -8,34 +10,30 @@ import {ProductService} from "./product.service";
 export class CartService {
 
 
-  constructor( private cookieService: CookieService,private productService: ProductService) { }
+  constructor( private cookieService: CookieService,
+               private httpClient: HttpClient) { }
 
-
-
+  public sendOrder(order: { items: { quantity: any; product_id: any }[] }): Observable<any> {
+    return this.httpClient.post('http://localhost:8080/checkout', order);
+  }
 
 
   addToCart(productId: number): void {
-    // Leggi l'elenco dei prodotti nel carrello dai cookie
+
     let cartItems: { product_id: number, quantity: number }[] = [];
     const cartItemsCookie = this.cookieService.get('cartItems');
-
     if (cartItemsCookie) {
       cartItems = JSON.parse(cartItemsCookie) as { product_id: number, quantity: number }[];
     }
-
-    // Verifica se il prodotto è già presente nel carrello
     const existingProductIndex = cartItems.findIndex(item => item.product_id === productId);
-
     if (existingProductIndex !== -1) {
-      // Se il prodotto è già presente, incrementa la quantità
       cartItems[existingProductIndex].quantity += 1;
     } else {
-      // Se il prodotto non è presente, aggiungi una nuova voce al carrello
       cartItems.push({ product_id: productId, quantity: 1 });
     }
-
-    // Salva l'elenco dei prodotti nel carrello nei cookie con una scadenza di un'ora
     this.cookieService.set('cartItems', JSON.stringify(cartItems), 1, '/');
 
   }
+
+
 }

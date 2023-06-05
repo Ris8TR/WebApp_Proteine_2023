@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {ProductService} from "../../Service/product.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {NavigationService} from "../../Service/navigation.service";
 import {HttpClient} from "@angular/common/http";
+import {CartService} from "../../Service/cart.service";
 
 
 @Component({
@@ -18,11 +19,11 @@ export class CartComponent implements OnInit {
   constructor(private cookieService: CookieService,
               private productService: ProductService,
               private navigationService: NavigationService,
+              private cartService: CartService,
               private http: HttpClient,
               private router: Router) {}
 
   ngOnInit(): void {
-    // Leggo l'elenco dei prodotti da cookie
     this.checkUserCookie()
     const cartItemsCookie = this.cookieService.get('cartItems');
     if (cartItemsCookie) {
@@ -30,7 +31,6 @@ export class CartComponent implements OnInit {
     } else {
       this.product = [];
     }
-    // Carico i dettagli dei prodotti
     this.loadProductDetails();
   }
 
@@ -124,7 +124,7 @@ removeFromCart(index: number): void {
       items: orderItems
     };
 
-    this.productService.sendOrder(order).subscribe(
+    this.cartService.sendOrder(order).subscribe(
       (response) => {
 
         console.log('Order created:', response);

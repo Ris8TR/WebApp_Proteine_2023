@@ -14,7 +14,6 @@ export class ProductService {
   constructor(private httpClient: HttpClient) { }
 
 
-
   public getAllProducts(pageNumber: number, searchKeyword: string = ""): Observable<Product[]> {
     return this.httpClient.get<Product[]>('http://localhost:8080/getAllProducts?pageNumber='+pageNumber);
   }
@@ -27,13 +26,10 @@ export class ProductService {
     return this.httpClient.get<Product[]>(`http://localhost:8080/getProductsBySearch?pageNumber=${pageNumber}&searchKeyword=${searchKeyword}`);
   }
 
-
   public getProductById(productId){
     return this.httpClient.get<Product>("http://localhost:8080/getProductById/"+productId);
   }
 
-  public sendOrder(order: { items: { quantity: any; product_id: any }[] }): Observable<any> {
-    return this.httpClient.post('http://localhost:8080/checkout', order);
-  }
+
 
 }

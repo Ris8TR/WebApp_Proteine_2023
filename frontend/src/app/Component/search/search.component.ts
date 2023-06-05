@@ -112,20 +112,6 @@ export class SearchComponent implements OnInit{
     this.getmoreProductsBySearch(this.pageNumber);
   }
 
-  showProductDetails(productId){
-    const currentRoute = this.router.url;
-    this.navigationService.setPreviousComponent(currentRoute);
-    this.router.navigate(['/product',  productId ]);
-  }
-
-
-  addToCart(ID){
-    this.cartService.addToCart(ID);
-    this.productAddedToCart = ID;
-    setTimeout(() => {
-      this.productAddedToCart = null;
-    }, 1000);
-  }
 
 
 
