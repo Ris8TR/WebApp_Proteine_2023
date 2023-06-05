@@ -16,12 +16,19 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import org.apache.commons.codec.binary.Base64;
 import java.util.List;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -166,51 +173,28 @@ public class PostController {
 
     @PostMapping("/checkout")
     @ResponseBody
-    public Object checkout(HttpServletRequest request) {
-        String email = request.getParameter("customerName");
-            int totale = 0;
-            String date = request.getParameter("orderDate");
-            Integer n = Integer.valueOf(request.getParameter("num"));
-            Ordine order = new Ordine();
-            ProdOrd prod = new ProdOrd();
+    public Object checkout(HttpServletRequest request, HttpServletResponse res) throws IOException, ParseException {
+        String user = new Getc(request.getCookies(),"user").Get();
+        String sess = new Getc(request.getCookies(),"sessionId").Get();
+        if((user==null && sess==null)){
+            return -1;
+        }
+        else {
+            // Ottenere i dati dell'ordine dalla richiesta
+            BufferedReader reader = request.getReader();
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            String requestData = stringBuilder.toString();
 
-            List<Integer> prods = new ArrayList<>();
-            List<Integer> quantita = new ArrayList<>();
-            order.setEmail(email);
-            order.setData(date);
-            if(n==0){
-                Integer product = Integer.valueOf(request.getParameter("products[0].name"));
-                Integer quantity = Integer.valueOf(request.getParameter("products[0].quantity"));
-                prods.add(product);
-                quantita.add(quantity);
-                int pr = new ProductSQL().getPrezzo(product);
-                totale += pr * quantity;
-                order.setTotale(totale);
-                prod.setId_prodotti(prods);
-                prod.setQuantita(quantita);
-            }
-            else{
-                Integer[] totali = new Integer[n];
-                for(int i=0;i<n;i++){
-                    int id=Integer.valueOf(request.getParameter("products["+i+"].name"));
-                    int quant=Integer.valueOf(request.getParameter("products["+i+"].quantity"));
-                    int p = new ProductSQL().getPrezzo(id);
-                    int tot = p*quant;
-                    totali[i] = tot;
-                    prods.add(id); quantita.add(quant);
-                }
-                int somma = 0;
-                for(int x:totali){
-                    somma+=x;
-                }
-                order.setTotale(somma);
-            }
-            int ordid = new OrderSQL().AddOrder(order);
-            prod.setId_prodotti(prods);
-            prod.setQuantita(quantita);
-            new ProdOrdSQL().AddProdOrd(prod,ordid);
+
+        }
+
             return null;
-    }
+        }
+
 
     @PostMapping("/elimina-utente/**")
     @ResponseBody
