@@ -2,7 +2,7 @@
   <h1>Carrello:</h1>
   <div class="container" style="display: flex; min-height: 1050px; min-height: 1050px; flex-wrap: wrap; flex-grow: 1;">
     <div style="width: 18rem; margin: 10px; flex-basis: 20%;" *ngFor="let item of product; let i = index">
-      <div class="card custom-card" style="width: 300px; position: relative;">
+      <div class="card custom-card" style="max-width: 300px; position: relative;">
         <a (click)=showProductDetails(item.product?.id_prodotto)>
           <img [src]="item.product?.imageUrl" class="card-img-top card-image" alt="{{item.title}}">
         </a>

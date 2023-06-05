@@ -24,6 +24,7 @@ import { CategoryComponent } from './Component/category/category.component';
 import { SearchComponent } from './Component/search/search.component';
 import { InfoComponent } from './Component/info/info.component';
 import { FacebookModule } from 'ngx-facebook';
+import { CardComponent } from './Component/card/card.component';
 
 
 
@@ -37,6 +38,7 @@ import { FacebookModule } from 'ngx-facebook';
     CategoryComponent,
     SearchComponent,
     InfoComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,

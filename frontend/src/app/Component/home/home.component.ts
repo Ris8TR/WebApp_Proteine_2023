@@ -20,16 +20,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   product: any[] = [];
   disableLoadMore = false;
 
-  productAddedToCart: number | null = null;
+
+
 
   constructor(
     private productService: ProductService,
-    private http: HttpClient,
-    private cartService: CartService,
-    private cookieService: CookieService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private navigationService: NavigationService
   ) {}
 
   ngOnInit(): void {
@@ -92,19 +87,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loadProducts();
   }
 
-  showProductDetails(productId) {
-    const currentRoute = this.router.url;
-    this.navigationService.setPreviousComponent(currentRoute);
-    this.router.navigate(['/product',  productId ]);
-  }
 
-  addToCart(ID) {
-    this.cartService.addToCart(ID);
-    this.productAddedToCart = ID;
-    setTimeout(() => {
-      this.productAddedToCart = null;
-    }, 1000);
-  }
 
   ngOnDestroy(): void {
     this.product = [];

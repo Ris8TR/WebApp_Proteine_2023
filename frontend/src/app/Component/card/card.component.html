@@ -1,0 +1,18 @@
+<div class="card custom-card"  >
+  <a (click)=showProductDetails(item?.id_prodotto)>
+    <img [src]="item?.imageUrl" class="card-img-top card-image" alt="{{item?.nome}}">
+  </a>
+  <div class="card-body" >
+    <a class="btn card-text-wrapper" style="text-align: left!important" (click)="showProductDetails(item?.id_prodotto)">
+      <h5 class="card-title">{{item?.marca}}</h5>
+      <h2 class="card-text">{{item?.nome}}</h2>
+    </a>
+    <div class="add-to-cart-wrapper">
+      <h2 class="card-text" style="margin-top: 5px">{{item?.prezzo}}€</h2>
+      <button *ngIf="item?.available" class="btn custom-button" [disabled]="productAddedToCart === item?.id_prodotto" [ngClass]="{'product-added': productAddedToCart === item?.id_prodotto}" (click)="addToCart(item?.id_prodotto)">
+        {{ productAddedToCart === item?.id_prodotto ? 'Prodotto aggiunto' : 'Aggiungi al carrello' }}
+      </button>
+      <span *ngIf="!item?.available" class="btn not-available-text" style="color: red; border-color: red; border-radius: 25px; letter-spacing: 1.3px;">Prodotto non disponibile</span>
+    </div>
+  </div>
+</div>

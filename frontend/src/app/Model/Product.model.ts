@@ -1,13 +1,14 @@
 import { FileHandel} from "./FileHandel.model";
 
 export interface Product {
-  productId: number,
-  productName: String,
-  productDescription: String,
-  productDiscountedPrice: number,
-  productActualPrice: number,
-  val_nutr: any;
-  foto:any
+  id_prodotto: number,
+  nome: String,
+  descrizione: String,
+  prezzo: number,
+  available: boolean,
+  marca: any,
+  val_nutr: any,
+  foto:any,
   imageUrl: any;
 
 

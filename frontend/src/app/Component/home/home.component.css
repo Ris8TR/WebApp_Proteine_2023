@@ -4,6 +4,7 @@
   color: white;
   border-radius: 25px;
   letter-spacing: 1.3px;
+
 }
 
 .custom-button:hover {
@@ -13,67 +14,4 @@
   border-radius: 25px;
   letter-spacing: 1.3px;
 }
-
-.product-added {
-  background-color: #ffee00 !important;
-  border-color: #ffee00 !important;
-  color: black !important;
-  border-radius: 25px;
-  letter-spacing: 1.3px;
-}
-
-.product-added:hover {
-  background-color: #ffee00 !important;
-  border-color: #ffee00 !important;
-  color: black !important;
-  border-radius: 25px;
-  letter-spacing: 1.3px;
-}
-
-.product-added {
-  background-color: #ffee00 !important;
-  border-color: #ffee00 !important;
-  color: black !important;
-  border-radius: 25px;
-  letter-spacing: 1.3px;
-}
-
-.product-added:active {
-  background-color: #ffee00 !important;
-  border-color: #ffee00 !important;
-  color: black !important;
-  border-radius: 25px;
-  letter-spacing: 1.3px;
-}
-
-.card-img-top{
-  max-width: 100%;
-  height: auto;
-}
-
-.add-to-cart-wrapper {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
-  right: 10px;
-  text-align: right;
-}
-
-.card-body {
-  flex-grow: 1;
-}
-
-
-
-.custom-card {
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 10px;
-  height: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 
