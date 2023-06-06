@@ -171,34 +171,30 @@ public class PostController {
 
     @PostMapping("/checkout")
     @ResponseBody
-    public Object checkout(HttpServletRequest request) throws IOException, ParseException {
-        String user = new Getc(request.getCookies(),"user").Get();
-        String sess = new Getc(request.getCookies(),"sessionId").Get();
-        if((user==null && sess==null)){
+    public Object checkout(HttpServletRequest request, @RequestParam("user") String user) throws IOException, ParseException {
+        if (user == null) {
             return -1;
-        }
-        else {
+        } else {
             // Ottenere i dati dell'ordine dalla richiesta
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-        String json = "";
-        if(br != null){
+            BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
             json = br.readLine();
+            Object obj = new JSONParser().parse(json);
+            JSONObject jo = (JSONObject) obj;
+            JSONArray ja = (JSONArray) jo.get("items");
+            Ordine ord = new Ordine();
+            ProdOrd prodord = new ProdOrd();
+            ord.setEmail(user);
+            ord.setTotale(gettot(ja));
+            ord.setData(String.valueOf(java.time.LocalDate.now()));
+            int id = new OrderSQL().AddOrder(ord);
+            prodord.setId_prodotti(prods(ja));
+            prodord.setQuantita(quantity(ja));
+            new ProdOrdSQL().AddProdOrd(prodord, id);
+            return null;
         }
-        Object obj = new JSONParser().parse(json);
-        JSONObject jo = (JSONObject) obj;
-        JSONArray ja = (JSONArray) jo.get("items");
-        Ordine ord = new Ordine();
-        ProdOrd prodord = new ProdOrd();
-        ord.setEmail(user);
-        ord.setTotale(gettot(ja));
-        ord.setData(String.valueOf(java.time.LocalDate.now()));
-        int id=new OrderSQL().AddOrder(ord);
-        prodord.setId_prodotti(prods(ja));
-        prodord.setQuantita(quantity(ja));
-        new ProdOrdSQL().AddProdOrd(prodord,id);
-        return null;
-        }
-        }
+    }
+
 
 
     @PostMapping("/elimina-utente/**")

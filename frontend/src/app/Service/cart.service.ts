@@ -13,11 +13,9 @@ export class CartService {
   constructor( private cookieService: CookieService,
                private httpClient: HttpClient) { }
 
-  public sendOrder(order: { items: { quantity: any; product_id: any }[] }): Observable<any> {
+  public sendOrder(order: { user: string; items: { quantity: any; product_id: any }[] }): Observable<any> {
     return this.httpClient.post('http://localhost:8080/checkout', order);
   }
-
-
   addToCart(productId: number): void {
 
     let cartItems: { product_id: number, quantity: number }[] = [];

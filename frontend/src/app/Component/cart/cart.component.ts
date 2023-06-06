@@ -15,7 +15,8 @@ import {CartService} from "../../Service/cart.service";
 export class CartComponent implements OnInit {
   product: any[] = [];
   ordineCreato=false;
-  logStringResult=false;
+  logStringResult: any;
+  logStringResultBool=false;
   constructor(private cookieService: CookieService,
               private productService: ProductService,
               private navigationService: NavigationService,
@@ -24,7 +25,7 @@ export class CartComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit(): void {
-    this.checkUserCookie()
+    this.checkUserCookieBool()
     const cartItemsCookie = this.cookieService.get('cartItems');
     if (cartItemsCookie) {
       this.product = JSON.parse(cartItemsCookie);
@@ -119,36 +120,42 @@ removeFromCart(index: number): void {
   }
 
   createOrder(): void {
-    const orderItems = this.product.map(item => ({ product_id: item.product_id, quantity: item.quantity }));
-    const order = {
-      items: orderItems
-    };
-
-    this.cartService.sendOrder(order).subscribe(
-      (response) => {
-
-        console.log('Order created:', response);
-        // Clear the cart items after successful order creation
-        this.product = [];
-        this.saveCartItems([]);
-        this.ordineCreato=true;
-      },
-      (error) => {
-        this.ordineCreato=false;
-        console.log(order)
-        console.error('Error creating order:', error);
-      }
-    );
-
-  }
-
-  checkUserCookie(): void {
     const userCookie = this.cookieService.get('user');
 
     if (userCookie) {
-      this.logStringResult = true;
+      const orderItems = this.product.map(item => ({ product_id: item.product_id, quantity: item.quantity }));
+      const order = {
+        user: userCookie,
+        items: orderItems
+      };
+
+      this.cartService.sendOrder(order).subscribe(
+        (response) => {
+          console.log('Order created:', response);
+          // Clear the cart items after successful order creation
+          this.product = [];
+          this.saveCartItems([]);
+          this.ordineCreato = true;
+        },
+        (error) => {
+          this.ordineCreato = false;
+          console.log(order);
+          console.error('Error creating order:', error);
+        }
+      );
     } else {
-      this.logStringResult = false;
+      console.log('User cookie not found');
+    }
+  }
+
+
+  checkUserCookieBool(): void {
+    const userCookie = this.cookieService.get('user');
+
+    if (userCookie) {
+      this.logStringResultBool = true;
+    } else {
+      this.logStringResultBool = false;
     }
   }
 
