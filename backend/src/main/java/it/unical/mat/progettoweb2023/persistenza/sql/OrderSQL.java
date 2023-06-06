@@ -87,7 +87,7 @@ public class OrderSQL implements OrderDAO {
         try{
             maxorder=jdbcTemplate.queryForObject("SELECT MAX(n_ordine) FROM ordini",Integer.class);
             }
-        catch (EmptyResultDataAccessException e){
+        catch (Exception e){
             maxorder = 0;
             first = true;
         }
