@@ -37,8 +37,12 @@ public class ServletController {
         String user = new Getc(request.getCookies(),"user").Get();
         String sess = new Getc(request.getCookies(),"sessionId").Get();
         String resource = request.getRequestURI().substring("/user/".length());
-        if((user==null && sess==null)){
+        if(user==null && sess==null){
             resp.sendRedirect("http://localhost:8080/login");
+            return null;
+        }
+        else if(new UserSQL().getUserByEmail(user).getAdmin()){
+            resp.sendRedirect("http://localhost:8080/admin");
             return null;
         }
         else{
