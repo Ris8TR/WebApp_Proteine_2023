@@ -167,10 +167,10 @@
                         } else if(response === 0){
                             document.getElementById("555").style.color = "red";
                             document.getElementById("555").textContent = "Utente non registrato";
+                        } else if(response === 2){
+                            window.location.replace("http://localhost:8080/admin");
                         } else if(response === 1){
                             window.location.replace("http://localhost:8080/user");
-                        } else{
-                            window.location.replace("http://localhost:8080/admin");
                         }
                     });
                 } else{
