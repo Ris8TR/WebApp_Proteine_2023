@@ -16,13 +16,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import org.apache.commons.codec.binary.Base64;
 import java.util.List;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -173,7 +171,7 @@ public class PostController {
 
     @PostMapping("/checkout")
     @ResponseBody
-    public Object checkout(HttpServletRequest request, HttpServletResponse res) throws IOException, ParseException {
+    public Object checkout(HttpServletRequest request) throws IOException, ParseException {
         String user = new Getc(request.getCookies(),"user").Get();
         String sess = new Getc(request.getCookies(),"sessionId").Get();
         if((user==null && sess==null)){
@@ -181,18 +179,25 @@ public class PostController {
         }
         else {
             // Ottenere i dati dell'ordine dalla richiesta
-            BufferedReader reader = request.getReader();
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-            String requestData = stringBuilder.toString();
-
-
+        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+        String json = "";
+        if(br != null){
+            json = br.readLine();
         }
-
-            return null;
+        Object obj = new JSONParser().parse(json);
+        JSONObject jo = (JSONObject) obj;
+        JSONArray ja = (JSONArray) jo.get("items");
+        Ordine ord = new Ordine();
+        ProdOrd prodord = new ProdOrd();
+        ord.setEmail("lukakastagna@gmail.com");
+        ord.setTotale(gettot(ja));
+        ord.setData(String.valueOf(java.time.LocalDate.now()));
+        int id=new OrderSQL().AddOrder(ord);
+        prodord.setId_prodotti(prods(ja));
+        prodord.setQuantita(quantity(ja));
+        new ProdOrdSQL().AddProdOrd(prodord,id);
+        return null;
+        }
         }
 
 
@@ -270,6 +275,7 @@ public class PostController {
         return null;
     }
 
+
     private byte[] getval_nutr(HttpServletRequest req) throws ServletException, IOException {
         InputStream inputStream = req.getPart("image").getInputStream();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -301,6 +307,43 @@ public class PostController {
         byte[] bytes = bs64.getBytes();
         return bytes;
     }
+
+    private Integer gettot(JSONArray ja) throws ParseException {
+        int tot=0;
+        for(int i=0;i<ja.size();i++){
+            int tmp=0,p,q;
+            JSONObject data = (JSONObject) new JSONParser().parse(ja.get(i).toString());
+            q = Long.valueOf(String.valueOf(data.get("quantity"))).intValue() ;
+            p = new ProductSQL().getPrezzo(Long.valueOf(String.valueOf(data.get("product_id"))).intValue());
+            tmp+=q*p;
+            tot+=tmp;
+        }
+       return tot;
+    }
+
+    private List<Integer> prods(JSONArray ja) throws ParseException {
+        List<Integer> prodotti = new ArrayList<>();
+        for(int i=0;i<ja.size();i++){
+            int p;
+            JSONObject data = (JSONObject) new JSONParser().parse(ja.get(i).toString());
+            p = Long.valueOf(String.valueOf(data.get("product_id"))).intValue();
+            prodotti.add(p);
+        }
+        return prodotti;
+    }
+
+    private List<Integer> quantity(JSONArray ja) throws ParseException {
+        List<Integer> quantity = new ArrayList<>();
+        for(int i=0;i<ja.size();i++){
+            int p;
+            JSONObject data = (JSONObject) new JSONParser().parse(ja.get(i).toString());
+            p = Long.valueOf(String.valueOf(data.get("quantity"))).intValue();
+            quantity.add(p);
+        }
+        return quantity;
+    }
+
+
 }
 
 
