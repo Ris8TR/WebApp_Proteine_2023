@@ -189,7 +189,7 @@ public class PostController {
         JSONArray ja = (JSONArray) jo.get("items");
         Ordine ord = new Ordine();
         ProdOrd prodord = new ProdOrd();
-        ord.setEmail("lukakastagna@gmail.com");
+        ord.setEmail(user);
         ord.setTotale(gettot(ja));
         ord.setData(String.valueOf(java.time.LocalDate.now()));
         int id=new OrderSQL().AddOrder(ord);
