@@ -171,16 +171,14 @@ public class PostController {
 
     @PostMapping("/checkout")
     @ResponseBody
-    public Object checkout(HttpServletRequest request, @RequestParam("user") String user) throws IOException, ParseException {
-        if (user == null) {
-            return -1;
-        } else {
-            // Ottenere i dati dell'ordine dalla richiesta
+    public Object checkout(HttpServletRequest request) throws IOException, ParseException {
+           // Ottenere i dati dell'ordine dalla richiesta
             BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String json = "";
             json = br.readLine();
             Object obj = new JSONParser().parse(json);
             JSONObject jo = (JSONObject) obj;
+            String user = jo.get("user").toString();
             JSONArray ja = (JSONArray) jo.get("items");
             Ordine ord = new Ordine();
             ProdOrd prodord = new ProdOrd();
@@ -193,7 +191,7 @@ public class PostController {
             new ProdOrdSQL().AddProdOrd(prodord, id);
             return null;
         }
-        }
+
 
 
     @PostMapping("/elimina-utente/**")
