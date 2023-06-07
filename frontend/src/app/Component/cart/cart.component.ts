@@ -5,6 +5,8 @@ import {Router} from "@angular/router";
 import {NavigationService} from "../../Service/navigation.service";
 import {HttpClient} from "@angular/common/http";
 import {CartService} from "../../Service/cart.service";
+import {catchError, forkJoin, Observable, throwError} from "rxjs";
+import {tap} from "rxjs/operators";
 
 
 @Component({
@@ -15,8 +17,11 @@ import {CartService} from "../../Service/cart.service";
 export class CartComponent implements OnInit {
   product: any[] = [];
   ordineCreato=false;
-  logStringResult: any;
   logStringResultBool=false;
+  totalCost = 0;
+  orderSuccess = false;
+  orderError = false;
+
   constructor(private cookieService: CookieService,
               private productService: ProductService,
               private navigationService: NavigationService,
@@ -36,27 +41,32 @@ export class CartComponent implements OnInit {
   }
 
   loadProductDetails(): void {
-    for (const cartItem of this.product) {
-      this.getProductById(cartItem.product_id);
-    }
+    const productRequests = this.product.map((cartItem) =>
+      this.getProductById(cartItem.product_id)
+    );
+    forkJoin(productRequests).subscribe(() => {
+      this.calculateTotalCost();
+    });
   }
 
-
-
-  getProductById(productId: number): void {
-    this.productService.getProductById(productId).subscribe(
-      (data: any) => {
-        const cartItem = this.product.find(item => item.product_id === productId);
+  getProductById(productId: number): Observable<any> {
+    return this.productService.getProductById(productId).pipe(
+      tap((data: any) => {
+        const cartItem = this.product.find(
+          (item) => item.product_id === productId
+        );
         if (cartItem) {
           cartItem.product = data;
           this.setProductImageSrc(cartItem.product.foto, cartItem);
         }
-      },
-      (error) => {
+      }),
+      catchError((error) => {
         console.log(error);
-      }
+        return throwError(error);
+      })
     );
   }
+
 
   showProductDetails(productId){
     const currentRoute = this.router.url;
@@ -93,29 +103,27 @@ export class CartComponent implements OnInit {
 
   decreaseQuantity(index: number): void {
   if (this.product[index].quantity > 1) {
-  this.product[index].quantity--;
-  this.saveCartItems(this.product);
-}
-}
+    this.product[index].quantity--;
+    this.saveCartItems(this.product);
+    this.calculateTotalCost();
+    }
+  }
 
-increaseQuantity(index: number): void {
-  this.product[index].quantity++;
-  this.saveCartItems(this.product);
-}
+  increaseQuantity(index: number): void {
+    this.product[index].quantity++;
+    this.saveCartItems(this.product);
+    this.calculateTotalCost();
+  }
 
-removeFromCart(index: number): void {
-  this.product.splice(index, 1);
-  this.saveCartItems(this.product);
-}
+  removeFromCart(index: number): void {
+    this.product.splice(index, 1);
+    this.saveCartItems(this.product);
+    this.calculateTotalCost();
+  }
 
   private saveCartItems(cartItems: { product_id: number, quantity: number }[]): void {
-    // Elimina il cookie precedente per i carrelli
     this.cookieService.delete('cartItems', '/');
-
-    // Crea un nuovo array di oggetti con ID prodotto e quantità
     const updatedCartItems = cartItems.map(item => ({ product_id: item.product_id, quantity: item.quantity }));
-
-    // Salva il nuovo array di oggetti come cookie
     this.cookieService.set('cartItems', JSON.stringify(updatedCartItems), 1, '/');
   }
 
@@ -123,7 +131,10 @@ removeFromCart(index: number): void {
     const userCookie = this.cookieService.get('user');
 
     if (userCookie) {
-      const orderItems = this.product.map(item => ({ product_id: item.product_id, quantity: item.quantity }));
+      const orderItems = this.product.map((item) => ({
+        product_id: item.product_id,
+        quantity: item.quantity
+      }));
       const order = {
         user: userCookie,
         items: orderItems
@@ -134,20 +145,24 @@ removeFromCart(index: number): void {
           console.log('Order created:', response);
           // Clear the cart items after successful order creation
           this.product = [];
+          this.calculateTotalCost();
           this.saveCartItems([]);
           this.ordineCreato = true;
+          this.orderSuccess = true;
+          this.orderError = false;
         },
         (error) => {
           this.ordineCreato = false;
           console.log(order);
           console.error('Error creating order:', error);
+          this.orderSuccess = false;
+          this.orderError = true;
         }
       );
     } else {
       console.log('User cookie not found');
     }
   }
-
 
   checkUserCookieBool(): void {
     const userCookie = this.cookieService.get('user');
@@ -159,6 +174,18 @@ removeFromCart(index: number): void {
     }
   }
 
+
+  calculateTotalCost(): void {
+    let totalCost = 0;
+
+    for (const item of this.product) {
+      const productPrice = item.product?.prezzo ?? 0;
+      const quantity = item.quantity;
+      totalCost += productPrice * quantity;
+    }
+
+    this.totalCost = totalCost;
+  }
 
 }
 

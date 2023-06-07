@@ -109,20 +109,27 @@
         <label for="surname">Cognome:</label>
         <input id="surname" name="surname" th:value="${surname}" type="text">
 
-        <label for="dateOfBirth">Data di nascita:</label>
-        <input id="dateOfBirth" name="dateOfBirth" th:value="${dateOfBirth}" type="text">
+        <label for="via_1">Indirizzo 1:</label>
+        <input id="via_1" name="via_1" th:value="${street_1}" type="text">
 
-        <label for="address">Indirizzo:</label>
-        <input id="address" name="address" th:value="${address}" type="text">
+        <label for="via_2">Indirizzo 2:</label>
+        <input id="via_2" name="via_2" th:value="${street_2}" type="text">
 
-        <label for="phone">Telefono:</label>
-        <input id="phone" name="phone" th:value="${phone}" type="text">
+        <label for="city">Citta:</label>
+        <input id="city" name="city" th:value="${city}" type="text">
 
-        <label for="bio">Bio:</label>
-        <textarea id="bio" name="bio" th:text="${bio}"></textarea>
+        <label for="nation">Paese:</label>
+        <input id="nation" name="nation" th:value="${country}" type="text">
 
-        <button id="submit" type="submit" onclick="submitForm()">Aggiorna</button>
+
+        <label for="cap">CAP:</label>
+        <input id="cap" name="cap" th:value="${cap}" type="text">
+
+        <label for="cell">Telefono:</label>
+        <input id="cell" name="cell" th:value="${cell}" type="text">
+
     </form>
+    <button id="submit" type="submit" onclick="submitForm()">Aggiorna</button>
 </div>
 <script>
     function togglePassword() {
@@ -135,9 +142,39 @@
     }
 
     function submitForm() {
-        // Implementazione della logica di invio del form
-        alert("Form inviato con successo!");
-    }
+        let mail = document.querySelector("#user");
+        let pass = document.querySelector("#pwd");
+        let name = document.querySelector("#name");
+        let surname = document.querySelector("#surname");
+        let via_1 = document.querySelector("#via_1");
+        let via_2 = document.querySelector("#via_2");
+        let cap = document.querySelector("#cap");
+        let city = document.querySelector("#city");
+        let nation = document.querySelector("#nation");
+        let phone = document.querySelector("#cell");
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'http://localhost:8080/updateuser',
+                                        data:
+                                        {
+                                            email: mail.value,
+                                            password: pass.value,
+                                            name: name.value,
+                                            surname: surname.value,
+                                            via_1: via_1.value,
+                                            via_2: via_2.value,
+                                            cap: cap.value,
+                                            city: city.value,
+                                            nation: nation.value,
+                                            phone: phone.value,
+                                            admin: true
+                                        }, // data to be submit
+                                        success:function () {// success callback
+                                                alert("Form inviato con successo!");
+                                                window.location.replace("http://localhost:8080/user/info");
+                                        }});}
+
 </script>
 </body>
 
