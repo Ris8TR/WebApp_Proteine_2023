@@ -28,5 +28,6 @@ mat-form-field {
 .logo {
   max-width: 3cm;
   max-height: 10cm;
+  cursor: pointer;
 }
 
