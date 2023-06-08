@@ -6,7 +6,7 @@ export interface Product {
   descrizione: String,
   prezzo: number,
   available: boolean,
-  marca: any,
+  marchio: any,
   val_nutr: any,
   foto:any,
   imageUrl: any;

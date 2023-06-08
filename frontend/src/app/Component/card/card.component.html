@@ -1,11 +1,11 @@
-<div class="card custom-card " style="cursor: pointer"  >
-  <a (click)=showProductDetails(item?.id_prodotto)>
+<div class="card custom-card "  >
+  <a (click)=showProductDetails(item?.id_prodotto)  style="cursor: pointer">
     <img [src]="item?.imageUrl" class="card-img-top card-image" alt="{{item?.nome}}">
   </a>
   <div class="card-body" >
     <a class="btn card-text-wrapper" style="text-align: left!important" (click)="showProductDetails(item?.id_prodotto)">
-      <h5 class="card-title">{{item?.marca}}</h5>
-      <h2 class="card-text">{{item?.nome}}</h2>
+      <p  style="cursor: pointer" class="card-title">{{item?.marchio}}</p>
+      <h2 style="cursor: pointer" class="card-text">{{item?.nome}}</h2>
     </a>
     <div class="add-to-cart-wrapper">
       <h2 class="card-text" style="margin-top: 5px">{{item?.prezzo}}€</h2>
