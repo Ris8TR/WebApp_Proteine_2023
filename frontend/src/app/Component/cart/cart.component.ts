@@ -143,7 +143,6 @@ export class CartComponent implements OnInit {
       this.cartService.sendOrder(order).subscribe(
         (response) => {
           console.log('Order created:', response);
-          // Clear the cart items after successful order creation
           this.product = [];
           this.calculateTotalCost();
           this.saveCartItems([]);
